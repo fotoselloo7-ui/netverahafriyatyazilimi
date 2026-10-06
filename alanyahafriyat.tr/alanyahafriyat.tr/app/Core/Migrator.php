@@ -111,6 +111,13 @@ class Migrator
     protected function upgradeContentPackV2(): void
     {
         try {
+            // Fresh kurulumda Migrator::run() Seeder'dan önce çalışır.
+            // Ayar tablosu henüz boşsa içerik yükseltmesi yapma; Seeder ilk paketi oluşturacak.
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
             $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
             $stmt->execute();
             $version = (int) ($stmt->fetchColumn() ?: 0);
