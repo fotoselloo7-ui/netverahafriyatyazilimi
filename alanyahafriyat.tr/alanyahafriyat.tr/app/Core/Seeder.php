@@ -20,12 +20,13 @@ class Seeder
         return date('Y-m-d H:i:s');
     }
 
-    protected function insert(string $table, array $data): void
+    protected function insert(string $table, array $data): int
     {
         $cols = '`' . implode('`, `', array_keys($data)) . '`';
         $ph = implode(', ', array_fill(0, count($data), '?'));
         $stmt = $this->pdo->prepare("INSERT INTO `$table` ($cols) VALUES ($ph)");
         $stmt->execute(array_values($data));
+        return (int) $this->pdo->lastInsertId();
     }
 
     public function run(): void
@@ -88,7 +89,7 @@ class Seeder
             ['floating_whatsapp_enabled', '1', 'general', 'toggle'],
             ['web_design_credit_text', 'Netvera Teknoloji Yazılım', 'footer', 'text'],
             ['web_design_credit_url', '', 'footer', 'text'],
-            ['content_pack_version', '2', 'system', 'text'],
+            ['content_pack_version', '3', 'system', 'text'],
         ];
         foreach ($settings as [$k, $v, $g, $t]) {
             $this->insert('settings', [
@@ -259,40 +260,46 @@ class Seeder
     {
         $services = [
             [
-                'title' => 'Kepçe Kiralama', 'slug' => 'kepce-kiralama', 'icon' => 'truck',
+                'title' => 'Kepçe Kiralama',
+                'slug' => 'kepce-kiralama',
+                'icon' => 'truck',
                 'short' => 'Alanya’da temel kazısı, yükleme, kanal, tesviye ve saha işleri için operatörlü kepçe hizmeti.',
                 'hero' => 'Alanya Kepçe Kiralama',
-                'content' => '<h2>Alanya’da kepçe kiralama hangi işler için kullanılır?</h2><p>Kepçe kiralama; temel ve kanal kazısı, arsa düzenleme, yükleme, tesviye, moloz ve hafriyat işleri gibi farklı saha ihtiyaçlarında kullanılır. Doğru makine seçimi işin büyüklüğü, zemin yapısı, çalışma alanına erişim ve çıkarılacak malzemenin miktarına göre yapılır.</p><h2>Operatörlü kepçe hizmetinde süreç nasıl işler?</h2><p>Teklif öncesinde işin konumu, yapılacak çalışma, yaklaşık alan veya kazı ölçüsü, makinenin sahaya giriş koşulları ve varsa fotoğraflar değerlendirilir. Böylece gereksiz kapasite veya yetersiz makine seçimi yerine işe uygun bir plan oluşturulur.</p><h2>Kepçe kiralama fiyatını neler belirler?</h2><p>Fiyat; çalışma süresi, kullanılacak makine tipi, makinenin sahaya nakli, zemin koşulları, kırıcı veya farklı ataşman ihtiyacı, çıkan hafriyatın taşınıp taşınmayacağı ve kamyon gereksinimi gibi kalemlere göre değişir. Bu nedenle tek bir sabit fiyat yerine işin kapsamına göre teklif hazırlanır.</p><h2>Alanya’da hizmet bölgeleri</h2><p>Mahmutlar, Kestel, Kargıcak, Oba, Tosmur, Cikcilli, Çıplaklı, Alanya Merkez, Konaklı, Payallar, Avsallar ve hizmet planına uygun çevre bölgeler için talep oluşturabilirsiniz.</p>',
-                'advantages' => ['İşin kapsamına göre makine planlama', 'Operatörlü çalışma seçeneği', 'Kazı, yükleme ve tesviye ihtiyaçlarını birlikte değerlendirme', 'Telefon ve WhatsApp üzerinden hızlı ön değerlendirme', 'Saha koşullarına göre teklif'],
+                'content' => '<h2>Alanya’da kepçe kiralama hangi işler için kullanılır?</h2><p>Kepçe kiralama; temel ve kanal kazısı, arsa düzenleme, yükleme, tesviye, moloz ve hafriyat işleri gibi farklı saha ihtiyaçlarında kullanılır. Doğru makine seçimi işin büyüklüğü, zemin yapısı, çalışma alanına erişim ve çıkarılacak malzemenin miktarına göre yapılır.</p><h2>Operatörlü kepçe hizmetinde süreç nasıl işler?</h2><p>Teklif öncesinde işin konumu, yapılacak çalışma, yaklaşık alan veya kazı ölçüsü, makinenin sahaya giriş koşulları ve varsa fotoğraflar değerlendirilir. Saatlik veya günlük çalışma ihtiyacı da bu kapsam içinde netleştirilir.</p><h2>Kepçe kiralama fiyatını neler belirler?</h2><p>Fiyat; çalışma süresi, kullanılacak makine tipi, makinenin sahaya nakli, zemin koşulları, ataşman ihtiyacı, çıkan hafriyatın taşınıp taşınmayacağı ve kamyon gereksinimi gibi kalemlere göre değişir. Bu nedenle tek bir sabit fiyat yerine işin kapsamına göre teklif hazırlanır.</p>',
+                'advantages' => ['İşin kapsamına göre makine planlama', 'Operatörlü çalışma', 'Kazı, yükleme ve tesviye ihtiyaçlarını birlikte değerlendirme', 'Telefon ve WhatsApp üzerinden hızlı ön değerlendirme', 'Saha koşullarına göre teklif'],
                 'usage' => ['Temel ve yapı kazıları', 'Kanal ve altyapı kazıları', 'Arsa tesviye ve dolgu', 'Toprak ve moloz yükleme', 'Bahçe ve saha düzenleme'],
                 'seo_title' => 'Alanya Kepçe Kiralama | Operatörlü Kepçe | Ersan Hafriyat',
                 'seo_description' => 'Alanya’da operatörlü kepçe kiralama; temel ve kanal kazısı, yükleme, tesviye ve hafriyat işleri. İşinize uygun makine için Ersan Hafriyat’tan teklif alın.',
                 'faqs' => [
                     ['Alanya’da kepçe kiralama fiyatı nasıl belirlenir?', 'Fiyat; çalışma süresi, makine tipi, saha erişimi, nakliye, zemin, ataşman ihtiyacı ve çıkan malzemenin taşınması gibi iş kalemlerine göre belirlenir.'],
                     ['Saatlik veya günlük kepçe çalışması mümkün mü?', 'Çalışma modeli işin kapsamına ve sahaya göre planlanır. Saatlik veya günlük uygunluk için işin konumunu ve yapılacak çalışmayı ileterek teklif isteyebilirsiniz.'],
-                    ['Kepçe operatörlü mü çalışıyor?', 'Hizmet planı operatörlü çalışma ihtiyacına göre hazırlanır. Teklif aşamasında makine ve operatör gereksinimi birlikte netleştirilir.'],
+                    ['Makinenin sahaya nakli nasıl planlanır?', 'Makine tipi, çalışma konumu ve saha erişimi netleştirildikten sonra uygun taşıma yöntemi teklif kapsamına dahil edilir.'],
                 ],
             ],
             [
-                'title' => 'Mini Kepçe Kiralama', 'slug' => 'mini-kepce-kiralama', 'icon' => 'truck',
+                'title' => 'Mini Kepçe Kiralama',
+                'slug' => 'mini-kepce-kiralama',
+                'icon' => 'excavator',
                 'short' => 'Dar alan, bahçe, küçük temel ve kanal işleri için Alanya mini kepçe ve mini ekskavatör çözümleri.',
                 'hero' => 'Alanya Mini Kepçe Kiralama',
-                'content' => '<h2>Mini kepçe hangi işlerde tercih edilir?</h2><p>Mini kepçe; büyük iş makinelerinin manevra yapmakta zorlandığı dar bahçeler, bina çevreleri, küçük temel ve kanal kazıları, peyzaj hazırlığı ve hassas tesviye işleri için tercih edilir. En önemli avantajı daha sınırlı çalışma alanlarında kontrollü hareket edebilmesidir.</p><h2>Dar alanda makine seçimi nasıl yapılır?</h2><p>Mini kepçe talebinde yalnız işin büyüklüğü değil; kapı veya geçiş genişliği, saha içindeki dönüş alanı, kazı derinliği, zemin tipi ve çıkan malzemenin nasıl uzaklaştırılacağı da önemlidir. Bu bilgiler makine seçiminin temelini oluşturur.</p><h2>Mini kepçe fiyatını etkileyen faktörler</h2><p>Çalışma süresi, makinenin sahaya nakli, zemin koşulları, kazı derinliği, ataşman ihtiyacı ve moloz/hafriyat taşıması fiyatı etkileyebilir. Gerçek makine ölçüleri ve teknik sınırlar yalnızca doğrulanmış ekipman bilgisi üzerinden paylaşılır.</p>',
-                'advantages' => ['Dar alanlarda çalışma planı', 'Bahçe ve bina çevresinde kontrollü kazı', 'Küçük temel ve kanal işleri', 'Erişim ölçülerine göre ön değerlendirme', 'Kazı ve tesviye ihtiyaçlarını birlikte planlama'],
+                'content' => '<h2>Mini kepçe hangi işlerde tercih edilir?</h2><p>Mini kepçe; büyük iş makinelerinin manevra yapmakta zorlandığı dar bahçeler, bina çevreleri, küçük temel ve kanal kazıları, peyzaj hazırlığı ve hassas tesviye işleri için tercih edilir. En önemli avantajı sınırlı çalışma alanlarında kontrollü hareket edebilmesidir.</p><h2>Dar alanda makine seçimi nasıl yapılır?</h2><p>Kapı veya geçiş genişliği, saha içindeki dönüş alanı, kazı derinliği, zemin tipi ve çıkan malzemenin nasıl uzaklaştırılacağı birlikte değerlendirilir. Gerçek makine ölçüleri yalnız doğrulanmış ekipman bilgisi üzerinden paylaşılır.</p><h2>Mini kepçe fiyatını etkileyen faktörler</h2><p>Çalışma süresi, makinenin sahaya nakli, zemin koşulları, kazı derinliği, ataşman ihtiyacı ve moloz/hafriyat taşıması fiyatı etkileyebilir.</p>',
+                'advantages' => ['Dar alanlarda çalışma planı', 'Bahçe ve bina çevresinde kontrollü kazı', 'Küçük temel ve kanal işleri', 'Erişim ölçülerine göre ön değerlendirme', 'Hassas tesviye ve düzenleme'],
                 'usage' => ['Dar bahçe girişleri', 'Küçük temel kazıları', 'Kanal ve tesisat hatları', 'Peyzaj ve çevre düzenleme', 'Hassas tesviye işleri'],
                 'seo_title' => 'Alanya Mini Kepçe Kiralama | Dar Alan Kazı | Ersan Hafriyat',
                 'seo_description' => 'Alanya mini kepçe kiralama; dar bahçe girişleri, küçük temel ve kanal kazıları, peyzaj ve hassas saha işleri. İşiniz için uygun mini kepçe planı alın.',
                 'faqs' => [
                     ['Mini kepçe dar bahçe girişlerinde kullanılabilir mi?', 'Uygunluk giriş genişliği, dönüş alanı ve kullanılacak gerçek makinenin ölçülerine bağlıdır. Saha ölçülerini ve fotoğrafları paylaşarak ön değerlendirme yapılabilir.'],
                     ['Mini kepçe ile temel kazısı yapılır mı?', 'Küçük ölçekli temel ve benzeri kazılarda kullanılabilir; uygunluk kazı derinliği, zemin ve iş hacmine göre belirlenir.'],
-                    ['Mini kepçe fiyatı neye göre değişir?', 'Çalışma süresi, nakliye, zemin, erişim, kazı kapsamı ve varsa kırıcı/ataşman ihtiyacı fiyatı etkileyen başlıca unsurlardır.'],
+                    ['Mini kepçe fiyatı neye göre değişir?', 'Çalışma süresi, nakliye, zemin, erişim, kazı kapsamı ve varsa ataşman ihtiyacı fiyatı etkileyen başlıca unsurlardır.'],
                 ],
             ],
             [
-                'title' => 'Temel Kazısı', 'slug' => 'temel-kazisi', 'icon' => 'layers',
+                'title' => 'Temel Kazısı',
+                'slug' => 'temel-kazisi',
+                'icon' => 'layers',
                 'short' => 'Alanya’da villa, konut ve yapı projeleri için saha koşullarına uygun temel kazısı hizmeti.',
                 'hero' => 'Alanya Temel Kazısı',
-                'content' => '<h2>Temel kazısı öncesinde nelere bakılır?</h2><p>Temel kazısında proje ölçüleri kadar zeminin yapısı, makinenin sahaya erişimi, kazı derinliği, çıkan toprağın sahada kullanılıp kullanılmayacağı ve taşıma ihtiyacı önemlidir. Çalışma bu bilgiler netleştirildikten sonra planlanır.</p><h2>Kazıdan çıkan malzeme nasıl yönetilir?</h2><p>Çıkan malzemenin bir kısmı dolgu veya tesviye için değerlendirilebilir; taşınması gereken toprak ve moloz için ise yükleme ve nakliye planı oluşturulur. Böylece kazı ile saha düzeni birbirinden kopuk iki iş yerine tek süreçte ele alınabilir.</p><h2>Teklif için hangi bilgiler gerekir?</h2><p>Konum, proje veya yaklaşık kazı ölçüsü, saha giriş durumu, zeminle ilgili bilinen bilgiler ve fotoğraflar teklifin daha doğru hazırlanmasına yardımcı olur.</p>',
+                'content' => '<h2>Temel kazısı öncesinde nelere bakılır?</h2><p>Temel kazısında proje ölçüleri kadar zeminin yapısı, makinenin sahaya erişimi, kazı derinliği, çıkan toprağın sahada kullanılıp kullanılmayacağı ve taşıma ihtiyacı önemlidir.</p><h2>Kazıdan çıkan malzeme nasıl yönetilir?</h2><p>Çıkan malzemenin bir kısmı dolgu veya tesviye için değerlendirilebilir; taşınması gereken toprak ve moloz için yükleme ve nakliye planı oluşturulur.</p><h2>Teklif için hangi bilgiler gerekir?</h2><p>Konum, proje veya yaklaşık kazı ölçüsü, saha giriş durumu, zeminle ilgili bilinen bilgiler ve fotoğraflar teklifin daha doğru hazırlanmasına yardımcı olur.</p>',
                 'advantages' => ['Kazı ölçülerine göre planlama', 'Saha erişimi ve zemin değerlendirmesi', 'Hafriyat yükleme ve taşıma ihtiyacını birlikte planlama', 'Tesviye ve dolgu ihtiyacını aynı süreçte değerlendirme', 'İş kapsamına göre makine seçimi'],
                 'usage' => ['Villa temel kazısı', 'Konut ve yapı temelleri', 'İstinat ve çevre kazıları', 'Temel çevresi düzenleme', 'Kazı sonrası dolgu ve tesviye'],
                 'seo_title' => 'Alanya Temel Kazısı | Bina ve Villa Kazısı | Ersan Hafriyat',
@@ -304,11 +311,13 @@ class Seeder
                 ],
             ],
             [
-                'title' => 'Moloz ve Hafriyat Taşıma', 'slug' => 'moloz-hafriyat-nakliye', 'icon' => 'truck',
+                'title' => 'Moloz ve Hafriyat Taşıma',
+                'slug' => 'moloz-hafriyat-nakliye',
+                'icon' => 'truck',
                 'short' => 'Alanya’da kazıdan çıkan toprak, hafriyat ve molozun yükleme ve taşıma ihtiyacına yönelik saha planlaması.',
                 'hero' => 'Alanya Moloz ve Hafriyat Taşıma',
-                'content' => '<h2>Moloz ve hafriyat taşıma nasıl planlanır?</h2><p>Taşıma işinde yalnız kamyon sayısı değil; malzemenin türü ve tahmini miktarı, yükleme alanı, sahaya araç giriş-çıkışı ve uygun boşaltma planı birlikte değerlendirilir. Kazı işiyle eş zamanlı planlama yapılması sahadaki beklemeyi azaltabilir.</p><h2>Yükleme hizmeti de dahil olabilir mi?</h2><p>İşin kapsamına göre moloz veya toprağın kepçe ile yüklenmesi ve taşıma süreci birlikte değerlendirilebilir. Teklif için yaklaşık miktar, konum ve malzeme türünün paylaşılması yararlıdır.</p><h2>Fiyatı etkileyen unsurlar</h2><p>Malzeme miktarı, yükleme ihtiyacı, taşıma mesafesi, saha erişimi, çalışma süresi ve ek makine gereksinimi fiyatı belirleyen ana kalemlerdir.</p>',
-                'advantages' => ['Kazı ve taşıma işini birlikte planlama', 'Yükleme ihtiyacını kapsama dahil edebilme', 'Malzeme miktarına göre araç planı', 'Saha giriş-çıkış koşullarını değerlendirme', 'Konum ve iş kapsamına göre teklif'],
+                'content' => '<h2>Moloz ve hafriyat taşıma nasıl planlanır?</h2><p>Taşıma işinde malzemenin türü ve tahmini miktarı, yükleme alanı, sahaya araç giriş-çıkışı ve uygun boşaltma planı birlikte değerlendirilir. Kazı işiyle eş zamanlı planlama yapılması sahadaki beklemeyi azaltabilir.</p><h2>Yükleme hizmeti de dahil olabilir mi?</h2><p>İşin kapsamına göre moloz veya toprağın kepçe ile yüklenmesi ve taşıma süreci birlikte değerlendirilebilir. Teklif için yaklaşık miktar, konum ve malzeme türünün paylaşılması yararlıdır.</p><h2>Fiyatı etkileyen unsurlar</h2><p>Malzeme miktarı, yükleme ihtiyacı, taşıma mesafesi, saha erişimi, çalışma süresi ve ek makine gereksinimi fiyatı belirleyen ana kalemlerdir.</p>',
+                'advantages' => ['Kazı ve taşıma işini birlikte planlama', 'Yükleme ihtiyacını kapsama dahil etme', 'Malzeme miktarına göre araç planı', 'Saha giriş-çıkış koşullarını değerlendirme', 'Konum ve iş kapsamına göre teklif'],
                 'usage' => ['Kazı toprağı taşıma', 'İnşaat molozu yükleme ve taşıma', 'Arsa ve bahçe temizliği sonrası malzeme', 'Temel kazısı hafriyatı', 'Saha temizliği'],
                 'seo_title' => 'Alanya Moloz Taşıma | Hafriyat Nakliye | Ersan Hafriyat',
                 'seo_description' => 'Alanya’da moloz taşıma ve hafriyat nakliye; yükleme, kazı toprağı, saha erişimi ve taşıma ihtiyacına göre planlama. Ersan Hafriyat’tan teklif alın.',
@@ -319,7 +328,9 @@ class Seeder
                 ],
             ],
             [
-                'title' => 'Altyapı ve Kanal Kazısı', 'slug' => 'alt-yapi-kanal-acma', 'icon' => 'git-branch',
+                'title' => 'Altyapı ve Kanal Kazısı',
+                'slug' => 'alt-yapi-kanal-acma',
+                'icon' => 'git-branch',
                 'short' => 'Alanya’da altyapı, drenaj, tesisat ve benzeri hatlar için kanal kazısı ve saha hazırlığı.',
                 'hero' => 'Alanya Kanal Kazısı ve Altyapı',
                 'content' => '<h2>Kanal kazısı hangi işler için yapılır?</h2><p>Kanal kazısı; drenaj, su ve tesisat hatları, altyapı geçişleri ve benzeri saha ihtiyaçlarında uygulanır. Çalışmanın genişliği ve derinliği, mevcut hatlar, zemin yapısı ve makinenin alana erişimi planlamada önemlidir.</p><h2>Dar alanlarda kanal kazısı</h2><p>Bahçe, bina çevresi veya sınırlı geçişe sahip alanlarda daha küçük makine ihtiyacı doğabilir. Kullanılacak makine, gerçek geçiş ölçüsü ve kazı kapsamına göre seçilir.</p><h2>Çalışma öncesi nelere dikkat edilir?</h2><p>Mevcut altyapı hatları ve proje bilgileri mümkün olduğunca önceden belirlenmeli; kazı güzergâhı, malzemenin nereye alınacağı ve kazı sonrası dolgu ihtiyacı birlikte değerlendirilmelidir.</p>',
@@ -334,10 +345,12 @@ class Seeder
                 ],
             ],
             [
-                'title' => 'Arsa Tesviye ve Dolgu', 'slug' => 'arsa-tesviye-dolgu', 'icon' => 'mountain',
+                'title' => 'Arsa Tesviye ve Dolgu',
+                'slug' => 'arsa-tesviye-dolgu',
+                'icon' => 'mountain',
                 'short' => 'Alanya’da arsa, bahçe ve yapı çevresinde kot düzenleme, tesviye, dolgu ve yüzey hazırlığı.',
                 'hero' => 'Alanya Arsa Tesviye ve Dolgu',
-                'content' => '<h2>Arsa tesviyesi nedir?</h2><p>Arsa tesviyesi; yüzeydeki seviye farklarının işin amacına göre düzenlenmesi, gerekli alanların kazılması veya doldurulması ve sahada kontrollü bir eğim/kot oluşturulması işlemidir. Yapı öncesi hazırlık, bahçe düzenleme ve kullanım alanı açma gibi farklı amaçlarla yapılabilir.</p><h2>Dolgu işinde hangi bilgiler önemlidir?</h2><p>Kullanılacak dolgu malzemesi, dolgu kalınlığı, alanın mevcut kotu, drenaj ihtiyacı ve sıkıştırma gereksinimi işin kapsamını etkiler. Saha koşullarına göre uygun makine ve çalışma sırası belirlenir.</p><h2>Fiyatı ne belirler?</h2><p>Alan büyüklüğü, taşınacak veya getirilecek malzeme miktarı, makine süresi, zemin ve erişim koşulları tesviye/dolgu fiyatında temel unsurlardır.</p>',
+                'content' => '<h2>Arsa tesviyesi nedir?</h2><p>Arsa tesviyesi; yüzeydeki seviye farklarının işin amacına göre düzenlenmesi, gerekli alanların kazılması veya doldurulması ve sahada kontrollü bir eğim/kot oluşturulması işlemidir.</p><h2>Dolgu işinde hangi bilgiler önemlidir?</h2><p>Kullanılacak dolgu malzemesi, dolgu kalınlığı, alanın mevcut kotu, drenaj ihtiyacı ve sıkıştırma gereksinimi işin kapsamını etkiler.</p><h2>Fiyatı ne belirler?</h2><p>Alan büyüklüğü, taşınacak veya getirilecek malzeme miktarı, makine süresi, zemin ve erişim koşulları tesviye/dolgu fiyatında temel unsurlardır.</p>',
                 'advantages' => ['Kot ve yüzey ihtiyacına göre çalışma', 'Kazı ve dolgu kalemlerini birlikte değerlendirme', 'Arsa ve bahçe düzenleme desteği', 'Malzeme hareketine göre makine planı', 'Saha erişimine göre teklif'],
                 'usage' => ['Arsa düzeltme', 'Yapı öncesi saha hazırlığı', 'Bahçe tesviyesi', 'Toprak dolgu', 'Kot ve eğim düzenleme'],
                 'seo_title' => 'Alanya Arsa Tesviye ve Dolgu | Ersan Hafriyat',
@@ -349,12 +362,14 @@ class Seeder
                 ],
             ],
             [
-                'title' => 'Arsa Temizleme ve Bahçe Düzenleme', 'slug' => 'cevre-bahce-duzenleme', 'icon' => 'trees',
+                'title' => 'Arsa Temizleme ve Bahçe Düzenleme',
+                'slug' => 'cevre-bahce-duzenleme',
+                'icon' => 'trees',
                 'short' => 'Alanya’da arsa ve bahçelerde saha temizliği, toprak düzenleme, tesviye ve kazı ihtiyaçları.',
                 'hero' => 'Alanya Arsa Temizleme ve Bahçe Düzenleme',
-                'content' => '<h2>Arsa ve bahçe temizliği hangi işleri kapsar?</h2><p>Saha temizliği; zemindeki birikintilerin kaldırılması, gerekli alanlarda kazı yapılması, toprağın düzenlenmesi, tesviye ve çıkan malzemenin yüklenip taşınması gibi farklı iş kalemlerini içerebilir. İş kapsamı arazinin mevcut durumuna göre belirlenir.</p><h2>Bahçe alanlarında neden makine seçimi önemlidir?</h2><p>Bahçe kapısı, duvarlar, ağaçlar ve mevcut yapılar çalışma alanını sınırlayabilir. Bu nedenle makine boyutu ve hareket alanı önceden değerlendirilmelidir.</p><h2>Temizlik sonrası saha düzenlenebilir mi?</h2><p>İhtiyaca göre yüzey düzeltme, tesviye veya dolgu çalışmaları temizlik sonrasında aynı plan içinde ele alınabilir.</p>',
+                'content' => '<h2>Arsa ve bahçe temizliği hangi işleri kapsar?</h2><p>Saha temizliği; zemindeki birikintilerin kaldırılması, gerekli alanlarda kazı yapılması, toprağın düzenlenmesi, tesviye ve çıkan malzemenin yüklenip taşınması gibi farklı iş kalemlerini içerebilir.</p><h2>Bahçe alanlarında neden makine seçimi önemlidir?</h2><p>Bahçe kapısı, duvarlar, ağaçlar ve mevcut yapılar çalışma alanını sınırlayabilir. Bu nedenle makine boyutu ve hareket alanı önceden değerlendirilmelidir.</p><h2>Temizlik sonrası saha düzenlenebilir mi?</h2><p>İhtiyaca göre yüzey düzeltme, tesviye veya dolgu çalışmaları temizlik sonrasında aynı plan içinde ele alınabilir.</p>',
                 'advantages' => ['Saha temizliği ve düzenlemeyi birlikte planlama', 'Dar girişleri değerlendirme', 'Yükleme ve taşıma ihtiyacını kapsama dahil etme', 'Tesviye ve dolgu seçeneği', 'Arazi durumuna göre makine planı'],
-                'usage' => ['Arsa temizleme', 'Bahçe toprak düzenleme', 'Yüzey tesviyesi', 'Malzeme yükleme ve taşıma', 'Yapı çevresi saha hazırlığı'],
+                'usage' => ['Arsa temizleme', 'Bahçe toprak düzenleme', 'Ağaç kökü ve alan temizliği', 'Yüzey tesviyesi', 'Yapı çevresi saha hazırlığı'],
                 'seo_title' => 'Alanya Arsa Temizleme ve Bahçe Düzenleme | Ersan Hafriyat',
                 'seo_description' => 'Alanya’da arsa temizleme, bahçe düzenleme, toprak tesviye, yükleme ve saha hazırlığı. Alanın erişim ve zemin koşullarına göre teklif alın.',
                 'faqs' => [
@@ -364,10 +379,12 @@ class Seeder
                 ],
             ],
             [
-                'title' => 'Drenaj ve Özel Kazı İşleri', 'slug' => 'drenaj-ozel-kazi', 'icon' => 'droplet',
+                'title' => 'Drenaj ve Özel Kazı İşleri',
+                'slug' => 'drenaj-ozel-kazi',
+                'icon' => 'droplet',
                 'short' => 'Alanya’da drenaj hattı, özel ölçülü kazı ve saha koşullarına göre planlanan kazı çalışmaları.',
                 'hero' => 'Alanya Drenaj ve Özel Kazı İşleri',
-                'content' => '<h2>Drenaj kazısı ne zaman gerekir?</h2><p>Drenaj kanalı veya hattı için yapılacak kazılarda güzergâh, eğim, derinlik, mevcut zemin ve saha erişimi birlikte değerlendirilir. Kazının amacı suyun kontrollü şekilde yönlendirilmesine uygun bir hat oluşturmaktır; teknik proje gerektiren işlerde uygulama ilgili proje ve ölçülere göre yapılmalıdır.</p><h2>Özel kazı ne demektir?</h2><p>Standart geniş saha kazılarından farklı olarak dar geçiş, belirli ölçü veya hassas çalışma gerektiren işler özel kazı kapsamında değerlendirilebilir. Kullanılacak makine ve ataşman gerçek saha koşullarına göre seçilir.</p>',
+                'content' => '<h2>Drenaj kazısı ne zaman gerekir?</h2><p>Drenaj kanalı veya hattı için yapılacak kazılarda güzergâh, eğim, derinlik, mevcut zemin ve saha erişimi birlikte değerlendirilir. Teknik proje gerektiren işlerde uygulama ilgili proje ve ölçülere göre yapılmalıdır.</p><h2>Özel kazı ne demektir?</h2><p>Standart geniş saha kazılarından farklı olarak dar geçiş, belirli ölçü veya hassas çalışma gerektiren işler özel kazı kapsamında değerlendirilebilir.</p><h2>Dolgu ve kapatma nasıl planlanır?</h2><p>Hat çalışması sonrasında dolgu, yüzey düzenleme veya tesviye ihtiyacı varsa bu kalemler kazı planıyla birlikte değerlendirilir.</p>',
                 'advantages' => ['Güzergâh ve ölçüye göre kazı planı', 'Dar veya hassas alanları değerlendirme', 'Zemin ve erişime göre makine seçimi', 'Kazı sonrası dolgu ihtiyacını planlama', 'İş kapsamına göre teklif'],
                 'usage' => ['Drenaj kanalları', 'Özel ölçülü kazılar', 'Bahçe ve yapı çevresi hatları', 'Dar alan çalışmaları', 'Kazı sonrası dolgu'],
                 'seo_title' => 'Alanya Drenaj ve Özel Kazı İşleri | Ersan Hafriyat',
@@ -376,6 +393,74 @@ class Seeder
                     ['Drenaj kazısı için hangi bilgiler gerekir?', 'Hat güzergâhı, yaklaşık uzunluk ve derinlik, saha erişimi ve varsa proje/ölçü bilgileri ön değerlendirme için önemlidir.'],
                     ['Dar alanda özel kazı yapılabilir mi?', 'Uygunluk geçiş ölçülerine ve gerçek makine seçeneklerine bağlıdır; saha bilgileri paylaşıldığında değerlendirilir.'],
                     ['Kazı sonrası dolgu planlanabilir mi?', 'İş kapsamına göre dolgu ve yüzey düzenleme çalışmaları kazı sürecine eklenebilir.'],
+                ],
+            ],
+            [
+                'title' => 'Havuz Kazısı',
+                'slug' => 'havuz-kazisi',
+                'icon' => 'droplet',
+                'short' => 'Alanya’da villa ve bahçe projelerinde havuz alanı açma, kazı, yükleme ve saha hazırlığı.',
+                'hero' => 'Alanya Havuz Kazısı',
+                'content' => '<h2>Havuz kazısı nasıl planlanır?</h2><p>Havuz kazısında proje ölçüsü, kazı derinliği, makine erişimi, zemin yapısı ve çıkan toprağın nasıl yönetileceği birlikte değerlendirilir. Bahçe duvarı, giriş genişliği ve yapı çevresindeki hareket alanı makine seçimini doğrudan etkileyebilir.</p><h2>Kazı toprağı ne olur?</h2><p>Çıkan malzemenin sahada kullanılacak kısmı ile taşınacak kısmı ayrılarak yükleme ve nakliye ihtiyacı planlanabilir.</p><h2>Teklif için ne gerekir?</h2><p>Konum, havuz projesi veya yaklaşık ölçüler, saha giriş bilgisi ve fotoğraflar ön değerlendirmeyi hızlandırır.</p>',
+                'advantages' => ['Proje ölçüsüne göre kazı planı', 'Dar bahçe erişimini değerlendirme', 'Kazı ve hafriyat taşımasını birlikte planlama', 'Zemin koşullarına göre makine seçimi', 'Kazı sonrası saha düzeni'],
+                'usage' => ['Villa havuzu kazısı', 'Bahçe havuzu alan açma', 'Havuz çevresi saha hazırlığı', 'Kazı toprağı yükleme', 'Kazı sonrası tesviye'],
+                'seo_title' => 'Alanya Havuz Kazısı | Villa ve Bahçe Havuzu | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da havuz kazısı; proje ölçüsü, bahçe erişimi, zemin, kazı derinliği ve hafriyat taşıma ihtiyacına göre planlı çalışma.',
+                'faqs' => [
+                    ['Havuz kazısı için mini kepçe kullanılabilir mi?', 'Uygunluk havuz ölçüsü, kazı derinliği, zemin ve bahçe erişimine bağlıdır. Dar alanlarda mini kepçe seçeneği değerlendirilebilir.'],
+                    ['Havuz kazısından çıkan toprak taşınır mı?', 'İş kapsamına göre çıkan malzemenin yüklenmesi ve taşınması ayrıca planlanabilir.'],
+                    ['Teklif için proje çizimi gerekli mi?', 'Proje veya ölçü bilgisi teklifin doğruluğunu artırır; yoksa yaklaşık ölçü ve saha fotoğraflarıyla ön değerlendirme yapılabilir.'],
+                ],
+            ],
+            [
+                'title' => 'Yol Açma ve Saha Hazırlığı',
+                'slug' => 'yol-acma-saha-hazirlama',
+                'icon' => 'mountain',
+                'short' => 'Alanya’da arsa içi ulaşım, şantiye girişi, yüzey açma, kot düzenleme ve yol altyapısı hazırlığı.',
+                'hero' => 'Alanya Yol Açma ve Saha Hazırlığı',
+                'content' => '<h2>Yol açma çalışması hangi aşamalardan oluşur?</h2><p>Arsa veya şantiye içi yol hazırlığında güzergâh, mevcut eğim, zemin yapısı, genişlik ve kullanılacak malzeme belirlenir. Gerekli alanlarda yüzey kazısı, tesviye ve dolgu yapılabilir.</p><h2>Şantiye girişi nasıl hazırlanır?</h2><p>Makine ve kamyon geçişine uygun bir çalışma alanı oluşturmak için giriş genişliği, dönüş noktaları ve zemin taşıma durumu değerlendirilir.</p><h2>Serme ve sıkıştırma gerekir mi?</h2><p>Yol veya saha kullanım amacına göre stabilize veya benzeri dolgu malzemelerinin serilmesi ve sıkıştırılması ayrı bir iş kalemi olarak planlanabilir.</p>',
+                'advantages' => ['Güzergâh ve kot planlama', 'Yüzey kazısı ve tesviye', 'Dolgu ihtiyacını birlikte değerlendirme', 'Kamyon ve makine erişimine göre saha düzeni', 'Serme-sıkıştırma ile entegre planlama'],
+                'usage' => ['Arsa içi yol açma', 'Şantiye girişi hazırlama', 'Arazi geçiş yolu', 'Yol tabanı hazırlığı', 'Saha kot düzenleme'],
+                'seo_title' => 'Alanya Yol Açma ve Saha Hazırlığı | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da yol açma, şantiye girişi, yüzey kazısı, tesviye ve saha hazırlığı. Güzergâh ve zemin koşullarına göre çalışma planı ve teklif.',
+                'faqs' => [
+                    ['Arsa içi yol açma fiyatı neye göre belirlenir?', 'Yol uzunluğu ve genişliği, zemin, eğim, kazı-dolgu miktarı, malzeme ve makine süresi fiyatı etkiler.'],
+                    ['Yol açma işinde dolgu da yapılabilir mi?', 'İhtiyaca göre dolgu malzemesi serimi ve yüzey düzenleme aynı çalışma planında ele alınabilir.'],
+                    ['Şantiye girişi için hangi bilgiler gerekir?', 'Giriş konumu, genişlik, yaklaşık güzergâh, eğim ve saha fotoğrafları ön değerlendirme için faydalıdır.'],
+                ],
+            ],
+            [
+                'title' => 'Toprak Serme ve Sıkıştırma',
+                'slug' => 'toprak-serme-sikistirma',
+                'icon' => 'layers',
+                'short' => 'Alanya’da dolgu malzemesi, toprak veya stabilize serme, tesviye ve sıkıştırma hazırlığı.',
+                'hero' => 'Alanya Toprak Serme ve Sıkıştırma',
+                'content' => '<h2>Serme ve sıkıştırma hangi işlerde gerekir?</h2><p>Yol tabanı, bahçe, arsa, şantiye ve yapı çevresinde dolgu malzemesinin kontrollü biçimde yayılması ve yüzeyin kullanım amacına göre hazırlanması gerekebilir.</p><h2>Malzeme ve katman kalınlığı neden önemlidir?</h2><p>Kullanılacak malzeme türü, serim kalınlığı, alanın kotu ve drenaj ihtiyacı işin yöntemini belirler. Teknik gereklilik bulunan projelerde uygulama proje şartlarına göre yapılmalıdır.</p><h2>Hafriyat işiyle birlikte yapılabilir mi?</h2><p>Kazı sonrası dolgu, serme ve yüzey düzeltme aynı saha planında değerlendirilebilir; böylece makine hareketi daha verimli planlanır.</p>',
+                'advantages' => ['Dolgu ve serme planı', 'Kot ve yüzey düzenleme', 'Kazı sonrası tamamlayıcı çalışma', 'Malzeme hareketine göre makine seçimi', 'Saha kullanım amacına göre hazırlık'],
+                'usage' => ['Stabilize serme', 'Toprak dolgu', 'Yol tabanı hazırlığı', 'Bahçe ve arsa düzenleme', 'Kazı sonrası yüzey hazırlığı'],
+                'seo_title' => 'Alanya Toprak Serme ve Sıkıştırma | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da toprak, dolgu ve stabilize serme; tesviye ve sıkıştırma hazırlığı. Alan, kot, malzeme ve saha koşullarına göre planlı çalışma.',
+                'faqs' => [
+                    ['Serme ve sıkıştırma fiyatı nasıl belirlenir?', 'Alan büyüklüğü, malzeme türü ve miktarı, serim kalınlığı, makine süresi ve saha erişimi fiyatı etkiler.'],
+                    ['Kazı sonrası dolgu yapılabilir mi?', 'Evet, iş kapsamına göre kazı sonrası dolgu, serme ve yüzey düzenleme aynı plan içinde yürütülebilir.'],
+                    ['Malzeme temini teklifin içinde olabilir mi?', 'Malzeme ihtiyacı ve temin koşulları işin konumuna göre ayrıca değerlendirilir.'],
+                ],
+            ],
+            [
+                'title' => 'Yıkım Sonrası Saha Temizliği',
+                'slug' => 'yikim-sonrasi-saha-temizligi',
+                'icon' => 'truck',
+                'short' => 'Alanya’da yıkım veya tadilat sonrası moloz yükleme, alan temizleme, taşıma ve saha düzenleme.',
+                'hero' => 'Alanya Yıkım Sonrası Saha Temizliği',
+                'content' => '<h2>Yıkım sonrası saha temizliği neleri kapsar?</h2><p>Yıkım veya tadilat sonrasında oluşan molozun toplanması, kepçe ile yüklenmesi, taşıma planı ve sahada kalan zeminin düzenlenmesi ayrı iş kalemleri olarak değerlendirilebilir.</p><h2>Dar alanlarda temizlik nasıl yapılır?</h2><p>Bina çevresi, site içi veya bahçe gibi alanlarda makine seçimi giriş genişliği ve hareket alanına göre yapılır. Gerektiğinde daha küçük ekipman planlanabilir.</p><h2>Taşıma nasıl planlanır?</h2><p>Malzemenin türü ve miktarı, kamyon erişimi ve taşıma mesafesi dikkate alınarak yükleme ve nakliye kapsamı oluşturulur.</p>',
+                'advantages' => ['Moloz yükleme ve taşıma planı', 'Dar alan erişimini değerlendirme', 'Saha temizliği ve tesviyeyi birlikte planlama', 'Malzeme miktarına göre araç ihtiyacı', 'İş sonrası alan düzenleme'],
+                'usage' => ['Yıkım sonrası moloz', 'Tadilat sonrası saha temizliği', 'İnşaat atığı yükleme', 'Alan temizleme', 'Temizlik sonrası tesviye'],
+                'seo_title' => 'Alanya Yıkım Sonrası Saha Temizliği | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da yıkım ve tadilat sonrası moloz yükleme, taşıma, saha temizliği ve tesviye. Alan ve malzeme miktarına göre teklif alın.',
+                'faqs' => [
+                    ['Yıkım sonrası moloz yükleme yapılabilir mi?', 'İş kapsamına göre molozun kepçe ile yüklenmesi ve taşıma planı birlikte değerlendirilebilir.'],
+                    ['Dar site veya bahçe alanında çalışma mümkün mü?', 'Uygunluk giriş genişliği ve hareket alanına bağlıdır; saha fotoğraflarıyla ön değerlendirme yapılabilir.'],
+                    ['Temizlik sonrası tesviye yapılabilir mi?', 'Evet, moloz kaldırıldıktan sonra ihtiyaç varsa yüzey düzenleme ve tesviye ayrıca planlanabilir.'],
                 ],
             ],
         ];
@@ -389,7 +474,9 @@ class Seeder
 
         foreach ($services as $i => $s) {
             $serviceId = $this->insert('services', [
-                'title' => $s['title'], 'slug' => $s['slug'], 'icon' => $s['icon'],
+                'title' => $s['title'],
+                'slug' => $s['slug'],
+                'icon' => $s['icon'],
                 'short_description' => $s['short'],
                 'content' => $s['content'],
                 'hero_title' => $s['hero'],
@@ -399,8 +486,11 @@ class Seeder
                 'process_json' => json_encode($process, JSON_UNESCAPED_UNICODE),
                 'seo_title' => $s['seo_title'],
                 'seo_description' => $s['seo_description'],
-                'sort_order' => $i, 'is_featured' => $i < 6 ? 1 : 0, 'is_active' => 1,
-                'created_at' => $this->now(), 'updated_at' => $this->now(),
+                'sort_order' => $i,
+                'is_featured' => $i < 6 ? 1 : 0,
+                'is_active' => 1,
+                'created_at' => $this->now(),
+                'updated_at' => $this->now(),
             ]);
 
             foreach ($s['faqs'] as $faqOrder => [$question, $answer]) {
