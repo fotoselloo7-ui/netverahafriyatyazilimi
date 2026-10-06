@@ -216,7 +216,7 @@ class Seeder
     protected function seedHomeSections(): void
     {
         $sectionImages = [
-            'hero' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+            'hero' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             'machine_anim' => 'anasayfa/alanya-hafriyat-mini-kepce-saha.webp',
         ];
         $sections = [
@@ -474,12 +474,12 @@ class Seeder
 
         $visuals = [
             'kepce-kiralama' => [
-                'card' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop',
-                'hero' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'card' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'mini-kepce-kiralama' => [
                 'card' => 'hizmetler/alanya-mini-kepce-kiralama.webp',
-                'hero' => 'https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'hero' => 'https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'temel-kazisi' => [
                 'card' => 'https://images.pexels.com/photos/18214889/pexels-photo-18214889.png?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
@@ -487,30 +487,30 @@ class Seeder
             ],
             'moloz-hafriyat-nakliye' => [
                 'card' => 'hizmetler/alanya-moloz-hafriyat-tasima.webp',
-                'hero' => 'https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'hero' => 'https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'alt-yapi-kanal-acma' => ['card' => 'hizmetler/alanya-kanal-kazisi.webp', 'hero' => 'hizmetler/alanya-kanal-kazisi.webp'],
             'arsa-tesviye-dolgu' => [
                 'card' => 'hizmetler/alanya-arsa-tesviye-dolgu.webp',
-                'hero' => 'https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'hero' => 'https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
-            'cevre-bahce-duzenleme' => ['card' => 'hizmetler/alanya-arsa-temizleme.webp', 'hero' => 'hizmetler/alanya-arsa-temizleme.webp'],
+            'cevre-bahce-duzenleme' => ['card' => 'galeri/alanya-dar-alan-mini-kepce-tesviye.webp', 'hero' => 'hizmetler/alanya-arsa-temizleme.webp'],
             'drenaj-ozel-kazi' => ['card' => 'hizmetler/alanya-kanal-kazisi.webp', 'hero' => 'hizmetler/alanya-kanal-kazisi.webp'],
             'havuz-kazisi' => [
-                'card' => 'https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop',
-                'hero' => 'https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'card' => 'https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'yol-acma-saha-hazirlama' => [
-                'card' => 'https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop',
-                'hero' => 'https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'card' => 'https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'toprak-serme-sikistirma' => [
-                'card' => 'https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop',
-                'hero' => 'https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'card' => 'https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
             'yikim-sonrasi-saha-temizligi' => [
-                'card' => 'hizmetler/alanya-yikim-saha-temizligi.webp',
-                'hero' => 'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+                'card' => 'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
         ];
 
@@ -597,13 +597,13 @@ class Seeder
     protected function seedProjects(): void
     {
         $projects = [
-            ['Mahmutlar Mini Kepçe ile Kanal Kazısı','mahmutlar-mini-kepce-kanal-kazisi','Alanya','Mini Kepçe / Kanal Kazısı','Dar alanda mini kepçe ile kanal açma ve saha düzenleme çalışması.','projeler/alanya-mini-kepce-kanal-kazisi.webp'],
-            ['Oba Dar Alanda Tesviye ve Saha Düzenleme','oba-dar-alan-tesviye','Alanya','Arsa Tesviye','Yapı çevresinde mini kepçe ile toprak tesviyesi ve çalışma alanı düzenleme.','projeler/alanya-dar-alan-tesviye.webp'],
-            ['Kestel Bahçe ve Arsa Temizleme','kestel-bahce-arsa-temizleme','Alanya','Arsa Temizleme','Bahçe ve yapı çevresinde mini kepçe ile kök, toprak ve alan temizliği.','projeler/alanya-bahce-arsa-temizleme.jpg'],
-            ['Cikcilli Moloz ve Hafriyat Taşıma','cikcilli-moloz-hafriyat-tasima','Alanya','Moloz ve Hafriyat Taşıma','Saha çalışması sonrası moloz ve hafriyatın kamyonla yüklenmesi ve taşınması.','projeler/alanya-moloz-hafriyat-tasima.jpg'],
-            ['Tosmur Yıkım Sonrası Saha Temizliği','tosmur-yikim-sonrasi-saha-temizligi','Alanya','Yıkım Sonrası Temizlik','Yıkım ve tadilat sonrası alanda mini kepçe ile moloz toplama ve saha temizliği.','projeler/alanya-yikim-sonrasi-saha-temizligi.jpg'],
-            ['Kargıcak Arsa Kazısı ve Tesviye','kargicak-arsa-kazisi-tesviye','Alanya','Kazı ve Tesviye','Açık arazide mini ekskavatörlerle kazı, yüzey düzeltme ve saha hazırlığı.','projeler/alanya-arsa-kazisi-tesviye.jpg'],
-            ['Mahmutlar Sera Alanında Mini Kepçe Temizliği','mahmutlar-sera-mini-kepce-temizligi','Alanya','Saha Temizliği','Sera içinde bitki ve kök temizliği, kazı ve malzeme yükleme çalışması.','projeler/alanya-sera-saha-temizligi.jpg'],
+            ['Mini Kepçe ile Kanal Kazısı','alanya-mini-kepce-kanal-kazisi','Alanya','Mini Kepçe / Kanal Kazısı','Dar alanda mini kepçe ile kanal açma ve saha düzenleme çalışması.','projeler/alanya-mini-kepce-kanal-kazisi.webp'],
+            ['Dar Alanda Tesviye ve Saha Düzenleme','alanya-dar-alan-tesviye','Alanya','Arsa Tesviye','Yapı çevresinde mini kepçe ile toprak tesviyesi ve çalışma alanı düzenleme.','projeler/alanya-dar-alan-tesviye.webp'],
+            ['Moloz ve Hafriyat Taşıma','alanya-moloz-hafriyat-tasima','Alanya','Moloz ve Hafriyat Taşıma','Saha çalışması sonrası moloz ve hafriyatın yüklenmesi ve taşınması.','hizmetler/alanya-moloz-hafriyat-tasima.webp'],
+            ['Arsa Kazısı ve Tesviye','alanya-arsa-kazisi-tesviye','Alanya','Kazı ve Tesviye','Açık arazide kazı, yüzey düzeltme ve saha hazırlığı.','hizmetler/alanya-arsa-tesviye-dolgu.webp'],
+            ['Bahçe ve Arsa Temizleme','alanya-bahce-arsa-temizleme','Alanya','Arsa Temizleme','Bahçe ve yapı çevresinde kök, toprak ve alan temizliği.','projeler/alanya-bahce-arsa-temizleme.jpg'],
+            ['Yıkım Sonrası Saha Temizliği','alanya-yikim-sonrasi-saha-temizligi','Alanya','Yıkım Sonrası Temizlik','Yıkım ve tadilat sonrası moloz toplama ve saha temizliği.','projeler/alanya-yikim-sonrasi-saha-temizligi.jpg'],
+            ['Sera Alanında Mini Kepçe Temizliği','alanya-sera-mini-kepce-temizligi','Alanya','Saha Temizliği','Sera içinde bitki ve kök temizliği, kazı ve malzeme yükleme çalışması.','projeler/alanya-sera-saha-temizligi.jpg'],
         ];
         foreach ($projects as [$title,$slug,$region,$serviceType,$short,$cover]) {
             $this->insert('projects', [
@@ -617,8 +617,8 @@ class Seeder
                 'before_image' => null,
                 'after_image' => null,
                 'gallery_json' => null,
-                'project_date' => '2026 saha arşivi',
-                'seo_title' => $title . ' | Ersan Hafriyat',
+                'project_date' => 'Saha arşivi',
+                'seo_title' => $title . ' | Alanya Hafriyat | Ersan Hafriyat',
                 'seo_description' => $short . ' Alanya hafriyat ve mini kepçe saha çalışması.',
                 'is_active' => 1,
                 'created_at' => $this->now(),
@@ -693,7 +693,7 @@ class Seeder
 
         $blogVisuals = [
             'alanyada-kepce-kiralama-fiyatlari-nasil-hesaplanir' => [
-                'image' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+                'image' => 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop&fm=webp',
                 'alt' => 'Alanya kepçe kiralama ve hafriyat saha çalışması',
             ],
             'mini-kepce-mi-buyuk-kepce-mi-alanya' => [
@@ -756,22 +756,24 @@ class Seeder
 
     protected function seedGallery(): void
     {
+        // Ana sayfada ilk 8 görsel gösterildiği için en hafif WebP dosyaları önce sıralanır.
         $items = [
+            ['Zoomlion Mini Ekskavatör','galeri/alanya-zoomlion-mini-ekskavator.webp','Makine Parkuru','Alanya Zoomlion ZE35GU mini ekskavatör saha görünümü'],
+            ['Kanal Hafriyatı Mini Kepçe','galeri/alanya-kanal-hafriyat-mini-kepce.webp','Kanal Kazısı','Alanya mini kepçe kanal ve hafriyat çalışması'],
+            ['Dar Alanda Mini Kepçe Tesviye','galeri/alanya-dar-alan-mini-kepce-tesviye.webp','Mini Kepçe','Alanya dar alanda mini kepçe ile tesviye çalışması'],
+            ['Hafriyat Kamyonu Saha Çalışması','galeri/alanya-hafriyat-kamyonu-saha.webp','Hafriyat Taşıma','Alanya hafriyat kamyonu saha çalışması'],
+            ['Dolgu ve Kamyon Çalışması','galeri/alanya-hafriyat-dolgu-kamyon.webp','Dolgu ve Tesviye','Alanya dolgu ve hafriyat kamyon çalışması'],
+            ['Moloz ve Hafriyat Taşıma','hizmetler/alanya-moloz-hafriyat-tasima.webp','Moloz Taşıma','Alanya moloz ve hafriyat taşıma çalışması'],
+            ['Mini Kepçe ile Kanal Kazısı','projeler/alanya-mini-kepce-kanal-kazisi.webp','Kanal Kazısı','Alanya mini kepçe ile kanal kazısı çalışması'],
+            ['Arsa Tesviye ve Dolgu','hizmetler/alanya-arsa-tesviye-dolgu.webp','Arsa Tesviye','Alanya arsa tesviye ve dolgu saha çalışması'],
             ['Malzeme Yükleme ve Saha Lojistiği','galeri/alanya-malzeme-yukleme-saha-lojistigi.jpg','Saha Lojistiği','Alanya saha lojistiği ve malzeme yükleme çalışması'],
             ['Hafriyat Toprağı Taşıma','galeri/alanya-hafriyat-toprak-tasima.jpg','Hafriyat Taşıma','Alanya hafriyat toprağı taşıma kamyonu'],
-            ['Mini Kepçe ile Kanal Kazısı','galeri/alanya-mini-kepce-kanal-kazisi.jpg','Kanal Kazısı','Alanya mini kepçe ile kanal kazısı çalışması'],
             ['Bahçe ve Arsa Temizleme','galeri/alanya-bahce-arsa-temizleme.jpg','Arsa Temizleme','Alanya mini kepçe bahçe ve arsa temizleme'],
             ['Sera Alanında Kök ve Bitki Temizliği','galeri/alanya-sera-alani-temizleme-1.jpg','Saha Temizliği','Alanya sera alanında mini kepçe ile kök temizliği'],
             ['Yıkım Sonrası Saha Temizliği','galeri/alanya-yikim-moloz-temizleme.jpg','Yıkım Sonrası Temizlik','Alanya yıkım sonrası mini kepçe ile moloz temizleme'],
             ['Arsa Kazısı ve Tesviye','galeri/alanya-arsa-kazisi-tesviye.jpg','Arsa Tesviye','Alanya arsa kazısı ve tesviye çalışması'],
-            ['Moloz ve Hafriyat Taşıma','galeri/alanya-moloz-hafriyat-tasima.jpg','Moloz Taşıma','Alanya moloz ve hafriyat taşıma kamyonu'],
             ['Sera İçinde Mini Kepçe Çalışması','galeri/alanya-sera-mini-kepce-calismasi.jpg','Saha Temizliği','Alanya sera içinde mini kepçe saha çalışması'],
             ['Sera Hafriyat Yükleme','galeri/alanya-sera-hafriyat-tasima.jpg','Hafriyat Taşıma','Alanya sera alanı hafriyat yükleme ve taşıma'],
-            ['Dar Alanda Mini Kepçe Tesviye','galeri/alanya-dar-alan-mini-kepce-tesviye.webp','Mini Kepçe','Alanya dar alanda mini kepçe ile tesviye'],
-            ['Hafriyat Kamyonu Saha Çalışması','galeri/alanya-hafriyat-kamyonu-saha.webp','Hafriyat Taşıma','Alanya hafriyat kamyonu saha çalışması'],
-            ['Zoomlion Mini Ekskavatör','galeri/alanya-zoomlion-mini-ekskavator.webp','Makine Parkuru','Alanya Zoomlion ZE35GU mini ekskavatör'],
-            ['Kanal Hafriyatı Mini Kepçe','galeri/alanya-kanal-hafriyat-mini-kepce.webp','Kanal Kazısı','Alanya mini kepçe kanal ve hafriyat çalışması'],
-            ['Dolgu ve Kamyon Çalışması','galeri/alanya-hafriyat-dolgu-kamyon.webp','Dolgu ve Tesviye','Alanya dolgu ve hafriyat kamyon çalışması'],
         ];
         foreach ($items as $i => [$title,$image,$category,$alt]) {
             $this->insert('gallery', [
@@ -936,19 +938,19 @@ class Seeder
             'moloz-hafriyat-nakliye' => ['hizmetler/alanya-moloz-hafriyat-tasima.webp','https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
             'alt-yapi-kanal-acma' => ['hizmetler/alanya-kanal-kazisi.webp','hizmetler/alanya-kanal-kazisi.webp'],
             'arsa-tesviye-dolgu' => ['hizmetler/alanya-arsa-tesviye-dolgu.webp','https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
-            'cevre-bahce-duzenleme' => ['hizmetler/alanya-arsa-temizleme.webp','hizmetler/alanya-arsa-temizleme.webp'],
+            'cevre-bahce-duzenleme' => ['galeri/alanya-dar-alan-mini-kepce-tesviye.webp','hizmetler/alanya-arsa-temizleme.webp'],
             'drenaj-ozel-kazi' => ['hizmetler/alanya-kanal-kazisi.webp','hizmetler/alanya-kanal-kazisi.webp'],
             'havuz-kazisi' => ['https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
             'yol-acma-saha-hazirlama' => ['https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
             'toprak-serme-sikistirma' => ['https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
-            'yikim-sonrasi-saha-temizligi' => ['hizmetler/alanya-yikim-saha-temizligi.webp','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'yikim-sonrasi-saha-temizligi' => ['https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
         ];
         $stmt = $this->pdo->prepare('UPDATE services SET card_image=?, cover_image=?, hero_image=?, og_image=?, updated_at=? WHERE slug=?');
         foreach ($serviceVisuals as $slug => [$card,$hero]) {
             $stmt->execute([$card,$hero,$hero,$card,$this->now(),$slug]);
         }
 
-        $this->pdo->exec("UPDATE home_sections SET image='https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop' WHERE section_key='hero'");
+        $this->pdo->exec("UPDATE home_sections SET image='https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp' WHERE section_key='hero'");
         $this->pdo->exec("UPDATE pages SET hero_image='sayfalar/ersan-hafriyat-hakkimizda-saha.webp', cover_image='sayfalar/ersan-hafriyat-hakkimizda-saha.webp', og_image='genel/alanya-hafriyat-og-kapak.webp' WHERE slug='hakkimizda'");
         $this->pdo->exec("UPDATE popups SET image='popup/alanya-hafriyat-teklif-saha.webp'");
 
