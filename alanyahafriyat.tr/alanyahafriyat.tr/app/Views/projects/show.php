@@ -17,7 +17,7 @@ include VIEW_PATH . '/partials/page-hero.php';
             <?php endif; ?>
         </div>
         <?php elseif ($project['cover_image']): ?>
-        <div class="about-media" style="aspect-ratio:16/9;margin-bottom:30px"><img src="<?= e(upload_url($project['cover_image'])) ?>" alt="<?= e($project['title']) ?>"></div>
+        <div class="about-media" style="aspect-ratio:16/9;margin-bottom:30px"><img src="<?= e(upload_url($project['cover_image'])) ?>" alt="<?= e($project['title']) ?>" title="<?= e($project['service_type'] ?: $project['title']) ?>" width="1600" height="900" decoding="async"></div>
         <?php endif; ?>
 
         <div class="prose" style="margin:0 0 20px"><?= $project['content'] ?></div>
@@ -30,7 +30,7 @@ include VIEW_PATH . '/partials/page-hero.php';
 
         <?php if ($gallery): ?>
         <div class="ggrid" style="margin-top:26px">
-            <?php foreach ($gallery as $g): ?><a class="gitem" href="<?= e(upload_url($g)) ?>" data-lightbox><img src="<?= e(upload_url($g)) ?>" alt="<?= e($project['title']) ?>" loading="lazy"></a><?php endforeach; ?>
+            <?php foreach ($gallery as $g): ?><a class="gitem" href="<?= e(upload_url($g)) ?>" data-lightbox><img src="<?= e(upload_url($g)) ?>" alt="<?= e($project['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low"></a><?php endforeach; ?>
         </div>
         <?php endif; ?>
     </div>
