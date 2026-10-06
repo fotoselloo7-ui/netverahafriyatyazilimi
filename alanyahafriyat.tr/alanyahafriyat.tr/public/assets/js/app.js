@@ -105,6 +105,43 @@
     });
   });
 
+  // Global scroll reveal / stagger animasyonları
+  // CSS tek başına içeriği gizlemez; yalnızca JS aktifse motion-ready eklenir.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var motionSelectors = [
+      '.hero__eyebrow', '.hero h1', '.hero__sub', '.hero__cta', '.quickform',
+      '.badge', '.sec-head', '.scard', '.ecard', '.pstep', '.gitem',
+      '.region-chip', '.bcard', '.faq__item', '.why-card', '.contact-row',
+      '.machine-anim__text', '.machine-scene', '.page-hero .container',
+      '.prose > h2', '.prose > h3', '.final-cta__inner'
+    ].join(',');
+
+    var motionItems = $(motionSelectors);
+    motionItems.forEach(function (el, i) {
+      el.classList.add('motion-ready');
+      // Aynı grid/listede peş peşe gelen öğelere küçük stagger ver.
+      var parent = el.parentElement;
+      if (parent) {
+        var siblings = Array.prototype.filter.call(parent.children, function (child) {
+          return child.matches && child.matches(motionSelectors);
+        });
+        var index = siblings.indexOf(el);
+        if (index > -1) el.style.setProperty('--motion-delay', Math.min(index * 55, 220) + 'ms');
+      }
+    });
+
+    var motionObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    motionItems.forEach(function (el) { motionObserver.observe(el); });
+  }
+
   // AJAX lead form
   $$('[data-ajax-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
