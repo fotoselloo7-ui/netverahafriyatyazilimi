@@ -104,7 +104,7 @@ $order = Migrator::tableNames(); // FK açısından güvenli sıra
 // 3) database.sql yaz
 $out = [];
 $out[] = "-- =====================================================================";
-$out[] = "--  Ersan Hafriyat CMS — Tek Dosya Kurulum (MySQL / MariaDB)";
+$out[] = "--  Netvera Hafriyat CMS — Tek Dosya Kurulum (MySQL / MariaDB)";
 $out[] = "--  Üretim: " . date('Y-m-d H:i');
 $out[] = "--  phpMyAdmin > İçe Aktar ile yükleyin. Boş bir veritabanına import edin.";
 $out[] = "-- =====================================================================";
