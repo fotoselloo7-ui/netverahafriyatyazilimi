@@ -30,15 +30,19 @@ $cur = $currentAdminPath ?? current_path();
     <title><?= e($pageTitle ?? 'Yönetim') ?> | <?= e(site_name()) ?></title>
     <meta name="robots" content="noindex, nofollow">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= asset('css/admin.css') ?>?v=4">
+    <link rel="stylesheet" href="<?= asset('css/admin.css') ?>?v=5">
     <style>:root{--primary:<?= e(theme('primary_color', '#F5A623')) ?>}</style>
 </head>
 <body>
 <div class="admin">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar__brand">
-            <span class="sidebar__mark"><?= icon('excavator', 24) ?></span>
-            <b><?= e($siteName ?? site_name()) ?></b>
+            <?php if ($adminLogo = setting('logo')): ?>
+                <img src="<?= e(upload_url($adminLogo)) ?>" alt="<?= e($siteName ?? site_name()) ?>" class="sidebar__brand-logo">
+            <?php else: ?>
+                <span class="sidebar__mark"><?= icon('excavator', 24) ?></span>
+                <b><?= e($siteName ?? site_name()) ?></b>
+            <?php endif; ?>
         </div>
         <nav class="sidebar__nav">
             <?php foreach ($nav as [$path, $label, $ic]): ?>
