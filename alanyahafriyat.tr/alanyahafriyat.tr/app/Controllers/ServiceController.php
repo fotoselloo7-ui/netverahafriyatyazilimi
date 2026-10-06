@@ -47,7 +47,7 @@ class ServiceController extends Controller
         $faqs = Service::faqs((int) $service['id']);
 
         // Service + FAQ yapılandırılmış verileri yalnız ekrandaki gerçek içerikten üretilir.
-        $regions = AppModelsServiceRegion::active('sort_order ASC, id ASC');
+        $regions = \App\Models\ServiceRegion::active('sort_order ASC, id ASC');
         $areaServed = array_values(array_map(fn ($r) => (string) $r['title'], $regions));
         $jsonLd = [
             '@context' => 'https://schema.org',
@@ -76,7 +76,7 @@ class ServiceController extends Controller
         $this->view('services/show', [
             'service' => $service,
             'services' => Service::active('sort_order ASC'),
-            'serviceRegions' => \App\Models\ServiceRegion::active('sort_order ASC, id ASC'),
+            'serviceRegions' => $regions,
             'advantages' => json_decode_safe($service['advantages_json']),
             'usageAreas' => json_decode_safe($service['usage_areas_json']),
             'process' => json_decode_safe($service['process_json']),
