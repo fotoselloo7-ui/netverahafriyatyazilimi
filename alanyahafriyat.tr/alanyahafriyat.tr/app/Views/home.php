@@ -12,6 +12,7 @@ $showForm = ($hc['show_form'] ?? '1') === '1';
 $showBadges = ($hc['show_badges'] ?? '1') === '1';
 ?>
 <!-- HERO -->
+<?php if (!empty($hero['is_active'])): ?>
 <section class="hero"<?= $heroImg ? ' style="background-image:linear-gradient(rgba(10,10,12,'.e($overlay).'),rgba(10,10,12,'.e($overlay).')),url(\''.e($heroImg).'\')"' : '' ?>>
     <div class="container hero__inner">
         <div class="hero__content">
@@ -43,6 +44,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
         <?php endforeach; ?>
     </div>
 </div>
+<?php endif; ?>
 <?php endif; ?>
 
 <!-- SERVICES -->
