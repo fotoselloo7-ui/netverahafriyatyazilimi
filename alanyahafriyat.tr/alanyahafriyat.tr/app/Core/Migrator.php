@@ -105,14 +105,13 @@ class Migrator
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_text', 'VARCHAR(191)', '');
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_url', 'VARCHAR(191)', '');
 
-        $this->upgradeContentPackV2();
+        $this->upgradeContentPackV3();
     }
 
-    protected function upgradeContentPackV2(): void
+    protected function upgradeContentPackV3(): void
     {
         try {
             // Fresh kurulumda Migrator::run() Seeder'dan önce çalışır.
-            // Ayar tablosu henüz boşsa içerik yükseltmesi yapma; Seeder ilk paketi oluşturacak.
             $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
             if ($settingCount === 0) {
                 return;
@@ -121,29 +120,66 @@ class Migrator
             $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
             $stmt->execute();
             $version = (int) ($stmt->fetchColumn() ?: 0);
-            if ($version >= 2) {
+            if ($version >= 3) {
                 return;
             }
 
-            // Yalnız eski paket imzası hâlâ mevcutsa otomatik içerik yenilemesi yap.
+            // v2'de Seeder::insert() kimlik döndürmediği için ilk hizmetten sonra FAQ eklerken
+            // süreç yarıda kalabiliyordu. Beklenen katalog eksikse temiz içerik paketi yeniden kurulur.
+            $expectedSlugs = [
+                'kepce-kiralama',
+                'mini-kepce-kiralama',
+                'temel-kazisi',
+                'moloz-hafriyat-nakliye',
+                'alt-yapi-kanal-acma',
+                'arsa-tesviye-dolgu',
+                'cevre-bahce-duzenleme',
+                'drenaj-ozel-kazi',
+                'havuz-kazisi',
+                'yol-acma-saha-hazirlama',
+                'toprak-serme-sikistirma',
+                'yikim-sonrasi-saha-temizligi',
+            ];
+
+            $placeholders = implode(',', array_fill(0, count($expectedSlugs), '?'));
+            $check = $this->pdo->prepare("SELECT COUNT(*) FROM services WHERE slug IN ($placeholders)");
+            $check->execute($expectedSlugs);
+            $catalogCount = (int) ($check->fetchColumn() ?: 0);
+
             $legacyTitle = (string) ($this->pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'seo_title' LIMIT 1")->fetchColumn() ?: '');
-            $legacyServices = (int) $this->pdo->query("SELECT COUNT(*) FROM services")->fetchColumn();
-            $looksLikeLegacySeed = $legacyServices === 9 || str_contains($legacyTitle, 'Alanya & Mahmutlar Hafriyat');
+            $legacyServices = (int) ($this->pdo->query("SELECT COUNT(*) FROM services")->fetchColumn() ?: 0);
+
+            $looksLikeLegacySeed =
+                $legacyServices === 9
+                || str_contains($legacyTitle, 'Alanya & Mahmutlar Hafriyat')
+                || $catalogCount < count($expectedSlugs);
 
             if ($looksLikeLegacySeed) {
                 (new Seeder($this->pdo))->upgradeLegacyDemoContent();
                 return;
             }
 
-            // Özelleştirilmiş kurulumlarda içerikleri ezme; yalnız sürüm işaretini ekle.
+            // İçerik zaten özelleştirilmiş ve katalog tam ise yalnız paket sürümünü yükselt.
             $now = date('Y-m-d H:i:s');
-            $insert = $this->pdo->prepare(
-                "INSERT INTO settings (setting_key, setting_value, setting_group, input_type, created_at, updated_at)
-                 VALUES ('content_pack_version', '2', 'system', 'text', ?, ?)"
-            );
-            $insert->execute([$now, $now]);
+            $exists = $this->pdo->prepare("SELECT id FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
+            $exists->execute();
+            if ($exists->fetchColumn()) {
+                $update = $this->pdo->prepare(
+                    "UPDATE settings SET setting_value = '3', setting_group = 'system', input_type = 'text', updated_at = ? WHERE setting_key = 'content_pack_version'"
+                );
+                $update->execute([$now]);
+            } else {
+                $insert = $this->pdo->prepare(
+                    "INSERT INTO settings (setting_key, setting_value, setting_group, input_type, created_at, updated_at)
+                     VALUES ('content_pack_version', '3', 'system', 'text', ?, ?)"
+                );
+                $insert->execute([$now, $now]);
+            }
         } catch (\Throwable $e) {
             // İçerik paketi güncellemesi siteyi açılmaz hâle getirmemeli.
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v3 upgrade: ' . $e->getMessage());
+            }
         }
     }
 
