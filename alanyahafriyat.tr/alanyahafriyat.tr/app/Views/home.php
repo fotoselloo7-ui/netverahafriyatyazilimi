@@ -75,7 +75,8 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
                 </article>
             <?php endforeach; ?>
         </div>
-        <div class="center-btn"><a href="<?= base_url('hizmetler') ?>" class="btn btn--primary">Tüm Hizmetler</a></div>
+        <?php $servicesCtaText = trim((string) ($sec['cta_text'] ?? '')) ?: 'Tüm Hizmetler'; $servicesCtaUrl = trim((string) ($sec['cta_url'] ?? '')) ?: '/hizmetler'; ?>
+        <div class="center-btn"><a href="<?= e(build_link('internal', $servicesCtaUrl)) ?>" class="btn btn--primary"><?= e($servicesCtaText) ?></a></div>
     </div>
 </section>
 <?php endif; ?>
@@ -89,7 +90,8 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
                 <span class="eyebrow" style="color:var(--color-primary);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:13px">Makine Parkurumuz</span>
                 <h2><?= e($sec['title']) ?></h2>
                 <p><?= e($sec['subtitle']) ?></p>
-                <a href="<?= base_url('makine-parkuru') ?>" class="btn btn--primary">Tüm Makineler</a>
+                <?php $equipmentCtaText = trim((string) ($sec['cta_text'] ?? '')) ?: 'Tüm Makineler'; $equipmentCtaUrl = trim((string) ($sec['cta_url'] ?? '')) ?: '/makine-parkuru'; ?>
+                <a href="<?= e(build_link('internal', $equipmentCtaUrl)) ?>" class="btn btn--primary"><?= e($equipmentCtaText) ?></a>
             </div>
             <div></div>
         </div>
@@ -149,7 +151,8 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
                 </a>
             <?php endforeach; ?>
         </div>
-        <div class="center-btn"><a href="<?= base_url('galeri') ?>" class="btn btn--outline">Tüm Galeri</a></div>
+        <?php $galleryCtaText = trim((string) ($sec['cta_text'] ?? '')) ?: 'Tüm Galeri'; $galleryCtaUrl = trim((string) ($sec['cta_url'] ?? '')) ?: '/galeri'; ?>
+        <div class="center-btn"><a href="<?= e(build_link('internal', $galleryCtaUrl)) ?>" class="btn btn--outline"><?= e($galleryCtaText) ?></a></div>
     </div>
 </section>
 <?php endif; ?>
@@ -174,6 +177,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
 <?php endif; ?>
 
 <!-- BLOG + FAQ split -->
+<?php if ((!empty($sections['blog']['is_active']) && $posts) || (!empty($sections['faq']['is_active']) && $faqs)): ?>
 <section class="section section--soft">
     <div class="container split">
         <?php if (!empty($sections['blog']['is_active'])): $sec = $sections['blog']; ?>
@@ -213,6 +217,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
         <?php endif; ?>
     </div>
 </section>
+<?php endif; ?>
 
 <!-- FINAL CTA -->
 <?php if (!empty($sections['final_cta']['is_active'])): $sec = $sections['final_cta']; ?>
@@ -221,7 +226,8 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
         <div><h2><?= e($sec['title']) ?></h2><p><?= e($sec['subtitle']) ?></p></div>
         <div class="final-cta__btns">
             <a href="<?= e(whatsapp_link('Merhaba, teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" data-wa-event class="btn btn--dark"><?= icon('whatsapp', 18) ?> WhatsApp</a>
-            <a href="<?= base_url('iletisim') ?>" class="btn btn--dark" style="background:#fff;color:#111"><?= icon('star', 17) ?> Teklif Al</a>
+            <?php $finalCtaText = trim((string) ($sec['cta_text'] ?? '')) ?: 'Teklif Al'; $finalCtaUrl = trim((string) ($sec['cta_url'] ?? '')) ?: '/iletisim'; ?>
+            <a href="<?= e(build_link('internal', $finalCtaUrl)) ?>" class="btn btn--dark" style="background:#fff;color:#111"><?= icon('star', 17) ?> <?= e($finalCtaText) ?></a>
         </div>
     </div>
 </section>
