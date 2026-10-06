@@ -236,7 +236,7 @@ class Seeder
              ], JSON_UNESCAPED_UNICODE),
              ''],
             ['services', 'Alanya Hafriyat Hizmetleri', 'Kepçe kiralama, mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme hizmetleri.', null, ''],
-            ['equipment', 'İşinize Uygun Makine Seçimi', 'Makine parkuru bölümünde yalnızca işletmenin doğrulanmış gerçek makineleri yayınlanır.', null, ''],
+            ['equipment', 'İşinize Uygun Makine Seçimi', 'İşin türü, saha koşulları ve erişime göre uygun makine seçeneği planlanır; marka/model ve mevcut makine teklif öncesinde teyit edilir.', null, ''],
             ['process', 'Hizmet Sürecimiz', 'Talebinizden saha uygulamasına kadar net ve planlı ilerleyen süreç', json_encode([
                 ['icon' => 'message-circle', 'title' => 'Talebi Paylaşın', 'text' => 'Konum, iş türü, yaklaşık alan ve varsa saha fotoğraflarını iletin.'],
                 ['icon' => 'search', 'title' => 'Saha İhtiyacını Belirleyelim', 'text' => 'Erişim, zemin, kazı derinliği ve çıkan malzeme gibi temel koşullar değerlendirilir.'],
