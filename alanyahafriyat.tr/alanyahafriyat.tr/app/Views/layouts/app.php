@@ -37,13 +37,14 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
-    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=13">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=14">
     <?php include VIEW_PATH . '/partials/schema.php'; ?>
 
     <?php
     // Tema tokenları — eksik/otomatik alanlar kontrast helper'ı ile hesaplanır.
     $tPrimary   = theme('primary_color', '#F5A400');
     $tSecondary = theme('secondary_color', '#111827');
+    $tSecondaryText = theme('secondary_text_color') ?: get_contrast_text($tSecondary);
     $tDark      = theme('dark_color', '#080B0F');
     $tAccent    = theme('accent_color', '#FFB703');
     $tAccentText = get_contrast_text($tAccent);
@@ -66,6 +67,7 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
             --color-primary-hover: <?= e($tPrimaryHover) ?>;
             --color-primary-text: <?= e($tPrimaryText) ?>;
             --color-secondary: <?= e($tSecondary) ?>;
+            --color-secondary-text: <?= e($tSecondaryText) ?>;
             --color-dark: <?= e($tDark) ?>;
             --color-accent: <?= e($tAccent) ?>;
             --color-accent-text: <?= e($tAccentText) ?>;
