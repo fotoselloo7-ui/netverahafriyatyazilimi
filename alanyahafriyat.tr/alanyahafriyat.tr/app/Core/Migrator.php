@@ -108,6 +108,7 @@ class Migrator
         $this->upgradeContentPackV5();
         $this->upgradeCatalogPackV6();
         $this->upgradeBrandPackV7();
+        $this->upgradeStockMediaPackV8();
     }
 
     protected function upgradeContentPackV5(): void
@@ -193,6 +194,29 @@ class Migrator
         } catch (\Throwable $e) {
             if (env('APP_DEBUG', false)) {
                 error_log('Content Pack v7 upgrade: ' . $e->getMessage());
+            }
+        }
+    }
+
+    protected function upgradeStockMediaPackV8(): void
+    {
+        try {
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 8) {
+                return;
+            }
+
+            (new Seeder($this->pdo))->applyStockMediaPackV8();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v8 upgrade: ' . $e->getMessage());
             }
         }
     }
