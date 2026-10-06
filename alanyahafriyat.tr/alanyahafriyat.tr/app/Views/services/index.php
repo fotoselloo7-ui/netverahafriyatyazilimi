@@ -1,4 +1,4 @@
-<?php $ph_title = 'Hizmetlerimiz'; $ph_sub = 'Alanya ve Mahmutlar genelinde sunduğumuz profesyonel hafriyat hizmetleri'; include VIEW_PATH . '/partials/page-hero.php'; ?>
+<?php $ph_title = 'Alanya Hafriyat Hizmetleri'; $ph_sub = 'Kepçe ve mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme çözümlerimizi inceleyin.'; include VIEW_PATH . '/partials/page-hero.php'; ?>
 
 <section class="section">
     <div class="container">
