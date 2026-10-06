@@ -21,49 +21,145 @@ jobs:
         with:
           ref: fix/admin-sync-db-cleanup
 
-      - name: Prepare clean deploy package
+      - name: Prepare production-only package
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
+
           SRC="alanyahafriyat.tr/alanyahafriyat.tr"
           OUT="$RUNNER_TEMP/netvera-hafriyat"
+          rm -rf "$OUT"
           mkdir -p "$OUT"
           cp -a "$SRC"/. "$OUT"/
 
-          # Yerel geliştirme/artık dosyaları pakete alma.
-          find "$OUT" -type f \( -name ".sync-conflict*" -o -name "*.log" -o -name ".DS_Store" \) -delete || true
-          rm -f "$OUT/storage/database.sqlite" || true
+          # Yalnız canlı kullanım için gerekli dosyalar kalsın.
+          rm -rf             "$OUT/ersan hafriyat görseller"             "$OUT/.git" "$OUT/.github" "$OUT/.idea" "$OUT/.vscode"             "$OUT/node_modules" "$OUT/vendor" 2>/dev/null || true
 
-          # Canlı kurulum için güvenli .env oluştur.
-          if [ -f "$OUT/.env.example" ]; then
-            cp "$OUT/.env.example" "$OUT/.env"
+          rm -f             "$OUT/README.md"             "$OUT/CPANEL-KURULUM.md"             "$OUT/start-8020.bat"             "$OUT/.gitignore"             "$OUT/.env.example"             "$OUT/database/build_install_sql.php"             "$OUT/storage/database.sqlite" 2>/dev/null || true
+
+          find "$OUT" -type f \(             -name ".sync-conflict*" -o             -name "*.log" -o             -name "*.bak" -o             -name "*.old" -o             -name "*.tmp" -o             -name "*.orig" -o             -name ".DS_Store" -o             -name "Thumbs.db" -o             -name "*.md"           \) -delete || true
+
+          # Eski müşteri/saha görsellerini paketten çıkar.
+          # Güncel içerik görselleri uzaktaki optimize stok URL'lerinden gelir.
+          if [ -d "$OUT/public/uploads" ]; then
+            find "$OUT/public/uploads" -mindepth 1 -maxdepth 1               ! -name ".htaccess" ! -name "genel" -exec rm -rf {} +
+            if [ -d "$OUT/public/uploads/genel" ]; then
+              find "$OUT/public/uploads/genel" -type f                 ! -name "netvera-hafriyat-logo.webp"                 ! -name "netvera-hafriyat-favicon.webp" -delete
+            fi
           fi
-          sed -i 's/^APP_NAME=.*/APP_NAME="Netvera Hafriyat"/' "$OUT/.env" || true
-          sed -i 's/^APP_ENV=.*/APP_ENV=production/' "$OUT/.env" || true
-          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' "$OUT/.env" || true
-          sed -i 's#^APP_URL=.*#APP_URL=https://domain.com#' "$OUT/.env" || true
-          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' "$OUT/.env" || true
-          sed -i 's/^DB_HOST=.*/DB_HOST=localhost/' "$OUT/.env" || true
-          sed -i 's/^DB_PORT=.*/DB_PORT=3306/' "$OUT/.env" || true
-          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=/' "$OUT/.env" || true
-          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=/' "$OUT/.env" || true
-          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=/' "$OUT/.env" || true
+
+          # Çalışma zamanı artıkları.
+          find "$OUT/storage" -type f \( -name "*.log" -o -name "*.cache" -o -name "*.tmp" \) -delete 2>/dev/null || true
+
+          # Kaynak kodda yalnız geliştirme sürecine ait açıklama izlerini temizle.
+          python3 - "$OUT" <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          root = Path(sys.argv[1])
+          exts = {".php",".css",".js",".html",".htm",".sql",".env",".txt"}
+          trace = re.compile(
+              r"(chatgpt|openai|claude|gemini|yapay\s*zeka|ai\s+generated|"
+              r"generated\s+by|fresh\s+install|content\s+pack\s+v\d+|"
+              r"stok\s+medya\s+paketi|demo\s+paketi|placeholder\s+content|"
+              r"development\s+only|geliştirme\s+için|migrasyonu\s+ekle)",
+              re.I,
+          )
+
+          for p in root.rglob("*"):
+              if not p.is_file() or p.suffix.lower() not in exts:
+                  continue
+              try:
+                  s = p.read_text(encoding="utf-8")
+              except Exception:
+                  continue
+
+              lines = []
+              for line in s.splitlines(True):
+                  stripped = line.lstrip()
+                  is_comment = (
+                      stripped.startswith("//")
+                      or stripped.startswith("# ")
+                      or stripped.startswith("/*")
+                      or stripped.startswith("* ")
+                      or stripped.startswith("<!--")
+                  )
+                  if is_comment and trace.search(stripped):
+                      continue
+                  lines.append(line)
+
+              cleaned = "".join(lines)
+              cleaned = re.sub(
+                  r"/\*[^*]*(?:\*(?!/)[^*]*)*(?:chatgpt|openai|claude|gemini|yapay\s*zeka|content\s+pack\s+v\d+|stok\s+medya\s+paketi)[^*]*(?:\*(?!/)[^*]*)*\*/",
+                  "",
+                  cleaned,
+                  flags=re.I|re.S,
+              )
+              p.write_text(cleaned, encoding="utf-8")
+          PY
+
+          # Production .env: kullanıcı yalnız domain, DB ve lisans değerlerini dolduracak.
+          cat > "$OUT/.env" <<'ENV'
+APP_NAME="Netvera Hafriyat"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://domain.com
+APP_KEY=
+APP_VERSION=1.0.0
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DATABASE_SQLITE=storage/database.sqlite
+
+DIGIKEY_ENV=production
+DIGIKEY_BASE_URL=
+DIGIKEY_API_SECRET=
+DIGIKEY_PRODUCT_SLUG=netvera-hafriyat-cms
+DIGIKEY_API_TIMEOUT=10
+DIGIKEY_VERIFY_INTERVAL_HOURS=24
+DIGIKEY_GRACE_DAYS=7
+DIGIKEY_CACHE_SECRET=
+ENV
+
+          # Son paket kalite kontrolü.
+          test -f "$OUT/app/Core/Seeder.php"
+          test -f "$OUT/database/database.sql"
+          test -f "$OUT/public/index.php"
+          test -f "$OUT/.htaccess"
+          test -f "$OUT/.env"
+          test -f "$OUT/public/uploads/genel/netvera-hafriyat-logo.webp"
+          test -f "$OUT/public/uploads/genel/netvera-hafriyat-favicon.webp"
+
+          if grep -RIniE             --exclude="database.sql"             --exclude-dir="storage"             "(ChatGPT|OpenAI|Claude|Gemini|yapay zeka)" "$OUT"; then
+            echo "AI trace check failed."
+            exit 1
+          fi
+
+          if grep -RIniE "(Ersan Hafriyat|ersanhafriyat|Ersan Yönetici)" "$OUT"; then
+            echo "Legacy brand trace check failed."
+            exit 1
+          fi
 
           cd "$OUT"
-          zip -rq "$GITHUB_WORKSPACE/Netvera-Hafriyat-Yazilimi-Pro.zip" .
+          zip -rq "$GITHUB_WORKSPACE/Netvera-Hafriyat-Yazilimi-Pro-TEMIZ.zip" .
 
-      - name: Publish downloadable release package
+      - name: Publish clean downloadable package
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
           TAG="netvera-hafriyat-pro-latest"
-          ASSET="Netvera-Hafriyat-Yazilimi-Pro.zip"
+          ASSET="Netvera-Hafriyat-Yazilimi-Pro-TEMIZ.zip"
+          NOTES="Canlı cPanel kurulumu için temizlenmiş Netvera Hafriyat Yazılımı Pro paketi. Geliştirme dosyaları, eski marka/görsel artıkları, yerel dosyalar ve gereksiz belgeler paketten çıkarılmıştır. Güncel database.sql dahildir."
 
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$ASSET" --clobber
-            gh release edit "$TAG" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "Temiz cPanel deploy paketi. Güncel database.sql, Netvera Hafriyat markası, stok görsel paketi ve admin kontrollerini içerir."
+            gh release edit "$TAG" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "$NOTES"
           else
-            gh release create "$TAG" "$ASSET" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "Temiz cPanel deploy paketi. Güncel database.sql, Netvera Hafriyat markası, stok görsel paketi ve admin kontrollerini içerir."
+            gh release create "$TAG" "$ASSET" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "$NOTES"
           fi
