@@ -1,4 +1,6 @@
 <?php
+$schemaRegions = AppModelsServiceRegion::active('sort_order ASC, id ASC');
+$schemaAreaServed = array_values(array_map(fn ($r) => (string) $r['title'], $schemaRegions));
 $schema = [
     '@context' => 'https://schema.org',
     '@type' => 'LocalBusiness',
@@ -16,7 +18,7 @@ $schema = [
         'addressCountry' => 'TR',
     ],
     'openingHours' => setting('working_hours', ''),
-    'areaServed' => ['Alanya', 'Mahmutlar', 'Kestel', 'Kargıcak', 'Oba', 'Tosmur'],
+    'areaServed' => $schemaAreaServed,
 ];
 ?>
 <script type="application/ld+json"><?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
