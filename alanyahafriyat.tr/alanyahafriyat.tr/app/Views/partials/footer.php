@@ -19,8 +19,22 @@ $ftext = $fs['text_color'] ?? '#CBD5E1';
             <p class="footer__about"><?= e(setting('footer_about', $fs['description'] ?? '')) ?></p>
             <div class="footer__social">
                 <?php foreach (($socialLinks ?? []) as $s): ?>
-                    <?php $socialHref = strtolower((string) ($s['platform'] ?? '')) === 'whatsapp' ? whatsapp_link('Merhaba, bilgi almak istiyorum.') : (string) ($s['url'] ?? '#'); ?>
-                    <a href="<?= e($socialHref) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 18) ?></a>
+                    <?php
+                    $platform = strtolower(trim((string) ($s['platform'] ?? '')));
+                    $storedUrl = trim((string) ($s['url'] ?? ''));
+                    if ($platform === 'whatsapp' && ($storedUrl === '' || $storedUrl === '#')) {
+                        $socialHref = whatsapp_link('Merhaba, bilgi almak istiyorum.');
+                    } else {
+                        $socialHref = $storedUrl !== '' ? $storedUrl : '#';
+                    }
+                    ?>
+                    <a
+                        href="<?= e($socialHref) ?>"
+                        class="footer__social-link footer__social-link--<?= e($platform ?: 'default') ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="<?= e(ucfirst($platform ?: 'Sosyal medya')) ?>"
+                    ><?= icon($s['icon'] ?: $platform, 18) ?></a>
                 <?php endforeach; ?>
             </div>
         </div>
