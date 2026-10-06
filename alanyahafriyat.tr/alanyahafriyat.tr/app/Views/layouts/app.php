@@ -37,7 +37,7 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
-    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=15">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=16">
     <?php include VIEW_PATH . '/partials/schema.php'; ?>
 
     <?php
@@ -101,6 +101,6 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
 <?php if (!empty($popup) && (int) ($popup['is_active'] ?? 0) === 1) { include VIEW_PATH . '/partials/popup.php'; } ?>
 
 <script>window.__CSRF="<?= e(csrf_token()) ?>";</script>
-<script src="<?= asset('js/app.js') ?>?v=7" defer></script>
+<script src="<?= asset('js/app.js') ?>?v=8" defer></script>
 </body>
 </html>
