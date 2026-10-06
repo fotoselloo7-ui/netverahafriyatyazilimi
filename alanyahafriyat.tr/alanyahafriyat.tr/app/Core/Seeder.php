@@ -89,7 +89,7 @@ class Seeder
             ['floating_whatsapp_enabled', '1', 'general', 'toggle'],
             ['web_design_credit_text', 'Netvera Teknoloji Yazılım', 'footer', 'text'],
             ['web_design_credit_url', '', 'footer', 'text'],
-            ['content_pack_version', '5', 'system', 'text'],
+            ['content_pack_version', '6', 'system', 'text'],
         ];
         foreach ($settings as [$k, $v, $g, $t]) {
             $this->insert('settings', [
@@ -470,6 +470,75 @@ class Seeder
                     ['Temizlik sonrası tesviye yapılabilir mi?', 'Evet, moloz kaldırıldıktan sonra ihtiyaç varsa yüzey düzenleme ve tesviye ayrıca planlanabilir.'],
                 ],
             ],
+
+            [
+                'title' => 'Lastikli Kepçe Kiralama',
+                'slug' => 'lastikli-kepce-kiralama',
+                'icon' => 'excavator',
+                'short' => 'Alanya’da şehir içi, yol, altyapı, yükleme ve saha işleri için hareket kabiliyeti yüksek lastikli kepçe hizmeti.',
+                'hero' => 'Alanya Lastikli Kepçe Kiralama',
+                'content' => '<h2>Lastikli kepçe hangi işlerde tercih edilir?</h2><p>Lastikli kepçeler; sert zeminli saha geçişleri, yol ve altyapı çalışmaları, yükleme, kanal ve şehir içi uygulamalarda hareket kabiliyeti sayesinde avantaj sağlar. Makine seçimi iş hacmi, zemin ve erişime göre yapılır.</p><h2>Normal tonajlı makine neden avantajlıdır?</h2><p>Çok ağır sınıf makinelerin gerekli olmadığı işlerde orta sınıf lastikli kepçeler saha içinde daha pratik hareket edebilir ve çalışma planını gereksiz kapasiteye göre büyütmez.</p><h2>Teklifte hangi bilgiler değerlendirilir?</h2><p>Konum, çalışma süresi, kazı veya yükleme kapsamı, zemin, makine erişimi ve varsa ataşman ihtiyacı teklifin temelini oluşturur.</p>',
+                'advantages' => ['Şehir içi ve sert zeminde hareket kabiliyeti', 'Kazı ve yükleme işleri', 'Yol ve altyapı uygulamaları', 'Saha koşullarına göre makine seçimi', 'Operatörlü çalışma planı'],
+                'usage' => ['Yol ve altyapı işleri', 'Kanal kazısı', 'Toprak ve moloz yükleme', 'Saha düzenleme', 'Şehir içi kazı çalışmaları'],
+                'seo_title' => 'Alanya Lastikli Kepçe Kiralama | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da lastikli kepçe kiralama; yol, altyapı, kanal, yükleme ve saha düzenleme işleri için orta sınıf operatörlü makine çözümleri.',
+                'faqs' => [
+                    ['Lastikli kepçe hangi işlerde daha uygundur?', 'Yol, altyapı, sert zeminli saha, yükleme ve sık yer değişimi gereken işlerde lastikli makine seçeneği değerlendirilebilir.'],
+                    ['Lastikli kepçe fiyatı nasıl belirlenir?', 'Makine sınıfı, çalışma süresi, saha konumu, zemin, ataşman ve nakliye ihtiyacı fiyatı belirler.'],
+                    ['Çok ağır tonajlı makine mi kullanılıyor?', 'Makine sınıfı işin ihtiyacına göre seçilir; gereksiz ağır makine yerine uygun kapasitede çözüm planlanır.'],
+                ],
+            ],
+            [
+                'title' => 'Kazıcı Yükleyici Kiralama',
+                'slug' => 'kazici-yukleyici-kiralama',
+                'icon' => 'excavator',
+                'short' => 'Alanya’da kazı, yükleme, kanal, saha temizliği ve dolgu işleri için çok amaçlı kazıcı yükleyici hizmeti.',
+                'hero' => 'Alanya Kazıcı Yükleyici Kiralama',
+                'content' => '<h2>Kazıcı yükleyici hangi işler için kullanılır?</h2><p>Kazıcı yükleyici; ön yükleyici kovası ve arka kazıcı kolu sayesinde küçük ve orta ölçekli saha işlerinde çok yönlü kullanılabilir. Kanal, yükleme, saha temizliği, dolgu ve çevre düzenleme işlerinde değerlendirilebilir.</p><h2>Hangi sahalarda avantaj sağlar?</h2><p>Birden fazla iş kaleminin aynı sahada yapılacağı uygulamalarda kazı ve yükleme fonksiyonlarının tek makinede bulunması çalışma akışını kolaylaştırabilir.</p><h2>Teklif nasıl hazırlanır?</h2><p>Yapılacak işlerin sırası, zemin, erişim, çalışma süresi ve malzeme hareketi değerlendirilerek uygun çalışma planı hazırlanır.</p>',
+                'advantages' => ['Kazı ve yüklemeyi tek makinede birleştirme', 'Kanal ve saha temizliği', 'Dolgu ve malzeme hareketi', 'Orta ölçekli saha işleri', 'Operatörlü hizmet planı'],
+                'usage' => ['Kanal kazısı', 'Toprak yükleme', 'Saha temizliği', 'Dolgu ve tesviye', 'İnşaat çevresi düzenleme'],
+                'seo_title' => 'Alanya Kazıcı Yükleyici Kiralama | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da kazıcı yükleyici kiralama; kazı, yükleme, kanal, dolgu ve saha temizliği işleri için operatörlü çok amaçlı iş makinesi.',
+                'faqs' => [
+                    ['Kazıcı yükleyici ile hem kazı hem yükleme yapılabilir mi?', 'Evet, makinenin ön ve arka çalışma ekipmanları iş kapsamına göre iki farklı iş kaleminde kullanılabilir.'],
+                    ['Hangi ölçekte işler için uygundur?', 'Küçük ve orta ölçekli saha işlerinde, erişim ve zemin koşulları uygunsa verimli bir seçenek olabilir.'],
+                    ['Ataşman ihtiyacı nasıl belirlenir?', 'İş türü ve zemin koşullarına göre kullanılacak ekipman teklif öncesinde netleştirilir.'],
+                ],
+            ],
+            [
+                'title' => 'Forklift Kiralama',
+                'slug' => 'forklift-kiralama',
+                'icon' => 'forklift',
+                'short' => 'Alanya’da paletli yük, yapı malzemesi ve saha içi indirme-bindirme ihtiyaçları için forklift desteği.',
+                'hero' => 'Alanya Forklift Kiralama',
+                'content' => '<h2>Forklift hangi işler için kullanılır?</h2><p>Forklift; paletli yapı malzemelerinin, paketli yüklerin ve saha içi taşınması gereken malzemelerin indirme-bindirme süreçlerinde kullanılır. Uygun makine seçimi yük ağırlığı, kaldırma yüksekliği ve zemin koşullarına bağlıdır.</p><h2>Saha koşulları neden önemlidir?</h2><p>Düz ve taşıyıcı zemin, giriş yüksekliği, manevra alanı ve yükün konumu forklift çalışma planını etkiler. Açık saha veya kapalı alan ihtiyacı teklif aşamasında netleştirilir.</p><h2>Teklif için hangi bilgiler gerekir?</h2><p>Yükün türü, yaklaşık ağırlığı, kaldırma yüksekliği, çalışma süresi, konum ve saha fotoğrafları doğru makine planına yardımcı olur.</p>',
+                'advantages' => ['Paletli yük taşıma', 'İndirme-bindirme desteği', 'Saha içi malzeme hareketi', 'Yük ve yüksekliğe göre makine seçimi', 'Kısa veya planlı çalışma seçenekleri'],
+                'usage' => ['Yapı malzemesi indirme', 'Palet taşıma', 'Depo ve saha içi lojistik', 'Kamyondan malzeme indirme', 'Şantiye malzeme yerleştirme'],
+                'seo_title' => 'Alanya Forklift Kiralama | Saha ve Yük Taşıma | Ersan Hafriyat',
+                'seo_description' => 'Alanya forklift kiralama; paletli yük, yapı malzemesi, kamyon indirme-bindirme ve saha içi taşıma ihtiyaçları için teklif alın.',
+                'faqs' => [
+                    ['Forklift fiyatı neye göre belirlenir?', 'Çalışma süresi, yük ağırlığı, kaldırma yüksekliği, saha konumu ve makinenin nakliye ihtiyacı fiyatı etkiler.'],
+                    ['Açık şantiyede forklift kullanılabilir mi?', 'Zemin ve makine tipi uygun olduğunda açık saha çalışması planlanabilir.'],
+                    ['Kamyondan malzeme indirme yapılabilir mi?', 'Yük ağırlığı ve saha erişimi uygun olduğunda indirme-bindirme işi planlanabilir.'],
+                ],
+            ],
+            [
+                'title' => 'Traktör ile Arazi ve Nakliye Desteği',
+                'slug' => 'traktor-arazi-nakliye',
+                'icon' => 'tractor',
+                'short' => 'Alanya’da bahçe, arazi ve saha işlerinde yerli üretim traktörle malzeme taşıma ve yardımcı çalışma desteği.',
+                'hero' => 'Alanya Traktör ile Arazi ve Nakliye Desteği',
+                'content' => '<h2>Traktör hangi saha işlerinde kullanılır?</h2><p>Traktör; bahçe, tarla ve arazi içinde hafif malzeme taşıma, römork desteği ve saha lojistiği gibi işlerde kullanılabilir. Ekipman seçimi yapılacak işe ve arazi koşullarına göre belirlenir.</p><h2>Hafriyat işiyle birlikte kullanılabilir mi?</h2><p>Kepçe veya mini kepçe ile yapılan çalışmalarda saha içi yardımcı taşıma ihtiyacı varsa traktör ve römork desteği çalışma planına dahil edilebilir.</p><h2>Makine bilgisi nasıl teyit edilir?</h2><p>Yerli üretim traktör seçeneğinin model, güç ve ekipman bilgileri iş öncesinde mevcut makineye göre teyit edilir.</p>',
+                'advantages' => ['Arazi içi yardımcı taşıma', 'Römork ile malzeme hareketi', 'Bahçe ve saha çalışmaları', 'Hafriyat ekibine lojistik destek', 'İşe göre ekipman planlama'],
+                'usage' => ['Bahçe ve arazi işleri', 'Römorklu malzeme taşıma', 'Toprak ve hafif malzeme hareketi', 'Saha lojistiği', 'Kepçe çalışmalarına yardımcı taşıma'],
+                'seo_title' => 'Alanya Traktör ve Arazi Nakliye Desteği | Ersan Hafriyat',
+                'seo_description' => 'Alanya’da traktör ile arazi, bahçe ve saha içi nakliye desteği; römorklu malzeme taşıma ve yardımcı çalışma seçenekleri.',
+                'faqs' => [
+                    ['Traktörle hangi malzemeler taşınabilir?', 'Taşınabilecek malzeme miktarı ve türü römork, arazi ve güvenli çalışma koşullarına göre belirlenir.'],
+                    ['Kepçe işiyle birlikte traktör desteği alınabilir mi?', 'İşin kapsamı uygunsa saha içi taşıma desteği aynı çalışma planına dahil edilebilir.'],
+                    ['Hangi traktör modeli kullanılıyor?', 'Model ve güç sınıfı teklif öncesinde mevcut yerli üretim makineye göre teyit edilir.'],
+                ],
+            ],
         ];
 
         $visuals = [
@@ -512,6 +581,23 @@ class Seeder
                 'card' => 'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
                 'hero' => 'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
             ],
+
+            'lastikli-kepce-kiralama' => [
+                'card' => 'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+            ],
+            'kazici-yukleyici-kiralama' => [
+                'card' => 'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+            ],
+            'forklift-kiralama' => [
+                'card' => 'https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+            ],
+            'traktor-arazi-nakliye' => [
+                'card' => 'https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero' => 'https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+            ],
         ];
 
         $process = [
@@ -541,7 +627,14 @@ class Seeder
                 'seo_title' => $s['seo_title'],
                 'seo_description' => $s['seo_description'],
                 'sort_order' => $i,
-                'is_featured' => $i < 6 ? 1 : 0,
+                'is_featured' => in_array($s['slug'], [
+                    'kepce-kiralama',
+                    'mini-kepce-kiralama',
+                    'temel-kazisi',
+                    'moloz-hafriyat-nakliye',
+                    'lastikli-kepce-kiralama',
+                    'forklift-kiralama',
+                ], true) ? 1 : 0,
                 'is_active' => 1,
                 'created_at' => $this->now(),
                 'updated_at' => $this->now(),
@@ -569,7 +662,7 @@ class Seeder
                 'usage_area' => 'Dar alan kazısı, kanal, bahçe ve saha düzenleme',
                 'attachments' => '',
                 'short_description' => 'Mini ekskavatör • Dar alan çalışmaları • Kanal ve tesviye işleri',
-                'content' => '<p>Ersan Hafriyat saha arşivindeki gerçek makine görsellerinde görülen Zoomlion ZE35GU mini ekskavatör; dar alan, kanal, bahçe ve saha düzenleme çalışmalarında kullanılmaktadır. Teknik kapasite ve ataşman bilgileri iş öncesinde makinenin mevcut konfigürasyonuna göre teyit edilir.</p>',
+                'content' => '<p>Ersan Hafriyat saha arşivindeki gerçek makine görsellerinde görülen Zoomlion ZE35GU mini ekskavatör; dar alan, kanal, bahçe ve saha düzenleme çalışmalarında kullanılmaktadır. Teknik kapasite ve ataşman bilgileri iş öncesinde mevcut konfigürasyona göre teyit edilir.</p>',
                 'image' => 'makine/zoomlion-ze35gu-mini-ekskavator-alanya.webp',
             ],
             [
@@ -579,8 +672,48 @@ class Seeder
                 'usage_area' => 'Toprak, moloz ve hafriyat taşıma',
                 'attachments' => '',
                 'short_description' => 'Hafriyat taşıma • Moloz taşıma • Saha lojistiği',
-                'content' => '<p>Saha arşivindeki gerçek çalışmalarda kullanılan Mitsubishi Canter kamyon; hafriyat toprağı, moloz ve saha lojistiği ihtiyaçlarında çalışma planına göre değerlendirilir. Taşıma kapasitesi ve sefer planı işin kapsamına göre netleştirilir.</p>',
+                'content' => '<p>Mitsubishi Canter kamyon; hafriyat toprağı, moloz ve saha lojistiği ihtiyaçlarında çalışma planına göre değerlendirilir. Taşıma kapasitesi ve sefer planı işin kapsamına göre netleştirilir.</p>',
                 'image' => 'makine/mitsubishi-canter-hafriyat-kamyonu-alanya.webp',
+            ],
+            [
+                'title' => 'Orta Sınıf Lastikli Ekskavatör',
+                'slug' => 'orta-sinif-lastikli-ekskavator',
+                'brand_model' => 'Lastikli Ekskavatör',
+                'usage_area' => 'Yol, altyapı, kanal, yükleme ve şehir içi saha işleri',
+                'attachments' => 'Kova • İşe göre ataşman',
+                'short_description' => 'Lastikli ekskavatör • Şehir içi hareket kabiliyeti • Kazı ve yükleme',
+                'content' => '<p>Çok ağır tonaj gerektirmeyen yol, altyapı, kanal ve yükleme işlerinde orta sınıf lastikli ekskavatör seçeneği değerlendirilir. Model ve teknik kapasite, iş öncesinde mevcut makineye göre teyit edilir.</p>',
+                'image' => 'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+            ],
+            [
+                'title' => 'Kazıcı Yükleyici (Beko Loder)',
+                'slug' => 'kazici-yukleyici-beko-loder',
+                'brand_model' => 'Kazıcı Yükleyici',
+                'usage_area' => 'Kazı, yükleme, kanal, dolgu ve saha temizliği',
+                'attachments' => 'Ön yükleyici kova • Arka kazıcı',
+                'short_description' => 'Kazı ve yükleme • Kanal işleri • Çok amaçlı saha kullanımı',
+                'content' => '<p>Kazıcı yükleyici; kazı ve yükleme fonksiyonlarının aynı makinede gerektiği küçük ve orta ölçekli saha çalışmalarında kullanılır. Marka, model ve ataşman bilgisi iş öncesinde mevcut makineye göre teyit edilir.</p>',
+                'image' => 'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+            ],
+            [
+                'title' => 'Tümosan Traktör',
+                'slug' => 'tumosan-traktor',
+                'brand_model' => 'Tümosan',
+                'usage_area' => 'Bahçe, arazi, römorklu taşıma ve saha lojistiği',
+                'attachments' => 'Römork • İşe göre yardımcı ekipman',
+                'short_description' => 'Yerli üretim traktör • Arazi desteği • Römorklu taşıma',
+                'content' => '<p>Yerli üretim Tümosan traktör; bahçe, arazi ve saha içi yardımcı taşıma işlerinde çalışma planına göre kullanılabilir. Model, güç ve ekipman bilgisi teklif öncesinde mevcut makineye göre teyit edilir.</p>',
+                'image' => 'https://www.tumosan.com.tr/uploads/2023/08/2013-yerli-105-beygir-traktor-uretimi_op.webp',
+            ],
+            [
+                'title' => 'Dizel Forklift',
+                'slug' => 'dizel-forklift',
+                'brand_model' => 'Dizel Forklift',
+                'usage_area' => 'Paletli yük, yapı malzemesi ve saha içi indirme-bindirme',
+                'attachments' => 'Standart çatal',
+                'short_description' => 'Paletli yük taşıma • İndirme-bindirme • Saha lojistiği',
+                'content' => '<p>Dizel forklift; yapı malzemesi, palet ve saha içi yüklerin taşınması ile kamyon indirme-bindirme işlerinde değerlendirilir. Kaldırma kapasitesi ve yükseklik bilgisi iş öncesinde mevcut makineye göre teyit edilir.</p>',
+                'image' => 'https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
             ],
         ];
         foreach ($items as $i => $m) {
@@ -927,6 +1060,146 @@ class Seeder
         $this->seedFooter();
         $this->seedTestimonials();
         $this->seedServiceRegions();
+    }
+
+    public function applyCatalogPackV6(): void
+    {
+        $process = [
+            ['title' => 'Talep & Bilgi', 'text' => 'Konum, iş türü, ölçü ve varsa fotoğraflar alınır.'],
+            ['title' => 'Saha Değerlendirmesi', 'text' => 'Erişim, zemin, makine ve taşıma ihtiyacı değerlendirilir.'],
+            ['title' => 'Teklif & Plan', 'text' => 'İş kapsamı, çalışma modeli ve teklif netleştirilir.'],
+            ['title' => 'Uygulama & Kontrol', 'text' => 'Planlanan iş uygulanır ve tamamlanan çalışma kontrol edilir.'],
+        ];
+
+        $services = [
+            [
+                'title'=>'Lastikli Kepçe Kiralama','slug'=>'lastikli-kepce-kiralama','icon'=>'excavator',
+                'short'=>'Alanya’da şehir içi, yol, altyapı, yükleme ve saha işleri için hareket kabiliyeti yüksek lastikli kepçe hizmeti.',
+                'hero'=>'Alanya Lastikli Kepçe Kiralama',
+                'content'=>'<h2>Lastikli kepçe hangi işlerde tercih edilir?</h2><p>Lastikli kepçeler; yol, altyapı, yükleme, kanal ve şehir içi saha işlerinde hareket kabiliyeti sayesinde avantaj sağlar. Makine sınıfı iş hacmi, zemin ve erişime göre seçilir.</p><h2>Fiyatı neler belirler?</h2><p>Çalışma süresi, makine sınıfı, konum, zemin, ataşman ve nakliye ihtiyacı teklifin temel kalemleridir.</p>',
+                'advantages'=>['Şehir içi hareket kabiliyeti','Kazı ve yükleme','Yol ve altyapı işleri','Saha koşullarına göre makine seçimi','Operatörlü çalışma'],
+                'usage'=>['Yol ve altyapı işleri','Kanal kazısı','Toprak ve moloz yükleme','Saha düzenleme','Şehir içi kazı'],
+                'seo_title'=>'Alanya Lastikli Kepçe Kiralama | Ersan Hafriyat',
+                'seo_description'=>'Alanya’da lastikli kepçe kiralama; yol, altyapı, kanal, yükleme ve saha düzenleme işleri için operatörlü makine çözümleri.',
+                'card'=>'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero_img'=>'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+                'faqs'=>[
+                    ['Lastikli kepçe hangi işlerde uygundur?','Yol, altyapı, yükleme ve sık yer değişimi gereken saha işlerinde değerlendirilebilir.'],
+                    ['Fiyat nasıl belirlenir?','Makine sınıfı, çalışma süresi, konum, zemin, ataşman ve nakliye ihtiyacına göre belirlenir.'],
+                ],
+            ],
+            [
+                'title'=>'Kazıcı Yükleyici Kiralama','slug'=>'kazici-yukleyici-kiralama','icon'=>'excavator',
+                'short'=>'Alanya’da kazı, yükleme, kanal, saha temizliği ve dolgu işleri için çok amaçlı kazıcı yükleyici hizmeti.',
+                'hero'=>'Alanya Kazıcı Yükleyici Kiralama',
+                'content'=>'<h2>Kazıcı yükleyici hangi işler için kullanılır?</h2><p>Ön yükleyici kovası ve arka kazıcı kolu sayesinde kazı, yükleme, kanal, dolgu ve saha temizliği gibi birden fazla iş kaleminde değerlendirilebilir.</p><h2>Hangi sahalarda avantaj sağlar?</h2><p>Küçük ve orta ölçekli, birden fazla işin aynı sahada yürütüldüğü uygulamalarda çok yönlü çalışma sağlar.</p>',
+                'advantages'=>['Kazı ve yüklemeyi birleştirme','Kanal işleri','Dolgu ve malzeme hareketi','Saha temizliği','Operatörlü hizmet'],
+                'usage'=>['Kanal kazısı','Toprak yükleme','Saha temizliği','Dolgu ve tesviye','İnşaat çevresi düzenleme'],
+                'seo_title'=>'Alanya Kazıcı Yükleyici Kiralama | Ersan Hafriyat',
+                'seo_description'=>'Alanya’da kazıcı yükleyici kiralama; kazı, yükleme, kanal, dolgu ve saha temizliği işleri için çok amaçlı iş makinesi.',
+                'card'=>'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero_img'=>'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+                'faqs'=>[
+                    ['Kazıcı yükleyici ile hem kazı hem yükleme yapılabilir mi?','Evet, iş kapsamına göre iki fonksiyon aynı çalışma planında kullanılabilir.'],
+                    ['Hangi ölçekte işler için uygundur?','Küçük ve orta ölçekli saha işlerinde erişim ve zemin uygunsa verimli bir seçenektir.'],
+                ],
+            ],
+            [
+                'title'=>'Forklift Kiralama','slug'=>'forklift-kiralama','icon'=>'forklift',
+                'short'=>'Alanya’da paletli yük, yapı malzemesi ve saha içi indirme-bindirme ihtiyaçları için forklift desteği.',
+                'hero'=>'Alanya Forklift Kiralama',
+                'content'=>'<h2>Forklift hangi işler için kullanılır?</h2><p>Forklift; paletli yapı malzemeleri, paketli yükler ve saha içi indirme-bindirme işlerinde kullanılır. Yük ağırlığı, kaldırma yüksekliği ve zemin koşulları makine seçimini belirler.</p><h2>Teklif için hangi bilgiler gerekir?</h2><p>Yük türü, yaklaşık ağırlık, kaldırma yüksekliği, çalışma süresi ve saha fotoğrafları doğru planlamaya yardımcı olur.</p>',
+                'advantages'=>['Paletli yük taşıma','İndirme-bindirme','Saha içi malzeme hareketi','Yük ve yüksekliğe göre makine seçimi','Planlı çalışma'],
+                'usage'=>['Yapı malzemesi indirme','Palet taşıma','Depo ve saha lojistiği','Kamyon boşaltma','Şantiye malzeme yerleştirme'],
+                'seo_title'=>'Alanya Forklift Kiralama | Ersan Hafriyat',
+                'seo_description'=>'Alanya forklift kiralama; paletli yük, yapı malzemesi, kamyon indirme-bindirme ve saha içi taşıma ihtiyaçları için teklif alın.',
+                'card'=>'https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero_img'=>'https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+                'faqs'=>[
+                    ['Forklift fiyatı neye göre belirlenir?','Çalışma süresi, yük ağırlığı, kaldırma yüksekliği, saha konumu ve nakliye ihtiyacı fiyatı etkiler.'],
+                    ['Kamyondan malzeme indirme yapılabilir mi?','Yük ve saha koşulları uygunsa indirme-bindirme işi planlanabilir.'],
+                ],
+            ],
+            [
+                'title'=>'Traktör ile Arazi ve Nakliye Desteği','slug'=>'traktor-arazi-nakliye','icon'=>'tractor',
+                'short'=>'Alanya’da bahçe, arazi ve saha işlerinde yerli üretim traktörle malzeme taşıma ve yardımcı çalışma desteği.',
+                'hero'=>'Alanya Traktör ile Arazi ve Nakliye Desteği',
+                'content'=>'<h2>Traktör hangi saha işlerinde kullanılır?</h2><p>Traktör; bahçe, arazi ve saha içi yardımcı taşıma, römork desteği ve hafif malzeme hareketi gibi işlerde kullanılabilir.</p><h2>Makine bilgisi nasıl teyit edilir?</h2><p>Yerli üretim traktör seçeneğinin model, güç ve ekipman bilgileri iş öncesinde mevcut makineye göre teyit edilir.</p>',
+                'advantages'=>['Arazi içi taşıma','Römork desteği','Bahçe ve saha çalışmaları','Hafriyat ekibine lojistik destek','İşe göre ekipman'],
+                'usage'=>['Bahçe ve arazi işleri','Römorklu taşıma','Toprak ve hafif malzeme hareketi','Saha lojistiği','Kepçe işlerine yardımcı taşıma'],
+                'seo_title'=>'Alanya Traktör ve Arazi Nakliye Desteği | Ersan Hafriyat',
+                'seo_description'=>'Alanya’da traktör ile arazi, bahçe ve saha içi nakliye desteği; römorklu malzeme taşıma ve yardımcı çalışma seçenekleri.',
+                'card'=>'https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp',
+                'hero_img'=>'https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp',
+                'faqs'=>[
+                    ['Traktörle hangi işler yapılabilir?','Arazi içi yardımcı taşıma, römorklu malzeme hareketi ve saha lojistiği işlerinde kullanılabilir.'],
+                    ['Hangi traktör modeli kullanılıyor?','Model ve güç sınıfı teklif öncesinde mevcut yerli üretim makineye göre teyit edilir.'],
+                ],
+            ],
+        ];
+
+        $findService = $this->pdo->prepare('SELECT id FROM services WHERE slug=? LIMIT 1');
+        foreach ($services as $i => $s) {
+            $findService->execute([$s['slug']]);
+            $serviceId = (int) ($findService->fetchColumn() ?: 0);
+            if ($serviceId === 0) {
+                $serviceId = $this->insert('services', [
+                    'title'=>$s['title'],'slug'=>$s['slug'],'icon'=>$s['icon'],
+                    'card_image'=>$s['card'],'cover_image'=>$s['hero_img'],'hero_image'=>$s['hero_img'],'og_image'=>$s['card'],
+                    'short_description'=>$s['short'],'content'=>$s['content'],
+                    'hero_title'=>$s['hero'],'hero_subtitle'=>$s['short'],
+                    'advantages_json'=>json_encode($s['advantages'], JSON_UNESCAPED_UNICODE),
+                    'usage_areas_json'=>json_encode($s['usage'], JSON_UNESCAPED_UNICODE),
+                    'process_json'=>json_encode($process, JSON_UNESCAPED_UNICODE),
+                    'seo_title'=>$s['seo_title'],'seo_description'=>$s['seo_description'],
+                    'sort_order'=>12+$i,'is_featured'=>0,'is_active'=>1,
+                    'created_at'=>$this->now(),'updated_at'=>$this->now(),
+                ]);
+                foreach ($s['faqs'] as $faqOrder => [$question,$answer]) {
+                    $this->insert('service_faqs', [
+                        'service_id'=>$serviceId,'question'=>$question,'answer'=>$answer,
+                        'sort_order'=>$faqOrder,'is_active'=>1,
+                    ]);
+                }
+            }
+        }
+
+        $this->pdo->exec("UPDATE services SET is_featured=CASE WHEN slug IN (
+            'kepce-kiralama','mini-kepce-kiralama','temel-kazisi',
+            'moloz-hafriyat-nakliye','lastikli-kepce-kiralama','forklift-kiralama'
+        ) THEN 1 ELSE 0 END");
+
+        $equipment = [
+            ['Orta Sınıf Lastikli Ekskavatör','orta-sinif-lastikli-ekskavator','Lastikli Ekskavatör','Yol, altyapı, kanal, yükleme ve şehir içi saha işleri','Kova • İşe göre ataşman','Lastikli ekskavatör • Şehir içi hareket kabiliyeti • Kazı ve yükleme','<p>Çok ağır tonaj gerektirmeyen yol, altyapı, kanal ve yükleme işlerinde orta sınıf lastikli ekskavatör seçeneği değerlendirilir. Model ve kapasite iş öncesinde teyit edilir.</p>','https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            ['Kazıcı Yükleyici (Beko Loder)','kazici-yukleyici-beko-loder','Kazıcı Yükleyici','Kazı, yükleme, kanal, dolgu ve saha temizliği','Ön yükleyici kova • Arka kazıcı','Kazı ve yükleme • Kanal işleri • Çok amaçlı saha kullanımı','<p>Kazıcı yükleyici; kazı ve yükleme fonksiyonlarının aynı makinede gerektiği küçük ve orta ölçekli saha çalışmalarında kullanılır. Marka ve model teklif öncesinde teyit edilir.</p>','https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            ['Tümosan Traktör','tumosan-traktor','Tümosan','Bahçe, arazi, römorklu taşıma ve saha lojistiği','Römork • İşe göre yardımcı ekipman','Yerli üretim traktör • Arazi desteği • Römorklu taşıma','<p>Yerli üretim Tümosan traktör; bahçe, arazi ve saha içi yardımcı taşıma işlerinde kullanılabilir. Model ve güç bilgisi teklif öncesinde mevcut makineye göre teyit edilir.</p>','https://www.tumosan.com.tr/uploads/2023/08/2013-yerli-105-beygir-traktor-uretimi_op.webp'],
+            ['Dizel Forklift','dizel-forklift','Dizel Forklift','Paletli yük, yapı malzemesi ve saha içi indirme-bindirme','Standart çatal','Paletli yük taşıma • İndirme-bindirme • Saha lojistiği','<p>Dizel forklift; yapı malzemesi, palet ve saha içi yüklerin taşınması ile kamyon indirme-bindirme işlerinde değerlendirilir. Kapasite iş öncesinde teyit edilir.</p>','https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+        ];
+        $findEquipment = $this->pdo->prepare('SELECT id FROM equipment WHERE slug=? LIMIT 1');
+        $baseSort = (int) ($this->pdo->query('SELECT COALESCE(MAX(sort_order),0) FROM equipment')->fetchColumn() ?: 0) + 1;
+        foreach ($equipment as $i => [$title,$slug,$brand,$usage,$attachments,$short,$content,$image]) {
+            $findEquipment->execute([$slug]);
+            if (!$findEquipment->fetchColumn()) {
+                $this->insert('equipment', [
+                    'title'=>$title,'slug'=>$slug,'brand_model'=>$brand,'usage_area'=>$usage,
+                    'attachments'=>$attachments,'short_description'=>$short,'content'=>$content,
+                    'image'=>$image,'gallery_json'=>null,'sort_order'=>$baseSort+$i,'is_active'=>1,
+                    'created_at'=>$this->now(),'updated_at'=>$this->now(),
+                ]);
+            }
+        }
+
+        $this->pdo->exec("UPDATE home_sections SET subtitle='İşin türü, saha koşulları ve erişime göre uygun makine seçeneği planlanır; marka/model ve mevcut makine teklif öncesinde teyit edilir.' WHERE section_key='equipment'");
+
+        $now=$this->now();
+        $exists=$this->pdo->prepare("SELECT id FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+        $exists->execute();
+        if($exists->fetchColumn()){
+            $st=$this->pdo->prepare("UPDATE settings SET setting_value='6', updated_at=? WHERE setting_key='content_pack_version'");
+            $st->execute([$now]);
+        }else{
+            $this->insert('settings',['setting_key'=>'content_pack_version','setting_value'=>'6','setting_group'=>'system','input_type'=>'text','created_at'=>$now,'updated_at'=>$now]);
+        }
     }
 
     public function applyVisualPackV5(): void
