@@ -277,6 +277,8 @@ if (!function_exists('icon')) {
             'zap' => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
             'users' => '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
             'truck' => '<path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+            'tractor' => '<path d="M3 18h3"/><path d="M14 18h2"/><path d="M16 13h3l2 3v2h-2"/><path d="M8 18V9h6l2 9"/><path d="M8 11H5l-2 3v4"/><circle cx="7" cy="18" r="3"/><circle cx="18" cy="18" r="2"/>',
+            'forklift' => '<path d="M3 4v13h3"/><path d="M8 17V8h6l3 4v5"/><path d="M17 4v13"/><path d="M20 4v15"/><path d="M17 19h4"/><circle cx="8" cy="18" r="2"/><circle cx="15" cy="18" r="2"/>',
             'shield' => '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
             'tag' => '<path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.2"/>',
             'excavator' => '<path d="M3 20h18"/><path d="M5 20v-4h5v4"/><rect x="5" y="9" width="5" height="4" rx="1"/><path d="M10 11h4l6-4"/><circle cx="7.5" cy="20" r="0"/>',
