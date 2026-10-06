@@ -37,7 +37,7 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
-    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=18">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=19">
     <?php include VIEW_PATH . '/partials/schema.php'; ?>
 
     <?php
