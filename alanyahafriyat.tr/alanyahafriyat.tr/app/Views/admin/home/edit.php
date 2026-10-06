@@ -18,6 +18,18 @@ $steps = $isProcess && is_array($content) ? $content : [];
         <div class="a-field"><label>Başlık</label><input type="text" name="title" value="<?= e($section['title']) ?>"></div>
         <div class="a-field"><label>Alt Başlık</label><textarea name="subtitle"><?= e($section['subtitle']) ?></textarea></div>
 
+        <?php
+        $moduleNotes = [
+            'services' => 'Hizmet kartları: Yönetim > Hizmetler modülünden yönetilir.',
+            'equipment' => 'Makine kartları: Yönetim > Makine Parkuru modülünden yönetilir.',
+            'gallery' => 'Galeri görselleri: Yönetim > Galeri modülünden yönetilir.',
+            'regions' => 'Bölge etiketleri: Yönetim > Çalışma Bölgeleri modülünden yönetilir.',
+            'blog' => 'Yazılar: Yönetim > Blog modülünden yönetilir.',
+            'faq' => 'Sorular: Yönetim > SSS modülünden yönetilir.',
+        ];
+        ?>
+        <?php if (isset($moduleNotes[$key])): ?><p class="help"><?= e($moduleNotes[$key]) ?></p><?php endif; ?>
+
         <div class="a-row">
             <div class="a-field">
                 <label>Yönetim Sırası</label>
