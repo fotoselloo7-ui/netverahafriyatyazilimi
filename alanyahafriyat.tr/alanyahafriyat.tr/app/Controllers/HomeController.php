@@ -11,6 +11,7 @@ use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\HomeSection;
 use App\Models\Popup;
+use App\Models\Project;
 use App\Models\Service;
 
 class HomeController extends Controller
@@ -25,6 +26,7 @@ class HomeController extends Controller
             'services'    => Service::featured(6),
             'equipment'   => Equipment::active(),
             'gallery'     => Gallery::active(),
+            'projects'    => array_slice(Project::active('project_date DESC, id DESC'), 0, 3),
             'posts'       => BlogPost::published(3),
             'faqs'        => Faq::active(),
             'popup'       => Popup::activeOne(),
