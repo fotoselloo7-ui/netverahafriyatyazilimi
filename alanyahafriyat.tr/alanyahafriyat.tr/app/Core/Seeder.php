@@ -147,8 +147,8 @@ class Seeder
         }
 
         $footerLinks = [
-            ['Ana Sayfa', '/'], ['Hakkımızda', '/hakkimizda'], ['Makine Parkuru', '/makine-parkuru'],
-            ['Projelerimiz', '/projeler'], ['Galeri', '/galeri'], ['Blog', '/blog'],
+            ['Ana Sayfa', '/'], ['Hakkımızda', '/hakkimizda'], ['Hizmetlerimiz', '/hizmetler'],
+            ['Projelerimiz', '/projeler'], ['Blog', '/blog'], ['İletişim', '/iletisim'],
         ];
         $i = 0;
         foreach ($footerLinks as [$title, $url]) {
@@ -573,10 +573,10 @@ class Seeder
             'column_2_links_json' => json_encode([
                 ['title' => 'Ana Sayfa', 'url' => '/'],
                 ['title' => 'Hakkımızda', 'url' => '/hakkimizda'],
-                ['title' => 'Makine Parkuru', 'url' => '/makine-parkuru'],
+                ['title' => 'Hizmetlerimiz', 'url' => '/hizmetler'],
                 ['title' => 'Projelerimiz', 'url' => '/projeler'],
-                ['title' => 'Galeri', 'url' => '/galeri'],
                 ['title' => 'Blog', 'url' => '/blog'],
+                ['title' => 'İletişim', 'url' => '/iletisim'],
             ], JSON_UNESCAPED_UNICODE),
             'column_3_title' => 'Hizmet Bölgeleri',
             'column_3_content' => 'Mahmutlar, Kestel, Kargıcak, Oba, Tosmur, Alanya Merkez ve çevresi',
