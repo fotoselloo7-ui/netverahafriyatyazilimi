@@ -9,7 +9,7 @@
                     <span class="badge__ico"><?= icon('phone', 20) ?></span><div><b>Telefon</b><span><?= e(setting('phone', '')) ?></span></div>
                 </a>
                 <a href="<?= e(whatsapp_link('Merhaba, bilgi almak istiyorum.')) ?>" target="_blank" rel="noopener" data-wa-event class="contact-row">
-                    <span class="badge__ico"><?= icon('whatsapp', 20) ?></span><div><b>WhatsApp</b><span><?= e(setting('phone', '')) ?></span></div>
+                    <span class="badge__ico"><?= icon('whatsapp', 20) ?></span><div><b>WhatsApp</b><span><?= e(setting('whatsapp_number', setting('phone', ''))) ?></span></div>
                 </a>
                 <a href="mailto:<?= e(setting('email', '')) ?>" class="contact-row">
                     <span class="badge__ico"><?= icon('mail', 20) ?></span><div><b>E-posta</b><span><?= e(setting('email', '')) ?></span></div>
@@ -21,8 +21,8 @@
                     <span class="badge__ico"><?= icon('clock', 20) ?></span><div><b>Çalışma Saatleri</b><span><?= e(setting('working_hours', '')) ?></span></div>
                 </div>
             </div>
-            <?php if ($map = setting('map_embed')): ?>
-            <div style="margin-top:22px;border-radius:14px;overflow:hidden;border:1px solid var(--line)">
+            <?php $map = map_embed_url((string) setting('map_embed', '')); if ($map !== ''): ?>
+            <div id="konum" style="margin-top:22px;border-radius:14px;overflow:hidden;border:1px solid var(--line)">
                 <iframe src="<?= e($map) ?>" width="100%" height="260" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             <?php endif; ?>
