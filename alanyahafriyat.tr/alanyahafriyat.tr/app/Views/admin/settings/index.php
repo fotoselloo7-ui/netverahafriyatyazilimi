@@ -33,7 +33,7 @@
             <div class="a-field"><label>Çalışma Saatleri</label><input type="text" name="working_hours" value="<?= $s('working_hours') ?>"></div>
         </div>
         <div class="a-field"><label>Adres</label><input type="text" name="address" value="<?= $s('address') ?>"></div>
-        <div class="a-field"><label>Google Maps Embed URL</label><input type="text" name="map_embed" value="<?= $s('map_embed') ?>"><small>Google Maps &gt; Paylaş &gt; Harita yerleştir &gt; src bağlantısı</small></div>
+        <div class="a-field"><label>Google Maps Embed URL</label><input type="text" name="map_embed" value="<?= $s('map_embed') ?>"><small>Google Maps &gt; Paylaş &gt; Harita yerleştir bölümündeki tam iframe kodunu veya yalnızca src bağlantısını yapıştırabilirsiniz.</small></div>
     </div>
 
     <div class="a-card">
