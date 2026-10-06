@@ -19,7 +19,7 @@ View::share('site_name', site_name());
 
 // Ana navigasyonda yalnızca standart kurumsal sayfaları göster.
 // SSS gibi içerik sayfaları silinmez; yalnızca ana menüyü kalabalıklaştırmaz.
-$standardHeaderUrls = ['/', '/hakkimizda', '/hizmetler', '/makine-parkuru', '/projeler', '/galeri', '/blog', '/iletisim'];
+$standardHeaderUrls = ['/', '/hakkimizda', '/hizmetler', '/projeler', '/blog', '/iletisim'];
 $headerMenu = array_values(array_filter(
     Menu::byLocation('header'),
     static fn (array $item): bool => in_array((string) ($item['url'] ?? ''), $standardHeaderUrls, true)
