@@ -95,11 +95,11 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
             </div>
             <div></div>
         </div>
-        <div class="grid grid--4">
+        <div class="grid grid--3 equipment-grid">
             <?php foreach ($equipment as $m): $specs = array_filter(array_map('trim', explode('•', (string) $m['short_description']))); ?>
                 <article class="ecard">
                     <div class="ecard__media">
-                        <?php if ($m['image']): ?><img src="<?= e(upload_url($m['image'])) ?>" alt="<?= e($m['title']) ?>" loading="lazy">
+                        <?php if ($m['image']): ?><img src="<?= e(upload_url($m['image'])) ?>" alt="<?= e($m['title']) ?>" title="<?= e($m['title'] . ' - Ersan Hafriyat') ?>" width="900" height="560" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?><div class="ph-media"><?= icon('truck', 48) ?></div><?php endif; ?>
                     </div>
                     <div class="ecard__body">
