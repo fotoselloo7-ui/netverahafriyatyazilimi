@@ -36,8 +36,9 @@ $robots = (($seo['robots'] ?? true) ? 'index' : 'noindex') . ', ' . (($seo['robo
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
-    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=20">
+    <link rel="icon" type="image/webp" href="<?= e(upload_url('genel/netvera-hafriyat-favicon.webp')) ?>">
+    <link rel="shortcut icon" href="<?= e(upload_url('genel/netvera-hafriyat-favicon.webp')) ?>">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=21">
     <?php include VIEW_PATH . '/partials/schema.php'; ?>
 
     <?php
