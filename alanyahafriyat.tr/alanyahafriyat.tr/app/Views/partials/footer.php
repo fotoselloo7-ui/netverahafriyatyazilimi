@@ -16,10 +16,11 @@ $ftext = $fs['text_color'] ?? '#CBD5E1';
                     <span class="brand__text"><?= e(site_name()) ?></span>
                 <?php endif; ?>
             </a>
-            <p class="footer__about"><?= e($fs['description'] ?? setting('footer_about', '')) ?></p>
+            <p class="footer__about"><?= e(setting('footer_about', $fs['description'] ?? '')) ?></p>
             <div class="footer__social">
                 <?php foreach (($socialLinks ?? []) as $s): ?>
-                    <a href="<?= e($s['url']) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 18) ?></a>
+                    <?php $socialHref = strtolower((string) ($s['platform'] ?? '')) === 'whatsapp' ? whatsapp_link('Merhaba, bilgi almak istiyorum.') : (string) ($s['url'] ?? '#'); ?>
+                    <a href="<?= e($socialHref) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 18) ?></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -59,7 +60,7 @@ $ftext = $fs['text_color'] ?? '#CBD5E1';
     ?>
     <div class="footer__bottom">
         <div class="container footer__bottom-inner">
-            <span class="footer__copyright"><?= e($fs['copyright_text'] ?? ('© ' . date('Y') . ' ' . site_name())) ?></span>
+            <span class="footer__copyright"><?= e('© ' . date('Y') . ' ' . site_name() . '. Tüm hakları saklıdır.') ?></span>
             <div class="footer__legal">
                 <a href="<?= base_url('sayfa/gizlilik-politikasi') ?>">Gizlilik Politikası</a>
                 <a href="<?= base_url('sayfa/kvkk') ?>">KVKK</a>
