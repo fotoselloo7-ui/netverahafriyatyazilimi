@@ -44,8 +44,10 @@ class AdminHomeController extends AdminBaseController
             'is_active' => isset($_POST['is_active']) ? 1 : 0,
         ];
 
-        // Hero bölümü için özel content_json alanları
-        if ($section['section_key'] === 'hero') {
+        $sectionKey = (string) $section['section_key'];
+
+        // Hero: butonlar + teklif formu + güven rozetleri aynı ekrandan yönetilir.
+        if ($sectionKey === 'hero') {
             $existing = json_decode_safe($section['content_json']);
             $existing['button_1_text'] = trim((string) ($_POST['button_1_text'] ?? ''));
             $existing['button_1_url'] = trim((string) ($_POST['button_1_url'] ?? ''));
@@ -56,7 +58,42 @@ class AdminHomeController extends AdminBaseController
             $existing['overlay_opacity'] = trim((string) ($_POST['overlay_opacity'] ?? '0.6'));
             $existing['show_form'] = isset($_POST['show_form']) ? '1' : '0';
             $existing['show_badges'] = isset($_POST['show_badges']) ? '1' : '0';
+
+            $badgeIcons = $_POST['badge_icon'] ?? [];
+            $badgeTitles = $_POST['badge_title'] ?? [];
+            $badgeTexts = $_POST['badge_text'] ?? [];
+            $badges = [];
+            foreach ($badgeTitles as $i => $title) {
+                $title = trim((string) $title);
+                $text = trim((string) ($badgeTexts[$i] ?? ''));
+                if ($title === '' && $text === '') { continue; }
+                $badges[] = [
+                    'icon' => trim((string) ($badgeIcons[$i] ?? 'check')),
+                    'title' => $title,
+                    'text' => $text,
+                ];
+            }
+            $existing['badges'] = $badges;
             $data['content_json'] = json_encode($existing, JSON_UNESCAPED_UNICODE);
+        }
+
+        // Çalışma süreci kartları eskiden yalnız seed verisindeydi; artık admin yönetir.
+        if ($sectionKey === 'process') {
+            $stepIcons = $_POST['step_icon'] ?? [];
+            $stepTitles = $_POST['step_title'] ?? [];
+            $stepTexts = $_POST['step_text'] ?? [];
+            $steps = [];
+            foreach ($stepTitles as $i => $title) {
+                $title = trim((string) $title);
+                $text = trim((string) ($stepTexts[$i] ?? ''));
+                if ($title === '' && $text === '') { continue; }
+                $steps[] = [
+                    'icon' => trim((string) ($stepIcons[$i] ?? 'check')),
+                    'title' => $title,
+                    'text' => $text,
+                ];
+            }
+            $data['content_json'] = json_encode($steps, JSON_UNESCAPED_UNICODE);
         }
 
         if (!empty($_FILES['image']['name'])) {
