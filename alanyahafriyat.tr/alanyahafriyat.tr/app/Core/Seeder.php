@@ -449,7 +449,7 @@ class Seeder
                 'title' => 'Alanya’da Kepçe Kiralama Fiyatları Nasıl Hesaplanır?',
                 'slug' => 'alanyada-kepce-kiralama-fiyatlari-nasil-hesaplanir',
                 'focus' => 'alanya kepçe kiralama fiyatları',
-                'service_id' => 1,
+                'service_slug' => 'kepce-kiralama',
                 'excerpt' => 'Alanya’da kepçe kiralama fiyatını çalışma süresi, makine tipi, nakliye, zemin, saha erişimi ve hafriyat taşıma ihtiyacı birlikte belirler.',
                 'seo_title' => 'Alanya Kepçe Kiralama Fiyatları Nasıl Hesaplanır? | Ersan Hafriyat',
                 'seo_description' => 'Alanya kepçe kiralama fiyatını etkileyen makine, süre, nakliye, zemin, ataşman, saha erişimi ve hafriyat taşıma kalemlerini öğrenin.',
@@ -464,7 +464,7 @@ class Seeder
                 'title' => 'Mini Kepçe mi Büyük Kepçe mi? Alanya’daki İşiniz İçin Hangisi Uygun?',
                 'slug' => 'mini-kepce-mi-buyuk-kepce-mi-alanya',
                 'focus' => 'alanya mini kepçe',
-                'service_id' => 2,
+                'service_slug' => 'mini-kepce-kiralama',
                 'excerpt' => 'Dar bahçe, küçük kanal ve hassas kazılarda mini kepçe; daha yüksek hacimli ve geniş sahalarda farklı makine seçenekleri değerlendirilebilir.',
                 'seo_title' => 'Mini Kepçe mi Büyük Kepçe mi? Alanya İçin Makine Seçimi',
                 'seo_description' => 'Alanya’da mini kepçe ile daha büyük kepçe arasında seçim yaparken giriş genişliği, kazı hacmi, zemin ve çalışma alanında nelere bakılır?',
@@ -479,7 +479,7 @@ class Seeder
                 'title' => 'Temel Kazısı Öncesi Nelere Bakılır?',
                 'slug' => 'temel-kazisi-oncesi-nelere-bakilir',
                 'focus' => 'alanya temel kazısı',
-                'service_id' => 3,
+                'service_slug' => 'temel-kazisi',
                 'excerpt' => 'Temel kazısından önce proje ölçüsü kadar saha erişimi, zemin, kazı derinliği, çıkan malzeme ve taşıma planı da netleştirilmelidir.',
                 'seo_title' => 'Alanya Temel Kazısı Öncesi Nelere Bakılır? | Ersan Hafriyat',
                 'seo_description' => 'Temel kazısı öncesinde kazı ölçüsü, zemin, saha erişimi, makine seçimi, hafriyat taşıma ve dolgu planında kontrol edilmesi gerekenler.',
@@ -508,7 +508,7 @@ class Seeder
                 'twitter_description' => $post['seo_description'],
                 'robots_index' => 1, 'robots_follow' => 1,
                 'schema_type' => 'BlogPosting',
-                'related_service_id' => $post['service_id'],
+                'related_service_id' => (int) ($this->pdo->query("SELECT id FROM services WHERE slug = " . $this->pdo->quote($post['service_slug']) . " LIMIT 1")->fetchColumn() ?: 0),
                 'faq_json' => json_encode(array_map(fn ($f) => ['question' => $f[0], 'answer' => $f[1]], $post['faq']), JSON_UNESCAPED_UNICODE),
                 'reading_time' => max(2, (int) ceil($wordCount / 200)),
                 'status' => 'published',
@@ -627,6 +627,48 @@ class Seeder
     {
         // Sahte veya örnek müşteri yorumu yayınlanmaz.
         // Yalnızca gerçek müşteriden izinli yorumlar admin panelden eklenir.
+    }
+
+    public function upgradeLegacyDemoContent(): void
+    {
+        // Eski demo seed paketini gerçek yayına uygun içerik paketiyle değiştirir.
+        // Yalnız Migrator tarafından bilinen legacy imza tespit edildiğinde çağrılır.
+        $preserve = [];
+        foreach (['logo', 'og_image'] as $key) {
+            $stmt = $this->pdo->prepare('SELECT setting_value FROM settings WHERE setting_key = ? LIMIT 1');
+            $stmt->execute([$key]);
+            $preserve[$key] = (string) ($stmt->fetchColumn() ?: '');
+        }
+
+        $tables = [
+            'service_faqs', 'services', 'blog_posts', 'blog_categories', 'faqs',
+            'service_regions', 'equipment', 'projects', 'gallery', 'testimonials',
+            'home_sections', 'pages', 'menus', 'footer_settings',
+        ];
+        foreach ($tables as $table) {
+            $this->pdo->exec('DELETE FROM ' . $table);
+        }
+        $this->pdo->exec('DELETE FROM settings');
+
+        $this->seedSettings();
+        foreach ($preserve as $key => $value) {
+            if ($value === '') { continue; }
+            $stmt = $this->pdo->prepare('UPDATE settings SET setting_value = ?, updated_at = ? WHERE setting_key = ?');
+            $stmt->execute([$value, $this->now(), $key]);
+        }
+
+        $this->seedMenus();
+        $this->seedPages();
+        $this->seedHomeSections();
+        $this->seedServices();
+        $this->seedEquipment();
+        $this->seedProjects();
+        $this->seedBlog();
+        $this->seedFaqs();
+        $this->seedGallery();
+        $this->seedFooter();
+        $this->seedTestimonials();
+        $this->seedServiceRegions();
     }
 
     protected function seedServiceRegions(): void
