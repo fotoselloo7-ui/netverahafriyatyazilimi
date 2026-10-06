@@ -55,7 +55,8 @@
                 <?php if (!empty($socialLinks)): ?>
                 <div class="nav__foot-social">
                     <?php foreach ($socialLinks as $s): ?>
-                        <a href="<?= e($s['url']) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 17) ?></a>
+                        <?php $socialHref = strtolower((string) ($s['platform'] ?? '')) === 'whatsapp' ? whatsapp_link('Merhaba, bilgi almak istiyorum.') : (string) ($s['url'] ?? '#'); ?>
+                        <a href="<?= e($socialHref) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 17) ?></a>
                     <?php endforeach; ?>
                 </div>
                 <?php endif; ?>
