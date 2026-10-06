@@ -132,11 +132,8 @@ class Seeder
             ['Ana Sayfa', '/', 'internal'],
             ['Hakkımızda', '/hakkimizda', 'internal'],
             ['Hizmetlerimiz', '/hizmetler', 'internal'],
-            ['Makine Parkuru', '/makine-parkuru', 'internal'],
             ['Projelerimiz', '/projeler', 'internal'],
-            ['Galeri', '/galeri', 'internal'],
             ['Blog', '/blog', 'internal'],
-            ['SSS', '/sss', 'internal'],
             ['İletişim', '/iletisim', 'internal'],
         ];
         $i = 0;
@@ -165,7 +162,7 @@ class Seeder
         $mobile = [
             ['Ara', 'phone', '', 'phone'],
             ['WhatsApp', 'whatsapp', 'Merhaba, teklif almak istiyorum.', 'whatsapp'],
-            ['Konum', 'external', '/iletisim', 'map-pin'],
+            ['Konum', 'internal', '/iletisim#konum', 'map-pin'],
             ['Teklif Al', 'internal', '/iletisim', 'send'],
         ];
         $i = 0;
