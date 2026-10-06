@@ -2,7 +2,7 @@
 $key = (string) $section['section_key'];
 $isHero = $key === 'hero';
 $isProcess = $key === 'process';
-$ctaSections = ['services', 'equipment', 'gallery', 'machine_anim', 'final_cta'];
+$ctaSections = ['services', 'equipment', 'gallery', 'projects', 'machine_anim', 'final_cta'];
 $typeOpts = ['internal' => 'İç Sayfa', 'external' => 'Dış Link', 'whatsapp' => 'WhatsApp', 'phone' => 'Telefon', 'anchor' => 'Sayfa İçi'];
 $badges = $isHero && isset($content['badges']) && is_array($content['badges']) ? $content['badges'] : [];
 $steps = $isProcess && is_array($content) ? $content : [];
@@ -23,6 +23,7 @@ $steps = $isProcess && is_array($content) ? $content : [];
             'services' => 'Hizmet kartları: Yönetim > Hizmetler modülünden yönetilir.',
             'equipment' => 'Makine kartları: Yönetim > Makine Parkuru modülünden yönetilir.',
             'gallery' => 'Galeri görselleri: Yönetim > Galeri modülünden yönetilir.',
+            'projects' => 'Proje kartları: Yönetim > Projeler modülünden yönetilir. Yalnız gerçek saha verisi ve gerçek görseller yayınlanmalıdır.',
             'regions' => 'Bölge etiketleri: Yönetim > Çalışma Bölgeleri modülünden yönetilir.',
             'blog' => 'Yazılar: Yönetim > Blog modülünden yönetilir.',
             'faq' => 'Sorular: Yönetim > SSS modülünden yönetilir.',
