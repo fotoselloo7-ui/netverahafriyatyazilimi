@@ -157,6 +157,41 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
 </section>
 <?php endif; ?>
 
+<!-- PROJECTS -->
+<?php if (!empty($sections['projects']['is_active']) && !empty($projects)): $sec = $sections['projects']; ?>
+<section class="section">
+    <div class="container">
+        <div class="sec-head">
+            <span class="eyebrow">Gerçek Saha Çalışmaları</span>
+            <h2><?= e($sec['title']) ?></h2>
+            <p><?= e($sec['subtitle']) ?></p>
+        </div>
+        <div class="grid grid--3">
+            <?php foreach ($projects as $project): ?>
+                <a class="scard" href="<?= base_url('projeler/' . $project['slug']) ?>">
+                    <div class="scard__media">
+                        <?php if (!empty($project['cover_image'])): ?>
+                            <img src="<?= e(upload_url($project['cover_image'])) ?>" alt="<?= e($project['title']) ?>" loading="lazy">
+                        <?php else: ?>
+                            <div class="ph-media"><?= icon('excavator', 42) ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="scard__body">
+                        <h3><?= e($project['title']) ?></h3>
+                        <p><?= e(str_excerpt($project['short_description'] ?? '', 120)) ?></p>
+                        <div class="scard__foot">
+                            <?php if (!empty($project['region'])): ?><span class="region-chip" style="padding:7px 12px;box-shadow:none"><?= icon('map-pin', 13) ?> <?= e($project['region']) ?></span><?php endif; ?>
+                            <?php if (!empty($project['project_date'])): ?><span class="region-chip" style="padding:7px 12px;box-shadow:none"><?= icon('calendar', 13) ?> <?= e($project['project_date']) ?></span><?php endif; ?>
+                        </div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+        <div class="center-btn"><a href="<?= base_url('projeler') ?>" class="btn btn--primary">Tüm Projeler</a></div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- REGIONS (kaynak: service_regions tablosu — admin: Çalışma Bölgeleri) -->
 <?php if (!empty($sections['regions']['is_active'])): $sec = $sections['regions'];
     // Yeni CMS modülü öncelikli; tablo boşsa eski JSON içeriğe düş (geri uyumluluk)
