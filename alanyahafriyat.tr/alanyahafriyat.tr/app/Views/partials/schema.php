@@ -1,5 +1,5 @@
 <?php
-$schemaRegions = AppModelsServiceRegion::active('sort_order ASC, id ASC');
+$schemaRegions = \App\Models\ServiceRegion::active('sort_order ASC, id ASC');
 $schemaAreaServed = array_values(array_map(fn ($r) => (string) $r['title'], $schemaRegions));
 $schema = [
     '@context' => 'https://schema.org',
