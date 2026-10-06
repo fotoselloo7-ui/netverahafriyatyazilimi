@@ -1,0 +1,73 @@
+name: Generate up-to-date database.sql
+
+on:
+  push:
+    branches:
+      - fix/admin-sync-db-cleanup
+    paths:
+      - .github/workflows/generate-database.yml
+      - alanyahafriyat.tr/alanyahafriyat.tr/app/Core/Seeder.php
+      - alanyahafriyat.tr/alanyahafriyat.tr/app/Core/Migrator.php
+      - alanyahafriyat.tr/alanyahafriyat.tr/app/Core/Schema.php
+      - alanyahafriyat.tr/alanyahafriyat.tr/database/build_install_sql.php
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout working branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/admin-sync-db-cleanup
+          persist-credentials: true
+
+      - name: Prepare PHP with SQLite and MySQL
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_sqlite, pdo_mysql, sqlite3, mbstring, fileinfo
+          coverage: none
+
+      - name: Build install SQL from actual schema and seeds
+        working-directory: alanyahafriyat.tr/alanyahafriyat.tr
+        run: |
+          set -euo pipefail
+          php -v
+          php -l database/build_install_sql.php
+          php -l app/Core/Seeder.php
+          php -l app/Core/Migrator.php
+          php database/build_install_sql.php
+
+      - name: Validate latest service and equipment data
+        working-directory: alanyahafriyat.tr/alanyahafriyat.tr
+        run: |
+          set -euo pipefail
+          test -s database/database.sql
+          grep -q "forklift-kiralama" database/database.sql
+          grep -q "lastikli-kepce-kiralama" database/database.sql
+          grep -q "tumosan-traktor" database/database.sql
+          grep -q "zoomlion-ze35gu-mini-ekskavator" database/database.sql
+          grep -q "content_pack_version" database/database.sql
+          if grep -q "'hidromek-102b'" database/database.sql; then
+            echo "ERROR: Legacy sample equipment was found."
+            exit 1
+          fi
+          echo "Latest SQL contents: validated"
+          wc -c database/database.sql
+
+      - name: Commit only the refreshed SQL
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add alanyahafriyat.tr/alanyahafriyat.tr/database/database.sql
+          if git diff --cached --quiet; then
+            echo "database.sql is already up to date."
+          else
+            git commit -m "build: regenerate current database.sql (content pack v6)"
+            git push origin HEAD:fix/admin-sync-db-cleanup
+          fi
