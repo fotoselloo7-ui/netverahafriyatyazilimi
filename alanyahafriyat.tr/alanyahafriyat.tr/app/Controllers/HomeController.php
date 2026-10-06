@@ -23,7 +23,7 @@ class HomeController extends Controller
         $this->view('home', [
             'sections'    => $sections,
             'serviceRegions' => \App\Models\ServiceRegion::active('sort_order ASC, id ASC'),
-            'services'    => Service::featured(12),
+            'services'    => Service::featured(6),
             'equipment'   => Equipment::active(),
             'gallery'     => Gallery::active(),
             'projects'    => array_slice(Project::active('project_date DESC, id DESC'), 0, 3),
