@@ -821,6 +821,212 @@ input:focus,select:focus,textarea:focus{
   .premium-shine::after{display:none !important}
 }
 
+
+
+/* ===== Premium metric/icon interactions v3 =====
+   Bilgi/istatistik modülleri: sakin başlangıç, hover'da sarı dolgu + beyaz ikon. */
+.badges__grid{
+  grid-template-columns:.96fr 1.10fr 1fr 1.02fr .92fr;
+  gap:10px;
+}
+.badge{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  padding:10px 10px;
+  gap:10px;
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) ease,
+    background-color var(--motion-base) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+.badge > div{min-width:0}
+.badge b{
+  white-space:nowrap;
+  font-size:clamp(12.6px,.98vw,14px);
+  line-height:1.25;
+  letter-spacing:-.15px;
+}
+.badge__ico{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:color-mix(in srgb,var(--color-primary) 12%,transparent);
+  color:var(--color-primary);
+  border:1px solid color-mix(in srgb,var(--color-primary) 38%,transparent);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.018);
+}
+.badge__ico svg,
+.pstep__ico svg,
+.why-card .wico svg,
+.about-feats .fico svg{
+  transform-origin:50% 50%;
+  transition:
+    transform 620ms cubic-bezier(.2,.8,.2,1),
+    color var(--motion-fast) ease;
+}
+
+/* Süreç / neden biz / özellik ikonları da aynı premium dilde başlar. */
+.pstep__ico,
+.why-card .wico,
+.about-feats .fico{
+  background:color-mix(in srgb,var(--color-primary) 12%,transparent);
+  color:var(--color-primary);
+  border:1px solid color-mix(in srgb,var(--color-primary) 36%,transparent);
+  box-shadow:0 7px 18px rgba(0,0,0,.10);
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+
+/* Sayaç ve makine istatistikleri: rakamı hareket ettiren, ama sürekli oynamayan mikro etkileşim. */
+.counter b,
+.machine-anim__stats b{
+  display:inline-block;
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    color var(--motion-fast) ease,
+    text-shadow var(--motion-base) ease;
+}
+.machine-anim__stats > div{
+  position:relative;
+  min-width:118px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--color-primary) 3%,var(--color-surface));
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+
+/* Kartın üstünden çok hafif ışık geçişi. */
+.badge::after,
+.machine-anim__stats > div::after{
+  content:"";
+  position:absolute;
+  inset:-35% auto -35% -45%;
+  width:28%;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transform:skewX(-18deg);
+}
+
+@keyframes premiumIconWobble{
+  0%{transform:rotate(0deg) scale(1)}
+  32%{transform:rotate(-7deg) scale(1.06)}
+  68%{transform:rotate(7deg) scale(1.06)}
+  100%{transform:rotate(0deg) scale(1)}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .badge:hover{
+    transform:translateY(-4px);
+    background:color-mix(in srgb,var(--color-primary) 6%,rgba(255,255,255,.025));
+    border-color:color-mix(in srgb,var(--color-primary) 48%,transparent);
+    box-shadow:0 13px 28px rgba(0,0,0,.22);
+  }
+
+  /* İstenen temel davranış: dolgu sarı, ikon çizgisi beyaz. */
+  .badge:hover .badge__ico,
+  .contact-row:hover .badge__ico,
+  .pstep:hover .pstep__ico,
+  .why-card:hover .wico,
+  .about-feats li:hover .fico{
+    background:var(--color-primary);
+    color:#fff;
+    border-color:var(--color-primary);
+    box-shadow:0 10px 24px color-mix(in srgb,var(--color-primary) 28%,rgba(0,0,0,.18));
+  }
+
+  .badge:hover .badge__ico{
+    transform:translateY(-2px) scale(1.06);
+  }
+
+  /* Bazı kartlarda tam spin yerine daha rafine tek seferlik dönüş/wobble. */
+  .badge:nth-child(2n):hover .badge__ico svg,
+  .contact-row:nth-child(2n):hover .badge__ico svg{
+    animation:premiumIconWobble 620ms cubic-bezier(.2,.8,.2,1) both;
+  }
+  .pstep:nth-child(3n):hover .pstep__ico svg,
+  .why-card:nth-child(2n):hover .wico svg{
+    transform:rotate(360deg);
+  }
+
+  .pstep:hover .pstep__ico,
+  .why-card:hover .wico{
+    transform:translateY(-4px) scale(1.065);
+  }
+
+  .about-feats li{
+    border-radius:10px;
+    transition:transform var(--motion-fast) var(--ease-out),background-color var(--motion-fast) ease;
+  }
+  .about-feats li:hover{
+    transform:translateX(4px);
+    background:color-mix(in srgb,var(--color-primary) 5%,transparent);
+  }
+
+  .counter:hover{
+    background:
+      radial-gradient(circle at 50% 100%,color-mix(in srgb,var(--color-primary) 14%,transparent),transparent 66%),
+      var(--color-dark);
+    transform:translateY(-3px);
+  }
+  .counter:hover b{
+    color:#fff;
+    transform:translateY(-2px) scale(1.08);
+    text-shadow:0 0 24px color-mix(in srgb,var(--color-primary) 52%,transparent);
+  }
+
+  .machine-anim__stats > div:hover{
+    transform:translateY(-4px);
+    border-color:color-mix(in srgb,var(--color-primary) 45%,var(--line));
+    background:color-mix(in srgb,var(--color-primary) 7%,var(--color-surface));
+    box-shadow:0 12px 26px rgba(0,0,0,.10);
+  }
+  .machine-anim__stats > div:hover b{
+    transform:scale(1.07);
+  }
+
+  .badge:hover::after,
+  .machine-anim__stats > div:hover::after{
+    opacity:1;
+    transform:skewX(-18deg) translateX(520%);
+    transition:transform 760ms var(--ease-out),opacity 180ms ease;
+  }
+}
+
+/* Başlıklar desktop/tablet görünümünde tek satır; küçük ekranlarda da taşmadan küçülür. */
+@media(max-width:1180px) and (min-width:993px){
+  .badge{padding-inline:8px;gap:8px}
+  .badge__ico{width:40px;height:40px}
+  .badge b{font-size:12.2px}
+}
+@media(max-width:992px){
+  .badges__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .badge b{font-size:13.5px}
+}
+@media(max-width:480px){
+  .badge b{font-size:12.5px}
+}
+
+/* Hareket azaltma tercihine ek güvence. */
+@media(prefers-reduced-motion:reduce){
+  .badge__ico svg,.pstep__ico svg,.why-card .wico svg,.about-feats .fico svg{
+    animation:none !important;
+    transform:none !important;
+  }
+  .badge::after,.machine-anim__stats > div::after{display:none !important}
+}
+
 /* Responsive */
 @media(max-width:992px){
   .hero__inner{grid-template-columns:1fr;gap:28px;padding-top:48px;padding-bottom:56px}
