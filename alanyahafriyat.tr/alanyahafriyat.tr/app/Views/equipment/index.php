@@ -2,11 +2,11 @@
 
 <section class="section">
     <div class="container">
-        <div class="grid grid--4">
+        <div class="grid grid--3 equipment-grid">
             <?php foreach ($equipment as $m): $specs = array_filter(array_map('trim', explode('•', (string) $m['short_description']))); ?>
                 <article class="ecard">
                     <a href="<?= base_url('makine-parkuru/' . $m['slug']) ?>" class="ecard__media">
-                        <?php if ($m['image']): ?><img src="<?= e(upload_url($m['image'])) ?>" alt="<?= e($m['title']) ?>" loading="lazy">
+                        <?php if ($m['image']): ?><img src="<?= e(upload_url($m['image'])) ?>" alt="<?= e($m['title']) ?>" title="<?= e($m['title'] . ' - Ersan Hafriyat') ?>" width="900" height="560" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?><div class="ph-media"><?= icon('truck', 48) ?></div><?php endif; ?>
                     </a>
                     <div class="ecard__body">
