@@ -559,15 +559,15 @@ class Seeder
     protected function seedFooter(): void
     {
         $this->insert('footer_settings', [
-            'description' => 'Alanya ve Mahmutlar başta olmak üzere çevre bölgelerde hafriyat, kepçe kiralama, moloz taşıma ve çevre düzenleme hizmetleri sunuyoruz.',
+            'description' => 'Ersan Hafriyat; Alanya ve çevresinde hafriyat, kepçe kiralama, mini kepçe, temel ve kanal kazısı, moloz taşıma ve arsa tesviye ihtiyaçlarına yönelik saha çözümleri sunar.',
             'copyright_text' => '© ' . date('Y') . ' Ersan Hafriyat. Tüm hakları saklıdır.',
             'column_1_title' => 'Hizmetlerimiz',
             'column_1_links_json' => json_encode([
-                ['title' => 'Alanya Hafriyat Hizmeti', 'url' => '/hizmetler/alanya-hafriyat-hizmeti'],
                 ['title' => 'Kepçe Kiralama', 'url' => '/hizmetler/kepce-kiralama'],
+                ['title' => 'Mini Kepçe Kiralama', 'url' => '/hizmetler/mini-kepce-kiralama'],
                 ['title' => 'Temel Kazısı', 'url' => '/hizmetler/temel-kazisi'],
-                ['title' => 'Alt Yapı ve Kanal Açma', 'url' => '/hizmetler/alt-yapi-kanal-acma'],
-                ['title' => 'Arsa Tesviye', 'url' => '/hizmetler/arsa-tesviye-dolgu'],
+                ['title' => 'Moloz Taşıma', 'url' => '/hizmetler/moloz-hafriyat-nakliye'],
+                ['title' => 'Kanal Kazısı', 'url' => '/hizmetler/alt-yapi-kanal-acma'],
             ], JSON_UNESCAPED_UNICODE),
             'column_2_title' => 'Hızlı Linkler',
             'column_2_links_json' => json_encode([
@@ -579,7 +579,7 @@ class Seeder
                 ['title' => 'İletişim', 'url' => '/iletisim'],
             ], JSON_UNESCAPED_UNICODE),
             'column_3_title' => 'Hizmet Bölgeleri',
-            'column_3_content' => 'Mahmutlar, Kestel, Kargıcak, Oba, Tosmur, Alanya Merkez ve çevresi',
+            'column_3_content' => 'Mahmutlar, Kestel, Kargıcak, Oba, Tosmur, Cikcilli, Çıplaklı, Alanya Merkez, Konaklı, Payallar ve Avsallar',
             'background_color' => '#111111',
             'text_color' => '#CBD5E1',
             'created_at' => $this->now(), 'updated_at' => $this->now(),
