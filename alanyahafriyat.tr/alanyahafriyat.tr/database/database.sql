@@ -341,11 +341,11 @@ INSERT INTO `menus` (`id`, `menu_location`, `title`, `url`, `page_id`, `menu_typ
 (1, 'header', 'Ana Sayfa', '/', NULL, 'internal', NULL, '_self', 0, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (2, 'header', 'Hakkımızda', '/hakkimizda', NULL, 'internal', NULL, '_self', 1, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (3, 'header', 'Hizmetlerimiz', '/hizmetler', NULL, 'internal', NULL, '_self', 2, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
-(4, 'header', 'Makine Parkuru', '/makine-parkuru', NULL, 'internal', NULL, '_self', 3, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
+(4, 'header', 'Makine Parkuru', '/makine-parkuru', NULL, 'internal', NULL, '_self', 3, 0, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (5, 'header', 'Projelerimiz', '/projeler', NULL, 'internal', NULL, '_self', 4, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
-(6, 'header', 'Galeri', '/galeri', NULL, 'internal', NULL, '_self', 5, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
+(6, 'header', 'Galeri', '/galeri', NULL, 'internal', NULL, '_self', 5, 0, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (7, 'header', 'Blog', '/blog', NULL, 'internal', NULL, '_self', 6, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
-(8, 'header', 'SSS', '/sss', NULL, 'internal', NULL, '_self', 7, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
+(8, 'header', 'SSS', '/sss', NULL, 'internal', NULL, '_self', 7, 0, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (9, 'header', 'İletişim', '/iletisim', NULL, 'internal', NULL, '_self', 8, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (10, 'footer', 'Ana Sayfa', '/', NULL, 'internal', NULL, '_self', 0, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (11, 'footer', 'Hakkımızda', '/hakkimizda', NULL, 'internal', NULL, '_self', 1, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
@@ -355,7 +355,7 @@ INSERT INTO `menus` (`id`, `menu_location`, `title`, `url`, `page_id`, `menu_typ
 (15, 'footer', 'Blog', '/blog', NULL, 'internal', NULL, '_self', 5, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (16, 'mobile_bar', 'Ara', '', NULL, 'phone', 'phone', '_self', 0, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (17, 'mobile_bar', 'WhatsApp', 'Merhaba, teklif almak istiyorum.', NULL, 'whatsapp', 'whatsapp', '_self', 1, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
-(18, 'mobile_bar', 'Konum', '/iletisim', NULL, 'external', 'map-pin', '_self', 2, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
+(18, 'mobile_bar', 'Konum', '/iletisim#konum', NULL, 'internal', 'map-pin', '_self', 2, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07'),
 (19, 'mobile_bar', 'Teklif Al', '/iletisim', NULL, 'internal', 'send', '_self', 3, 1, '2026-07-02 15:34:07', '2026-07-02 15:34:07');
 
 -- --------------------------------------------------------
