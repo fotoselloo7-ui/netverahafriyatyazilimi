@@ -429,45 +429,90 @@ class Seeder
 
     protected function seedBlog(): void
     {
-        $catId = null;
         $categories = [
-            ['Hafriyat', 'hafriyat'],
-            ['Kepçe Kiralama', 'kepce-kiralama'],
-            ['Rehber', 'rehber'],
+            ['Kepçe Kiralama', 'kepce-kiralama', 'Alanya’da kepçe ve mini kepçe seçimi, kiralama süreci ve fiyat faktörleri.', 'Alanya Kepçe Kiralama Rehberi | Ersan Hafriyat', 'Kepçe ve mini kepçe kiralama öncesi makine seçimi, saha erişimi, çalışma süresi ve fiyat faktörlerini öğrenin.'],
+            ['Hafriyat ve Kazı', 'hafriyat-kazi', 'Temel, kanal, moloz, tesviye ve hafriyat işlerinin planlama rehberleri.', 'Alanya Hafriyat ve Kazı Rehberi | Ersan Hafriyat', 'Alanya’da hafriyat, temel kazısı, kanal, moloz taşıma ve arsa tesviye işleri için karar rehberleri.'],
+            ['Saha Rehberi', 'saha-rehberi', 'İş başlamadan önce erişim, zemin, ölçü ve saha hazırlığı hakkında pratik bilgiler.', 'Hafriyat Saha Rehberi | Ersan Hafriyat', 'Kazı ve hafriyat işi öncesinde saha erişimi, zemin, makine seçimi ve teklif için gerekli bilgileri öğrenin.'],
         ];
-        $i = 0;
-        foreach ($categories as [$title, $slug]) {
-            $this->insert('blog_categories', [
-                'title' => $title, 'slug' => $slug,
-                'description' => "$title kategorisindeki yazılar.",
-                'sort_order' => $i++, 'is_active' => 1,
+        $categoryIds = [];
+        foreach ($categories as $i => [$title, $slug, $desc, $seoTitle, $seoDesc]) {
+            $categoryIds[$slug] = $this->insert('blog_categories', [
+                'title' => $title, 'slug' => $slug, 'description' => $desc,
+                'seo_title' => $seoTitle, 'seo_description' => $seoDesc,
+                'sort_order' => $i, 'is_active' => 1,
             ]);
         }
-        $firstCat = (int) $this->pdo->query('SELECT id FROM blog_categories ORDER BY id ASC LIMIT 1')->fetchColumn();
 
         $posts = [
-            ['Alanya’da Kepçe Kiralama Hangi İşlerde Kullanılır?', 'alanyada-kepce-kiralama-hangi-islerde-kullanilir',
-             "## Alanya’da Kepçe Kiralama\n\nKepçe kiralama, Alanya ve çevresinde birçok farklı işte kullanılır. Temel kazısından bahçe düzenlemeye, moloz taşımadan altyapı çalışmalarına kadar geniş bir kullanım alanı vardır.\n\n### Başlıca Kullanım Alanları\n\n- Temel kazısı ve hafriyat\n- Bahçe ve arsa düzenleme\n- Kanal ve altyapı açma\n- Moloz yükleme ve taşıma\n\n### Neden Kepçe Kiralamalı?\n\nİş makinesi satın almak yerine, ihtiyaç duyduğunuz süre boyunca operatörlü kepçe kiralamak çok daha ekonomiktir. Ersan Hafriyat olarak günlük, haftalık ve aylık kiralama seçenekleri sunuyoruz."],
-            ['Hafriyat ve Moloz Taşıma Sürecinde Nelere Dikkat Edilmeli?', 'hafriyat-ve-moloz-tasima-surecinde-nelere-dikkat-edilmeli',
-             "## Hafriyat ve Moloz Taşıma\n\nHafriyat işleri, doğru planlama ve iş güvenliği gerektiren süreçlerdir. Moloz taşıma sırasında dikkat edilmesi gereken önemli noktalar vardır.\n\n### Dikkat Edilmesi Gerekenler\n\n1. **İş güvenliği:** Saha güvenliği önceliklidir.\n2. **Ruhsat ve izinler:** Gerekli belgeler eksiksiz olmalıdır.\n3. **Doğru makine seçimi:** İşin ölçeğine uygun ekipman kullanılmalıdır.\n4. **Çevre duyarlılığı:** Molozlar uygun döküm sahalarına taşınmalıdır.\n\nErsan Hafriyat, tüm bu süreçleri profesyonelce yönetir."],
-            ['Mahmutlar’da Bahçe, Arsa ve Temel Kazısı İçin Profesyonel Çözüm', 'mahmutlarda-bahce-arsa-ve-temel-kazisi',
-             "## Mahmutlar’da Profesyonel Kazı Çözümleri\n\nMahmutlar ve çevresinde bahçe düzenleme, arsa tesviye ve temel kazısı işlerinde deneyimli ekibimizle hizmet veriyoruz.\n\n### Hizmetlerimiz\n\n- Temel kazısı\n- Arsa tesviye ve dolgu\n- Bahçe düzenleme\n- Çevre temizliği\n\nModern makine parkurumuz ve uzman kadromuzla projelerinizi güvenle tamamlıyoruz. Ücretsiz keşif için bizimle iletişime geçin."],
+            [
+                'category' => 'kepce-kiralama',
+                'title' => 'Alanya’da Kepçe Kiralama Fiyatları Nasıl Hesaplanır?',
+                'slug' => 'alanyada-kepce-kiralama-fiyatlari-nasil-hesaplanir',
+                'focus' => 'alanya kepçe kiralama fiyatları',
+                'service_id' => 1,
+                'excerpt' => 'Alanya’da kepçe kiralama fiyatını çalışma süresi, makine tipi, nakliye, zemin, saha erişimi ve hafriyat taşıma ihtiyacı birlikte belirler.',
+                'seo_title' => 'Alanya Kepçe Kiralama Fiyatları Nasıl Hesaplanır? | Ersan Hafriyat',
+                'seo_description' => 'Alanya kepçe kiralama fiyatını etkileyen makine, süre, nakliye, zemin, ataşman, saha erişimi ve hafriyat taşıma kalemlerini öğrenin.',
+                'content' => "## Alanya’da kepçe kiralama fiyatını ne belirler?\n\nKepçe kiralama için tek bir doğru fiyat yoktur. Aynı şehirde iki işin maliyeti; çalışma süresi, kullanılacak makine, zeminin durumu ve nakliye ihtiyacı nedeniyle farklı olabilir. Bu yüzden doğru yaklaşım, önce işin kapsamını netleştirip sonra teklif oluşturmaktır.\n\n### 1. Çalışma süresi\n\nKazı, yükleme veya tesviye işinin tahmini süresi toplam maliyetin ana kalemlerinden biridir. Kısa bir yükleme işi ile gün boyu sürecek temel kazısı aynı şekilde fiyatlanmaz.\n\n### 2. Makine tipi\n\nDar alan için mini kepçe gerekirken daha geniş ve yüksek hacimli işler farklı kapasitede makine gerektirebilir. Gereğinden büyük makine seçmek de, yetersiz makineyle çalışmak da verimsiz olabilir.\n\n### 3. Makinenin sahaya nakli\n\nMakinenin çalışma alanına nasıl ulaştırılacağı, mesafe ve taşıma ihtiyacı teklifte dikkate alınır.\n\n### 4. Zemin ve ataşman ihtiyacı\n\nSert zemin, taşlı alan veya kırıcı gerektiren işler standart kazıdan farklı planlanır.\n\n### 5. Çıkan hafriyatın taşınması\n\nKazıdan çıkan toprak veya moloz sahada kalmayacaksa yükleme ve taşıma ayrıca planlanır.\n\n### 6. Saha erişimi\n\nDar kapı, düşük geçiş, eğimli arazi veya sınırlı dönüş alanı makine seçimini doğrudan etkileyebilir.\n\n## Daha doğru teklif için ne göndermelisiniz?\n\nKonum, yapılacak işin kısa tarifi, yaklaşık ölçü veya alan, giriş genişliği ve birkaç saha fotoğrafı ilk değerlendirmeyi hızlandırır. Böylece yalnız \"saatlik fiyat\" yerine gerçek işinize göre daha anlamlı bir teklif hazırlanabilir.",
+                'faq' => [
+                    ['Kepçe kiralama için sabit saatlik fiyat var mı?', 'Fiyat; makine, süre, nakliye, saha ve iş kapsamına göre değişebildiği için tek bir sabit rakam her iş için doğru olmaz.'],
+                    ['Fotoğraf göndererek ön teklif alınabilir mi?', 'Konum, ölçü ve saha fotoğrafları ön değerlendirmeyi kolaylaştırır; bazı işlerde kesin plan için yerinde inceleme gerekebilir.'],
+                ],
+            ],
+            [
+                'category' => 'kepce-kiralama',
+                'title' => 'Mini Kepçe mi Büyük Kepçe mi? Alanya’daki İşiniz İçin Hangisi Uygun?',
+                'slug' => 'mini-kepce-mi-buyuk-kepce-mi-alanya',
+                'focus' => 'alanya mini kepçe',
+                'service_id' => 2,
+                'excerpt' => 'Dar bahçe, küçük kanal ve hassas kazılarda mini kepçe; daha yüksek hacimli ve geniş sahalarda farklı makine seçenekleri değerlendirilebilir.',
+                'seo_title' => 'Mini Kepçe mi Büyük Kepçe mi? Alanya İçin Makine Seçimi',
+                'seo_description' => 'Alanya’da mini kepçe ile daha büyük kepçe arasında seçim yaparken giriş genişliği, kazı hacmi, zemin ve çalışma alanında nelere bakılır?',
+                'content' => "## Mini kepçe ne zaman daha mantıklıdır?\n\nMini kepçe; dar bahçe girişleri, bina çevreleri, küçük temel ve kanal kazıları, peyzaj hazırlığı ve kontrollü çalışma gereken alanlarda avantaj sağlayabilir. Ancak \"mini\" olması her iş için yeterli olduğu anlamına gelmez.\n\n### Giriş ve dönüş alanı\n\nMakinenin sahaya girebilmesi için yalnız kapı genişliği değil, içeride dönüş yapabileceği alan da önemlidir. Gerçek makine ölçüsü doğrulanmadan kesin uygunluk söylenmemelidir.\n\n### Kazı derinliği ve hacmi\n\nKüçük bir kanal ile yüksek hacimli temel kazısının makine ihtiyacı aynı değildir. Kazı derinliği, genişliği ve çıkarılacak malzeme miktarı seçimi etkiler.\n\n### Zemin yapısı\n\nYumuşak toprak, sıkışmış dolgu, taşlı zemin veya kırıcı ihtiyacı farklı ekipman gerektirebilir.\n\n### Çıkan malzemenin taşınması\n\nMini kepçeyle kazı yapılırken çıkan toprağın kamyona yüklenmesi veya sahada başka bir noktaya alınması gerekiyorsa bu akış da baştan planlanmalıdır.\n\n## Hangi bilgileri paylaşmalısınız?\n\nİşin konumu, kapı/geçiş ölçüsü, yaklaşık kazı ölçüsü, zeminle ilgili bilinenler ve fotoğraflar doğru makineyi seçmek için iyi bir başlangıçtır.",
+                'faq' => [
+                    ['Mini kepçe bahçe kapısından geçer mi?', 'Bu, kapının gerçek genişliğine ve kullanılacak makinenin doğrulanmış ölçülerine bağlıdır. Ölçü ve fotoğraf paylaşılması gerekir.'],
+                    ['Mini kepçe temel kazısında kullanılabilir mi?', 'Küçük ölçekli işlerde kullanılabilir; uygunluk kazı hacmi, derinlik, zemin ve süreye göre değerlendirilir.'],
+                ],
+            ],
+            [
+                'category' => 'hafriyat-kazi',
+                'title' => 'Temel Kazısı Öncesi Nelere Bakılır?',
+                'slug' => 'temel-kazisi-oncesi-nelere-bakilir',
+                'focus' => 'alanya temel kazısı',
+                'service_id' => 3,
+                'excerpt' => 'Temel kazısından önce proje ölçüsü kadar saha erişimi, zemin, kazı derinliği, çıkan malzeme ve taşıma planı da netleştirilmelidir.',
+                'seo_title' => 'Alanya Temel Kazısı Öncesi Nelere Bakılır? | Ersan Hafriyat',
+                'seo_description' => 'Temel kazısı öncesinde kazı ölçüsü, zemin, saha erişimi, makine seçimi, hafriyat taşıma ve dolgu planında kontrol edilmesi gerekenler.',
+                'content' => "## Temel kazısında ilk soru yalnız \"kaç metre kazılacak?\" değildir\n\nSağlıklı bir temel kazısı planı; proje ölçüsü, zemin, makine erişimi ve çıkan malzemenin yönetimini birlikte ele alır. İş başlamadan önce bu başlıkların netleştirilmesi gereksiz beklemeyi ve yanlış makine seçimini azaltır.\n\n### Proje ve kazı ölçüleri\n\nKazının sınırları, derinliği ve çalışma payı mümkün olduğunca net olmalıdır. Uygulama teknik projeye bağlıysa saha çalışması ilgili ölçülere göre yürütülmelidir.\n\n### Makinenin sahaya erişimi\n\nKapı, yol genişliği, eğim, dönüş alanı ve çevredeki mevcut yapılar makinenin seçimini etkiler.\n\n### Zemin yapısı\n\nToprak, dolgu, taşlı veya sert zemin çalışma süresini ve ataşman ihtiyacını değiştirebilir.\n\n### Çıkan malzeme ne olacak?\n\nKazı toprağı sahada dolgu için kullanılacak mı, stoklanacak mı, yoksa taşınacak mı? Bu karar yükleme ve kamyon planını doğrudan etkiler.\n\n### Kazı sonrası tesviye ve dolgu\n\nTemel çevresi veya saha içinde daha sonra dolgu ve seviye düzenlemesi gerekecekse iş sırası en baştan buna göre planlanabilir.\n\n## Teklif isterken paylaşılabilecek bilgiler\n\nKonum, proje/ölçü bilgisi, saha fotoğrafları, giriş durumu ve çıkan malzemeyle ilgili beklenti doğru ön değerlendirme için en yararlı bilgilerdir.",
+                'faq' => [
+                    ['Temel kazısı için hangi makine gerekir?', 'Makine seçimi kazı hacmi, derinlik, zemin ve saha erişimine göre yapılır.'],
+                    ['Kazı toprağı taşınmak zorunda mı?', 'Hayır. Proje ve saha uygunsa bir kısmı dolgu veya tesviye için değerlendirilebilir; taşınacak kısım ayrıca planlanır.'],
+                ],
+            ],
         ];
-        foreach ($posts as $idx => [$title, $slug, $md]) {
-            $wordCount = str_word_count(strip_tags($md));
+
+        foreach ($posts as $idx => $post) {
+            $wordCount = str_word_count(strip_tags($post['content']));
             $this->insert('blog_posts', [
-                'category_id' => $firstCat,
-                'title' => $title, 'slug' => $slug,
-                'excerpt' => str_excerpt($md, 150),
-                'content_markdown' => $md,
+                'category_id' => $categoryIds[$post['category']] ?? null,
+                'title' => $post['title'], 'slug' => $post['slug'],
+                'excerpt' => $post['excerpt'],
+                'content_markdown' => $post['content'],
                 'author_name' => 'Ersan Hafriyat',
-                'seo_title' => $title . ' | Ersan Hafriyat',
-                'seo_description' => str_excerpt($md, 155),
+                'focus_keyword' => $post['focus'],
+                'seo_title' => $post['seo_title'],
+                'seo_description' => $post['seo_description'],
+                'og_title' => $post['seo_title'],
+                'og_description' => $post['seo_description'],
+                'twitter_title' => $post['seo_title'],
+                'twitter_description' => $post['seo_description'],
                 'robots_index' => 1, 'robots_follow' => 1,
                 'schema_type' => 'BlogPosting',
-                'reading_time' => max(1, (int) ceil($wordCount / 200)),
+                'related_service_id' => $post['service_id'],
+                'faq_json' => json_encode(array_map(fn ($f) => ['question' => $f[0], 'answer' => $f[1]], $post['faq']), JSON_UNESCAPED_UNICODE),
+                'reading_time' => max(2, (int) ceil($wordCount / 200)),
                 'status' => 'published',
-                'published_at' => date('Y-m-d H:i:s', strtotime("-" . ($idx * 3) . " days")),
+                'published_at' => date('Y-m-d H:i:s', strtotime("-" . ($idx * 4) . " days")),
                 'created_at' => $this->now(), 'updated_at' => $this->now(),
             ]);
         }
