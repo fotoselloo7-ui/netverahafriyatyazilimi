@@ -121,7 +121,7 @@ if (!function_exists('map_embed_url')) {
             return '';
         }
 
-        if (preg_match('/<iframe\\b[^>]*\\bsrc=["\\\']([^"\\\']+)["\\\']/i', $value, $m)) {
+        if (preg_match("~\\bsrc\\s*=\\s*['\"]([^'\"]+)['\"]~i", $value, $m)) {
             $value = $m[1];
         }
 
