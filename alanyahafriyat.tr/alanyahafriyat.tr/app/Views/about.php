@@ -1,13 +1,13 @@
 <?php
 $heroImg = !empty($page['hero_image']) ? upload_url($page['hero_image']) : null;
-$features = ['Deneyimli ve Uzman Ekip', 'Modern Makine Parkuru', 'Zamanında ve Güvenli Çalışma', 'Uygun Fiyat Politikası', 'Yerinde Keşif ve Doğru Planlama'];
+$features = ['İşin kapsamına göre makine ve ekip planlama', 'Telefon ve WhatsApp üzerinden kolay teklif', 'Alanya ve çevresinde saha odaklı hizmet', 'Kazı, taşıma ve tesviye işlerini birlikte planlama', 'İş öncesi erişim, zemin ve çalışma kapsamı değerlendirmesi'];
 $why = [
-    ['zap', 'Hızlı Dönüş', 'İhtiyaçlarınıza hızlı cevap verir, zaman kaybınızı minimuma indiririz.'],
-    ['truck', 'Doğru Makine', 'İşinize en uygun makine seçimi ile verimli ve ekonomik çözümler sunarız.'],
-    ['shield', 'Güvenli Çalışma', 'İş güvenliği standartlarına uygun çalışır, risksiz süreç yönetiriz.'],
-    ['award', 'Kaliteli Hizmet', 'Kaliteyi ön planda tutar, her işi kendi işimiz gibi sahipleniriz.'],
-    ['tag', 'Uygun Fiyat', 'Piyasa koşullarına uygun, rekabetçi ve şeffaf fiyatlandırma yaparız.'],
-    ['users', 'Müşteri Memnuniyeti', 'Müşteri memnuniyetini her zaman önceliğimiz olarak belirleriz.'],
+    ['search', 'İhtiyaca Uygun Planlama', 'İşin türünü, saha erişimini ve zemin koşullarını değerlendirerek uygun çalışma planını oluştururuz.'],
+    ['truck', 'Doğru Makine Seçimi', 'Büyük veya dar alanlı işlerde kullanılacak makineyi işin gereksinimine göre belirleriz.'],
+    ['map-pin', 'Yerel Hizmet', 'Mahmutlar başta olmak üzere Alanya ve çevresindeki hizmet bölgelerine odaklanırız.'],
+    ['message-circle', 'Açık İletişim', 'Talep, kapsam, süre ve teklif adımlarını telefon veya WhatsApp üzerinden netleştiririz.'],
+    ['shield', 'Planlı Saha Uygulaması', 'Kazı ve hafriyat işlerinde saha düzeni ve iş güvenliği gereksinimlerini çalışma planına dahil ederiz.'],
+    ['tag', 'Şeffaf Teklif', 'Fiyatı; iş süresi, makine tipi, nakliye, zemin ve çıkan malzeme gibi gerçek iş kalemlerine göre değerlendiririz.'],
 ];
 ?>
 <section class="page-hero"<?= $heroImg ? ' style="background-image:linear-gradient(rgba(10,10,12,.7),rgba(10,10,12,.65)),url(\''.e($heroImg).'\')"' : '' ?>>
@@ -38,12 +38,19 @@ $why = [
                 <?php if ($heroImg): ?><img src="<?= e($heroImg) ?>" alt="<?= e(site_name()) ?>">
                 <?php else: ?><div class="ph-media"><?= icon('excavator', 90) ?></div><?php endif; ?>
             </div>
+            <?php $visibleCounters = array_filter([
+                ['value' => trim((string) ($counters['experience'] ?? '')), 'label' => 'Yıllık Deneyim'],
+                ['value' => trim((string) ($counters['projects'] ?? '')), 'label' => 'Tamamlanan Proje'],
+                ['value' => trim((string) ($counters['staff'] ?? '')), 'label' => 'Uzman Personel'],
+                ['value' => trim((string) ($counters['support'] ?? '')), 'label' => 'Destek Hizmeti'],
+            ], fn ($item) => $item['value'] !== ''); ?>
+            <?php if ($visibleCounters): ?>
             <div class="counters">
-                <div class="counter"><b><?= e($counters['experience']) ?></b><span>Yıllık Deneyim</span></div>
-                <div class="counter"><b><?= e($counters['projects']) ?></b><span>Tamamlanan Proje</span></div>
-                <div class="counter"><b><?= e($counters['staff']) ?></b><span>Uzman Personel</span></div>
-                <div class="counter"><b><?= e($counters['support']) ?></b><span>Destek Hizmeti</span></div>
+                <?php foreach ($visibleCounters as $counter): ?>
+                    <div class="counter"><b><?= e($counter['value']) ?></b><span><?= e($counter['label']) ?></span></div>
+                <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -94,7 +101,7 @@ $why = [
 
 <section class="final-cta">
     <div class="container final-cta__inner">
-        <div><h2>Hafriyat veya Kepçe Hizmeti mi İhtiyacınız Var?</h2><p>Hemen bizimle iletişime geçin, hızlı ve ücretsiz teklif alın.</p></div>
+        <div><h2>Hafriyat veya Kepçe Hizmeti mi İhtiyacınız Var?</h2><p>İşinizin kapsamını paylaşın; uygun makine ve çalışma planı için teklif isteyin.</p></div>
         <div class="final-cta__btns">
             <a href="<?= e(whatsapp_link('Merhaba, teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" data-wa-event class="btn btn--dark"><?= icon('whatsapp', 18) ?> WhatsApp</a>
             <a href="<?= base_url('iletisim') ?>" class="btn btn--dark" style="background:#fff;color:#111"><?= icon('star', 17) ?> Teklif Al</a>
