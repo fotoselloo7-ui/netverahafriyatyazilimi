@@ -1073,7 +1073,7 @@ class Seeder
         $settingUpdates = [
             'site_name' => 'Netvera Hafriyat',
             'logo' => 'genel/netvera-hafriyat-logo.webp',
-            'footer_about' => 'Netvera Hafriyat; hafriyat, kepçe kiralama, mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme ihtiyaçlarına yönelik profesyonel web sitesi demo içeriği sunar.',
+            'footer_about' => 'Netvera Hafriyat; Alanya ve çevresinde hafriyat, kepçe kiralama, mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme hizmetleri sunar.',
         ];
         foreach ($settingUpdates as $key => $value) {
             $stmt = $this->pdo->prepare('UPDATE settings SET setting_value=?, updated_at=? WHERE setting_key=?');
@@ -1158,7 +1158,7 @@ class Seeder
 
         // Footer'ın marka açıklamasını ve telifini yeni marka ile eşitle.
         try {
-            $this->pdo->exec("UPDATE footer_settings SET description='Netvera Hafriyat; hafriyat ve iş makinesi hizmetlerini modern, güçlü ve profesyonel bir kurumsal yapı ile sunmak için hazırlanmıştır.', copyright_text='© " . date('Y') . " Netvera Hafriyat. Tüm hakları saklıdır.'");
+            $this->pdo->exec("UPDATE footer_settings SET description='Netvera Hafriyat; Alanya ve çevresinde hafriyat, kepçe kiralama, mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme hizmetleri sunar.', copyright_text='© " . date('Y') . " Netvera Hafriyat. Tüm hakları saklıdır.'");
         } catch (\Throwable $e) {
         }
 
