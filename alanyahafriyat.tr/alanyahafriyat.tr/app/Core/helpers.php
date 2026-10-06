@@ -109,6 +109,32 @@ if (!function_exists('whatsapp_number')) {
     }
 }
 
+if (!function_exists('map_embed_url')) {
+    /**
+     * Admin paneline tam iframe kodu veya yalnızca Google Maps embed URL'si
+     * yapıştırılsa da güvenli bir iframe src değeri üretir.
+     */
+    function map_embed_url(?string $value): string
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return '';
+        }
+
+        if (preg_match('/<iframe\\b[^>]*\\bsrc=["\\\']([^"\\\']+)["\\\']/i', $value, $m)) {
+            $value = $m[1];
+        }
+
+        $value = html_entity_decode(trim($value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (!filter_var($value, FILTER_VALIDATE_URL)) {
+            return '';
+        }
+
+        $scheme = strtolower((string) parse_url($value, PHP_URL_SCHEME));
+        return in_array($scheme, ['http', 'https'], true) ? $value : '';
+    }
+}
+
 if (!function_exists('whatsapp_link')) {
     function whatsapp_link(string $text = ''): string
     {
