@@ -106,6 +106,7 @@ class Migrator
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_url', 'VARCHAR(191)', '');
 
         $this->upgradeContentPackV5();
+        $this->upgradeCatalogPackV6();
     }
 
     protected function upgradeContentPackV5(): void
@@ -145,6 +146,29 @@ class Migrator
         } catch (\Throwable $e) {
             if (env('APP_DEBUG', false)) {
                 error_log('Content Pack v5 upgrade: ' . $e->getMessage());
+            }
+        }
+    }
+
+    protected function upgradeCatalogPackV6(): void
+    {
+        try {
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 6) {
+                return;
+            }
+
+            (new Seeder($this->pdo))->applyCatalogPackV6();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v6 upgrade: ' . $e->getMessage());
             }
         }
     }
