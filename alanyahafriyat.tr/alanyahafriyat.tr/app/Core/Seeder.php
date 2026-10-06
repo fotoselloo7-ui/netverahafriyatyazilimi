@@ -634,7 +634,12 @@ class Seeder
         // Eski demo seed paketini gerçek yayına uygun içerik paketiyle değiştirir.
         // Yalnız Migrator tarafından bilinen legacy imza tespit edildiğinde çağrılır.
         $preserve = [];
-        foreach (['logo', 'og_image'] as $key) {
+        // Yerelde/admin panelinde girilmiş gerçek işletme ve iletişim verilerini koru.
+        // SEO metinlerini yenilerken kullanıcının telefon, harita veya logo ayarını ezme.
+        foreach ([
+            'site_name', 'phone', 'whatsapp_number', 'email', 'address', 'working_hours',
+            'map_embed', 'logo', 'og_image', 'web_design_credit_text', 'web_design_credit_url'
+        ] as $key) {
             $stmt = $this->pdo->prepare('SELECT setting_value FROM settings WHERE setting_key = ? LIMIT 1');
             $stmt->execute([$key]);
             $preserve[$key] = (string) ($stmt->fetchColumn() ?: '');
