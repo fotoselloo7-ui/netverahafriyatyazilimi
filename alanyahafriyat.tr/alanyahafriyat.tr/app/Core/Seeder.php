@@ -49,6 +49,7 @@ class Seeder
         $this->seedNotifications();
         $this->seedTestimonials();
         $this->seedServiceRegions();
+        $this->applyStockMediaPackV8();
     }
 
     protected function seedUsers(): void
@@ -89,7 +90,7 @@ class Seeder
             ['floating_whatsapp_enabled', '1', 'general', 'toggle'],
             ['web_design_credit_text', 'Netvera Teknoloji Yazılım', 'footer', 'text'],
             ['web_design_credit_url', '', 'footer', 'text'],
-            ['content_pack_version', '7', 'system', 'text'],
+            ['content_pack_version', '8', 'system', 'text'],
         ];
         foreach ($settings as [$k, $v, $g, $t]) {
             $this->insert('settings', [
@@ -1063,6 +1064,173 @@ class Seeder
         $this->seedFooter();
         $this->seedTestimonials();
         $this->seedServiceRegions();
+    }
+
+    public function applyStockMediaPackV8(): void
+    {
+        $now = $this->now();
+
+        // Tüm görsel alanları konuya uygun, web için ölçülendirilmiş stok görsellerle eşleştirilir.
+        // Pexels CDN parametreleri kart/hero boyutunu sınırlayarak gereksiz büyük dosya indirilmesini önler.
+        $serviceVisuals = [
+            'kepce-kiralama' => ['https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'mini-kepce-kiralama' => ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'temel-kazisi' => ['https://images.pexels.com/photos/18214889/pexels-photo-18214889.png?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/18214889/pexels-photo-18214889.png?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'moloz-hafriyat-nakliye' => ['https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'alt-yapi-kanal-acma' => ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'arsa-tesviye-dolgu' => ['https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'cevre-bahce-duzenleme' => ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'drenaj-ozel-kazi' => ['https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'havuz-kazisi' => ['https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'yol-acma-saha-hazirlama' => ['https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'toprak-serme-sikistirma' => ['https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'yikim-sonrasi-saha-temizligi' => ['https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'lastikli-kepce-kiralama' => ['https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'kazici-yukleyici-kiralama' => ['https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'forklift-kiralama' => ['https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+            'traktor-arazi-nakliye' => ['https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp','https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp'],
+        ];
+        $serviceStmt = $this->pdo->prepare('UPDATE services SET card_image=?, cover_image=?, hero_image=?, og_image=?, updated_at=? WHERE slug=?');
+        foreach ($serviceVisuals as $slug => [$card,$hero]) {
+            $serviceStmt->execute([$card,$hero,$hero,$card,$now,$slug]);
+        }
+
+        // Makine parkuru: stok görseller makine türünü temsil eder, marka/model iddiası görsele bağlanmaz.
+        $equipmentVisuals = [
+            'zoomlion-ze35gu-mini-ekskavator' => ['Mini Ekskavatör','Mini Ekskavatör','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            'mitsubishi-canter-hafriyat-kamyonu' => ['Hafriyat Kamyonu','Hafriyat Kamyonu','https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            'orta-sinif-lastikli-ekskavator' => ['Orta Sınıf Lastikli Ekskavatör','Lastikli Ekskavatör','https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            'kazici-yukleyici-beko-loder' => ['Kazıcı Yükleyici','Kazıcı Yükleyici','https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            'tumosan-traktor' => ['Yerli Traktör','Yerli Traktör','https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+            'dizel-forklift' => ['Dizel Forklift','Dizel Forklift','https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=900&h=560&fit=crop&fm=webp'],
+        ];
+        $equipmentStmt = $this->pdo->prepare('UPDATE equipment SET title=?, brand_model=?, image=?, updated_at=? WHERE slug=?');
+        foreach ($equipmentVisuals as $slug => [$title,$brand,$image]) {
+            $equipmentStmt->execute([$title,$brand,$image,$now,$slug]);
+        }
+
+        // Projeler: her hizmet türüne uygun stok kapak ve detay galerisi.
+        $projectVisuals = [
+            'alanya-mini-kepce-kanal-kazisi' => [
+                'https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-dar-alan-tesviye' => [
+                'https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-moloz-hafriyat-tasima' => [
+                'https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-arsa-kazisi-tesviye' => [
+                'https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-bahce-arsa-temizleme' => [
+                'https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-yikim-sonrasi-saha-temizligi' => [
+                'https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+            'alanya-sera-mini-kepce-temizligi' => [
+                'https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp',
+                ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp']
+            ],
+        ];
+        $projectStmt = $this->pdo->prepare('UPDATE projects SET cover_image=?, gallery_json=?, content=REPLACE(content, \' Görseller Netvera Hafriyat saha arşivinden seçilmiştir.\', \'\'), updated_at=? WHERE slug=?');
+        foreach ($projectVisuals as $slug => [$cover,$gallery]) {
+            $projectStmt->execute([$cover,json_encode($gallery, JSON_UNESCAPED_UNICODE),$now,$slug]);
+        }
+
+        // Galeri tamamen stok görsellerle yeniden kurulur; böylece eski saha dosyalarına bağımlılık kalmaz.
+        try {
+            $this->pdo->exec('DELETE FROM gallery');
+            $galleryItems = [
+                ['Mini Ekskavatör ile Dar Alan Kazısı','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Mini Kepçe','Mini ekskavatör ile dar alan kazı çalışması'],
+                ['Ekskavatör ile Hafriyat Kazısı','https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Hafriyat','Ekskavatör ile hafriyat ve kazı çalışması'],
+                ['Temel Kazısı','https://images.pexels.com/photos/18214889/pexels-photo-18214889.png?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Temel Kazısı','Bina ve yapı temel kazısı'],
+                ['Hafriyat Kamyonu','https://images.pexels.com/photos/29506754/pexels-photo-29506754.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Hafriyat Taşıma','Hafriyat kamyonu ile saha taşıma çalışması'],
+                ['Arsa Tesviye','https://images.pexels.com/photos/12164798/pexels-photo-12164798.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Arsa Tesviye','Arsa tesviye ve zemin düzenleme çalışması'],
+                ['Havuz Kazısı','https://images.pexels.com/photos/38733243/pexels-photo-38733243.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Havuz Kazısı','Villa ve bahçe havuz kazısı'],
+                ['Yol ve Saha Hazırlığı','https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Yol Açma','Yol açma ve saha hazırlığı'],
+                ['Toprak Serme ve Sıkıştırma','https://images.pexels.com/photos/4390530/pexels-photo-4390530.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Dolgu ve Tesviye','Toprak serme ve sıkıştırma hazırlığı'],
+                ['Yıkım Sonrası Saha Temizliği','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Saha Temizliği','Yıkım sonrası moloz ve saha temizliği'],
+                ['Lastikli Ekskavatör','https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Makine Parkuru','Lastikli ekskavatör saha çalışması'],
+                ['Kazıcı Yükleyici','https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Makine Parkuru','Kazıcı yükleyici ile saha çalışması'],
+                ['Forklift ile Yük Taşıma','https://images.pexels.com/photos/12069525/pexels-photo-12069525.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Forklift','Forklift ile paletli yük taşıma'],
+                ['Traktör ile Arazi Çalışması','https://images.pexels.com/photos/8938489/pexels-photo-8938489.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Arazi','Traktör ile arazi ve saha çalışması'],
+                ['Kanal ve Drenaj Kazısı','https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Kanal Kazısı','Kanal ve drenaj hattı için kazı çalışması'],
+                ['Moloz Yükleme','https://images.pexels.com/photos/29565466/pexels-photo-29565466.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Moloz Taşıma','Moloz yükleme ve saha temizliği'],
+                ['Şantiye Kazı Çalışması','https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp','Hafriyat','Şantiye alanında ekskavatör kazı çalışması'],
+            ];
+            foreach ($galleryItems as $i => [$title,$image,$category,$alt]) {
+                $this->insert('gallery', [
+                    'title'=>$title,'image'=>$image,'video_url'=>null,'category'=>$category,'alt_text'=>$alt,
+                    'sort_order'=>$i,'is_active'=>1,'created_at'=>$now,'updated_at'=>$now,
+                ]);
+            }
+        } catch (\Throwable $e) {
+        }
+
+        // Makalelerin her birine konuya uygun ayrı stok kapak/OG/Twitter görseli.
+        $blogVisuals = [
+            'alanyada-kepce-kiralama-fiyatlari-nasil-hesaplanir' => ['https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop&fm=webp','Kepçe kiralama ve hafriyat saha çalışması'],
+            'mini-kepce-mi-buyuk-kepce-mi-alanya' => ['https://images.pexels.com/photos/14846286/pexels-photo-14846286.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop&fm=webp','Mini ekskavatör ile dar alan kazı çalışması'],
+            'temel-kazisi-oncesi-nelere-bakilir' => ['https://images.pexels.com/photos/18214889/pexels-photo-18214889.png?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop&fm=webp','Temel kazısı yapılan yapı şantiyesi'],
+        ];
+        $blogStmt = $this->pdo->prepare('UPDATE blog_posts SET cover_image=?, cover_image_alt=?, cover_image_title=title, og_image=?, twitter_image=?, author_name=?, updated_at=? WHERE slug=?');
+        foreach ($blogVisuals as $slug => [$image,$alt]) {
+            $blogStmt->execute([$image,$alt,$image,$image,'Netvera Hafriyat',$now,$slug]);
+        }
+
+        // Ana sayfa, hakkımızda, genel OG ve popup dahil kalan görsel alanları.
+        $hero = 'https://images.pexels.com/photos/38948572/pexels-photo-38948572.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp';
+        $about = 'https://images.pexels.com/photos/18812422/pexels-photo-18812422.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp';
+        $machine = 'https://images.pexels.com/photos/29411122/pexels-photo-29411122.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop&fm=webp';
+        $popup = 'https://images.pexels.com/photos/37704019/pexels-photo-37704019.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop&fm=webp';
+
+        $hs = $this->pdo->prepare('UPDATE home_sections SET image=?, updated_at=? WHERE section_key=?');
+        $hs->execute([$hero,$now,'hero']);
+        $hs->execute([$machine,$now,'machine_anim']);
+        $this->pdo->exec("UPDATE home_sections SET title='Hafriyat ve Saha Görselleri', subtitle='Hizmet türlerini ve iş makinelerini gösteren görsel örnekler.' WHERE section_key='gallery'");
+        $this->pdo->exec("UPDATE home_sections SET subtitle='Hizmet türlerini gösteren uygulama örnekleri.' WHERE section_key='projects'");
+
+        $pageStmt = $this->pdo->prepare("UPDATE pages SET hero_image=?, cover_image=?, og_image=?, updated_at=? WHERE slug='hakkimizda'");
+        $pageStmt->execute([$about,$about,$about,$now]);
+
+        try {
+            $this->pdo->exec("UPDATE popups SET image=" . $this->pdo->quote($popup));
+        } catch (\Throwable $e) {
+        }
+
+        $settings = [
+            'og_image' => $hero,
+        ];
+        foreach ($settings as $key => $value) {
+            $st = $this->pdo->prepare('UPDATE settings SET setting_value=?, updated_at=? WHERE setting_key=?');
+            $st->execute([$value,$now,$key]);
+        }
+
+        // Stock görseller gerçek müşteri/saha fotoğrafı gibi sunulmasın.
+        try {
+            $this->pdo->exec("UPDATE projects SET content=REPLACE(content, ' Görseller Netvera Hafriyat saha arşivinden seçilmiştir.', '')");
+        } catch (\Throwable $e) {
+        }
+
+        $exists = $this->pdo->prepare("SELECT id FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+        $exists->execute();
+        if ($exists->fetchColumn()) {
+            $st = $this->pdo->prepare("UPDATE settings SET setting_value='8', updated_at=? WHERE setting_key='content_pack_version'");
+            $st->execute([$now]);
+        } else {
+            $this->insert('settings', [
+                'setting_key'=>'content_pack_version','setting_value'=>'8','setting_group'=>'system','input_type'=>'text',
+                'created_at'=>$now,'updated_at'=>$now,
+            ]);
+        }
     }
 
     public function applyBrandPackV7(): void
