@@ -23,7 +23,7 @@
             <?php foreach ($projects as $p): ?>
                 <a class="scard" href="<?= base_url('projeler/' . $p['slug']) ?>">
                     <div class="scard__media">
-                        <?php if ($p['cover_image']): ?><img src="<?= e(upload_url($p['cover_image'])) ?>" alt="<?= e($p['title']) ?>" loading="lazy">
+                        <?php if ($p['cover_image']): ?><img src="<?= e(upload_url($p['cover_image'])) ?>" alt="<?= e($p['title']) ?>" title="<?= e($p['service_type'] ?: $p['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?><div class="ph-media"><?= icon('excavator', 48) ?></div><?php endif; ?>
                     </div>
                     <div class="scard__body" style="text-align:left">
