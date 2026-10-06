@@ -39,7 +39,11 @@ class AdminSettingController extends AdminBaseController
         $this->verifyCsrf();
         foreach ($this->fields as $key => $group) {
             if (array_key_exists($key, $_POST)) {
-                SettingsService::set($key, trim((string) $_POST[$key]), $group);
+                $value = trim((string) $_POST[$key]);
+                if ($key === 'map_embed') {
+                    $value = map_embed_url($value);
+                }
+                SettingsService::set($key, $value, $group);
             }
         }
         foreach ($this->toggles as $key => $group) {
