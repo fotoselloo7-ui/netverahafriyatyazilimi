@@ -105,10 +105,10 @@ class Migrator
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_text', 'VARCHAR(191)', '');
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_url', 'VARCHAR(191)', '');
 
-        $this->upgradeContentPackV4();
+        $this->upgradeContentPackV5();
     }
 
-    protected function upgradeContentPackV4(): void
+    protected function upgradeContentPackV5(): void
     {
         try {
             // Fresh kurulumda Seeder zaten v4 görsel paketini oluşturur.
@@ -120,7 +120,7 @@ class Migrator
             $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
             $stmt->execute();
             $version = (int) ($stmt->fetchColumn() ?: 0);
-            if ($version >= 4) {
+            if ($version >= 5) {
                 return;
             }
 
@@ -141,10 +141,10 @@ class Migrator
             }
 
             // Katalog tam ise yalnız görsel/proje/galeri/makine paketini idempotent biçimde uygula.
-            (new Seeder($this->pdo))->applyVisualPackV4();
+            (new Seeder($this->pdo))->applyVisualPackV5();
         } catch (\Throwable $e) {
             if (env('APP_DEBUG', false)) {
-                error_log('Content Pack v4 upgrade: ' . $e->getMessage());
+                error_log('Content Pack v5 upgrade: ' . $e->getMessage());
             }
         }
     }
