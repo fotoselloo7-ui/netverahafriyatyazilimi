@@ -437,6 +437,186 @@ section{scroll-margin-top:120px}
 .flash--ok{background:#e7f7ed;color:#1a7f45;border:1px solid #b6e6c8}
 .flash--err{background:#fdecec;color:#b23b3b;border:1px solid #f5c2c2}
 
+
+
+/* ===== Mikro Etkileşimler / Motion System =====
+   Amaç: tüm ön yüzde daha canlı ama kurumsal bir his. Animasyonlar yalnızca
+   JS tarafından .motion-ready eklenen öğelerde devreye girer; JS çalışmazsa
+   içerik gizlenmez. */
+:root{
+  --motion-fast:180ms;
+  --motion-base:280ms;
+  --motion-slow:520ms;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.2,.7,.2,1);
+}
+
+/* Butonlar */
+.btn{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    filter var(--motion-fast) ease;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  z-index:-1;
+  opacity:0;
+  background:linear-gradient(110deg,transparent 22%,rgba(255,255,255,.22) 46%,transparent 70%);
+  transform:translateX(-120%);
+  transition:transform .5s var(--ease-out),opacity .2s ease;
+}
+.btn svg{transition:transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.12)}
+  .btn:hover::after{opacity:1;transform:translateX(120%)}
+  .btn:hover svg{transform:translateX(2px)}
+  .btn--wa:hover svg{transform:scale(1.08)}
+}
+.btn:active{transform:translateY(0) scale(.985)}
+.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--color-primary) 35%,transparent);outline-offset:3px}
+
+/* Header / marka / menü */
+.brand__mark{transition:transform var(--motion-base) var(--ease-out),box-shadow var(--motion-base) ease}
+.brand__text,.brand__text strong{transition:color var(--motion-fast) ease}
+.nav__link{transition:color var(--motion-fast) ease,background-color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out)}
+.topbar__item{transition:color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .brand:hover .brand__mark{transform:translateY(-2px) rotate(-3deg);box-shadow:0 8px 20px color-mix(in srgb,var(--color-primary) 22%,transparent)}
+  .nav__link:hover{background:rgba(255,255,255,.035);transform:translateY(-1px)}
+  .topbar__item:hover{transform:translateY(-1px)}
+}
+
+/* Ortak kart davranışı */
+.scard,.ecard,.bcard,.why-card,.faq__item,.contact-row,.machine-scene,.quickform,.gitem,.region-chip{
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) ease,
+    background-color var(--motion-base) ease;
+}
+.scard__media img,.ecard__media img,.bcard__media img,.gitem img{
+  transition:transform var(--motion-slow) var(--ease-out),filter var(--motion-base) ease;
+}
+.scard__ico,.pstep__ico,.why-card .wico,.badge__ico{
+  transition:transform var(--motion-base) var(--ease-out),box-shadow var(--motion-base) ease,background-color var(--motion-base) ease;
+}
+@media(hover:hover){
+  .scard:hover,.ecard:hover,.bcard:hover{transform:translateY(-7px);box-shadow:0 18px 38px rgba(0,0,0,calc(var(--shadow-strength) + .05))}
+  .scard:hover .scard__media img,.ecard:hover .ecard__media img,.bcard:hover .bcard__media img{transform:scale(1.045)}
+  .scard:hover .scard__ico{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+  .gitem:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(0,0,0,.16)}
+  .gitem:hover img{transform:scale(1.075);filter:saturate(1.05)}
+  .region-chip:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.10)}
+  .why-card:hover .wico{transform:translateY(-2px) scale(1.06)}
+  .faq__item:hover{border-color:color-mix(in srgb,var(--color-primary) 40%,var(--line));box-shadow:0 8px 22px rgba(0,0,0,.06)}
+  .contact-row:hover{transform:translateX(4px);border-color:color-mix(in srgb,var(--color-primary) 45%,var(--line));box-shadow:0 8px 20px rgba(0,0,0,.06)}
+  .machine-scene:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .quickform:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--color-primary) 24%,rgba(255,255,255,.08))}
+}
+
+/* Metin linkleri ve CTA okları */
+.bcard__more,.footer__links a,.footer__legal a,.prose a{
+  transition:color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out);
+}
+.bcard__more svg{transition:transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .bcard__more:hover{transform:translateX(2px)}
+  .bcard__more:hover svg{transform:translateX(4px)}
+  .footer__links a:hover,.footer__legal a:hover{display:inline-block;transform:translateX(3px)}
+}
+
+/* Form alanları */
+input,select,textarea{
+  transition:border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease,background-color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out);
+}
+input:focus,select:focus,textarea:focus{
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--color-primary) 12%,transparent);
+}
+
+/* Bölüm başlıkları */
+.sec-head .eyebrow,.machine-anim__text .eyebrow{position:relative}
+.sec-head .eyebrow::after,.machine-anim__text .eyebrow::after{
+  content:"";
+  display:block;
+  width:28px;
+  height:2px;
+  margin:7px auto 0;
+  background:var(--color-primary);
+  border-radius:2px;
+  transform-origin:center;
+  transition:width var(--motion-base) var(--ease-out);
+}
+.sec-head--left .eyebrow::after,.machine-anim__text .eyebrow::after{margin-left:0}
+@media(hover:hover){
+  section:hover .sec-head .eyebrow::after{width:46px}
+}
+
+/* Scroll reveal: JS .motion-ready ekler, IntersectionObserver görünür yapar */
+.motion-ready{
+  opacity:0;
+  transform:translateY(22px);
+  transition:
+    opacity var(--motion-slow) var(--ease-out),
+    transform var(--motion-slow) var(--ease-out);
+  transition-delay:var(--motion-delay,0ms);
+}
+.motion-ready.motion-from-left{transform:translateX(-24px)}
+.motion-ready.motion-from-right{transform:translateX(24px)}
+.motion-ready.motion-scale{transform:scale(.965)}
+.motion-ready.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Hero ilk açılışta daha hızlı ve kontrollü gelir */
+.hero .motion-ready{transition-duration:620ms}
+.hero__cta .btn:nth-child(2){transition-delay:35ms}
+
+/* Sayfa hero görsel/başlık hareketi */
+.page-hero{overflow:hidden}
+.page-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto -10% -70% auto;
+  width:360px;
+  height:360px;
+  border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--color-primary) 12%,transparent),transparent 68%);
+  pointer-events:none;
+  animation:heroGlow 7s ease-in-out infinite alternate;
+}
+@keyframes heroGlow{
+  from{transform:translate3d(0,0,0) scale(.92)}
+  to{transform:translate3d(-24px,-16px,0) scale(1.08)}
+}
+
+/* Hafif canlılık: rozet ve sayaç ikonları */
+@media(hover:hover){
+  .badge:hover .badge__ico{transform:translateY(-2px) rotate(-2deg)}
+  .pstep:hover .pstep__ico{transform:translateY(-4px) scale(1.04)}
+}
+
+/* Erişilebilirlik: hareket azaltma tercihini eksiksiz destekle */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .motion-ready{opacity:1 !important;transform:none !important}
+}
+
 /* Responsive */
 @media(max-width:992px){
   .hero__inner{grid-template-columns:1fr;gap:28px;padding-top:48px;padding-bottom:56px}
