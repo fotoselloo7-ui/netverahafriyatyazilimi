@@ -1,0 +1,69 @@
+name: Package Netvera Hafriyat Pro
+
+on:
+  push:
+    branches:
+      - fix/admin-sync-db-cleanup
+    paths:
+      - "alanyahafriyat.tr/alanyahafriyat.tr/**"
+      - ".github/workflows/package-netvera-hafriyat.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: fix/admin-sync-db-cleanup
+
+      - name: Prepare clean deploy package
+        shell: bash
+        run: |
+          set -e
+          SRC="alanyahafriyat.tr/alanyahafriyat.tr"
+          OUT="$RUNNER_TEMP/netvera-hafriyat"
+          mkdir -p "$OUT"
+          cp -a "$SRC"/. "$OUT"/
+
+          # Yerel geliştirme/artık dosyaları pakete alma.
+          find "$OUT" -type f \( -name ".sync-conflict*" -o -name "*.log" -o -name ".DS_Store" \) -delete || true
+          rm -f "$OUT/storage/database.sqlite" || true
+
+          # Canlı kurulum için güvenli .env oluştur.
+          if [ -f "$OUT/.env.example" ]; then
+            cp "$OUT/.env.example" "$OUT/.env"
+          fi
+          sed -i 's/^APP_NAME=.*/APP_NAME="Netvera Hafriyat"/' "$OUT/.env" || true
+          sed -i 's/^APP_ENV=.*/APP_ENV=production/' "$OUT/.env" || true
+          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' "$OUT/.env" || true
+          sed -i 's#^APP_URL=.*#APP_URL=https://domain.com#' "$OUT/.env" || true
+          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' "$OUT/.env" || true
+          sed -i 's/^DB_HOST=.*/DB_HOST=localhost/' "$OUT/.env" || true
+          sed -i 's/^DB_PORT=.*/DB_PORT=3306/' "$OUT/.env" || true
+          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=/' "$OUT/.env" || true
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=/' "$OUT/.env" || true
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=/' "$OUT/.env" || true
+
+          cd "$OUT"
+          zip -rq "$GITHUB_WORKSPACE/Netvera-Hafriyat-Yazilimi-Pro.zip" .
+
+      - name: Publish downloadable release package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -e
+          TAG="netvera-hafriyat-pro-latest"
+          ASSET="Netvera-Hafriyat-Yazilimi-Pro.zip"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ASSET" --clobber
+            gh release edit "$TAG" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "Temiz cPanel deploy paketi. Güncel database.sql, Netvera Hafriyat markası, stok görsel paketi ve admin kontrollerini içerir."
+          else
+            gh release create "$TAG" "$ASSET" --target "$GITHUB_SHA" --title "Netvera Hafriyat Yazılımı Pro" --notes "Temiz cPanel deploy paketi. Güncel database.sql, Netvera Hafriyat markası, stok görsel paketi ve admin kontrollerini içerir."
+          fi
