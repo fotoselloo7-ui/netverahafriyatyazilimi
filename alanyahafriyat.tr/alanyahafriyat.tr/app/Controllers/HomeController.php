@@ -11,7 +11,6 @@ use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\HomeSection;
 use App\Models\Popup;
-use App\Models\Project;
 use App\Models\Service;
 
 class HomeController extends Controller
@@ -25,7 +24,6 @@ class HomeController extends Controller
             'serviceRegions' => \App\Models\ServiceRegion::active('sort_order ASC, id ASC'),
             'services'    => Service::featured(6),
             'equipment'   => Equipment::active(),
-            'projects'    => array_slice(Project::active('id DESC'), 0, 6),
             'gallery'     => Gallery::active(),
             'posts'       => BlogPost::published(3),
             'faqs'        => Faq::active(),
