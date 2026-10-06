@@ -104,6 +104,40 @@ class Migrator
         // Footer web tasarım kredi alanları
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_text', 'VARCHAR(191)', '');
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_url', 'VARCHAR(191)', '');
+
+        $this->upgradeContentPackV2();
+    }
+
+    protected function upgradeContentPackV2(): void
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 2) {
+                return;
+            }
+
+            // Yalnız eski paket imzası hâlâ mevcutsa otomatik içerik yenilemesi yap.
+            $legacyTitle = (string) ($this->pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'seo_title' LIMIT 1")->fetchColumn() ?: '');
+            $legacyServices = (int) $this->pdo->query("SELECT COUNT(*) FROM services")->fetchColumn();
+            $looksLikeLegacySeed = $legacyServices === 9 || str_contains($legacyTitle, 'Alanya & Mahmutlar Hafriyat');
+
+            if ($looksLikeLegacySeed) {
+                (new Seeder($this->pdo))->upgradeLegacyDemoContent();
+                return;
+            }
+
+            // Özelleştirilmiş kurulumlarda içerikleri ezme; yalnız sürüm işaretini ekle.
+            $now = date('Y-m-d H:i:s');
+            $insert = $this->pdo->prepare(
+                "INSERT INTO settings (setting_key, setting_value, setting_group, input_type, created_at, updated_at)
+                 VALUES ('content_pack_version', '2', 'system', 'text', ?, ?)"
+            );
+            $insert->execute([$now, $now]);
+        } catch (\Throwable $e) {
+            // İçerik paketi güncellemesi siteyi açılmaz hâle getirmemeli.
+        }
     }
 
     public function run(): void
