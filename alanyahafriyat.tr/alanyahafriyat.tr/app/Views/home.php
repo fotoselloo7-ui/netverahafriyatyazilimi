@@ -60,7 +60,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
             <?php foreach ($services as $s): ?>
                 <article class="scard">
                     <div class="scard__media">
-                        <?php if ($s['card_image']): ?><img src="<?= e(upload_url($s['card_image'])) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
+                        <?php if ($s['card_image']): ?><img src="<?= e(upload_url($s['card_image'])) ?>" alt="<?= e('Alanya ' . $s['title']) ?>" title="<?= e($s['title'] . ' - Ersan Hafriyat') ?>" width="900" height="560" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?><div class="ph-media"><?= icon($s['icon'] ?: 'excavator', 54) ?></div><?php endif; ?>
                         <span class="scard__ico"><?= icon($s['icon'] ?: 'excavator', 24) ?></span>
                     </div>
@@ -145,7 +145,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
         <div class="ggrid">
             <?php foreach (array_slice($gallery, 0, 8) as $g): ?>
                 <a class="gitem" href="<?= $g['image'] ? e(upload_url($g['image'])) : '#' ?>" data-lightbox>
-                    <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy">
+                    <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" title="<?= e($g['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low">
                     <?php else: ?><div class="ph-media"><?= icon('excavator', 46) ?></div><?php endif; ?>
                     <span class="gitem__cap"><?= icon('map-pin', 15) ?> <?= e($g['title']) ?></span>
                 </a>
@@ -171,7 +171,7 @@ $showBadges = ($hc['show_badges'] ?? '1') === '1';
                 <a class="scard" href="<?= base_url('projeler/' . $project['slug']) ?>">
                     <div class="scard__media">
                         <?php if (!empty($project['cover_image'])): ?>
-                            <img src="<?= e(upload_url($project['cover_image'])) ?>" alt="<?= e($project['title']) ?>" loading="lazy">
+                            <img src="<?= e(upload_url($project['cover_image'])) ?>" alt="<?= e($project['title']) ?>" title="<?= e($project['service_type'] ?: $project['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?>
                             <div class="ph-media"><?= icon('excavator', 42) ?></div>
                         <?php endif; ?>
