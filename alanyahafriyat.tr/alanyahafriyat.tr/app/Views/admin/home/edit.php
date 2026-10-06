@@ -9,7 +9,7 @@
         <div class="a-field"><label>Başlık</label><input type="text" name="title" value="<?= e($section['title']) ?>"></div>
         <div class="a-field"><label>Alt Başlık</label><textarea name="subtitle"><?= e($section['subtitle']) ?></textarea></div>
         <div class="a-row">
-            <div class="a-field"><label>Sıralama</label><input type="number" name="sort_order" value="<?= (int) $section['sort_order'] ?>"></div>
+            <div class="a-field"><label>Yönetim Sırası</label><input type="number" name="sort_order" value="<?= (int) $section['sort_order'] ?>"><small>Bu değer yönetim listesindeki sırayı belirler; ön yüz bölüm dizilimi tema tasarımında sabittir.</small></div>
             <div class="a-field" style="display:flex;align-items:flex-end"><label class="a-check"><input type="checkbox" name="is_active" <?= $section['is_active'] ? 'checked' : '' ?>> Bölüm Aktif</label></div>
         </div>
 
@@ -32,14 +32,16 @@
                 <label class="a-check"><input type="checkbox" name="show_badges" <?= ($content['show_badges'] ?? '1') === '1' ? 'checked' : '' ?>> Güven Rozetleri</label>
             </div>
         </div>
-        <?php else: ?>
+        <?php elseif ($section['section_key'] === 'machine_anim'): ?>
         <div class="a-row">
             <div class="a-field"><label>CTA Metni</label><input type="text" name="cta_text" value="<?= e($section['cta_text']) ?>"></div>
             <div class="a-field"><label>CTA Link</label><input type="text" name="cta_url" value="<?= e($section['cta_url']) ?>"></div>
         </div>
         <?php endif; ?>
 
-        <?php $if_name = 'image'; $if_current = $section['image']; $if_label = ($isHero ? 'Hero Görseli' : 'Bölüm Görseli'); $if_remove = 'remove_image'; include VIEW_PATH . '/admin/partials/image-field.php'; ?>
+        <?php if ($isHero): ?>
+            <?php $if_name = 'image'; $if_current = $section['image']; $if_label = 'Hero Görseli'; $if_remove = 'remove_image'; include VIEW_PATH . '/admin/partials/image-field.php'; ?>
+        <?php endif; ?>
     </div>
     <button type="submit" class="btn btn--primary"><?= icon('check', 16) ?> Kaydet</button>
 </form>
