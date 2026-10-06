@@ -1,10 +1,10 @@
 <?php
 /**
- * database/install.sql üretici (MySQL/MariaDB).
+ * database/database.sql üretici (MySQL/MariaDB).
  *
  * Şema tanımlarını (Migrator/Schema) MySQL modunda çalıştırıp CREATE TABLE
  * ifadelerini toplar; seed verisini geçici bir SQLite üzerinde üretip
- * INSERT ifadelerine dönüştürür. Çıktı tek dosya: database/install.sql
+ * INSERT ifadelerine dönüştürür. Çıktı tek dosya: database/database.sql
  *
  * Çalıştırma:  php database/build_install_sql.php
  */
@@ -101,10 +101,10 @@ function columns_of(PDO $sqlite, string $table): array
 
 $order = Migrator::tableNames(); // FK açısından güvenli sıra
 
-// 3) install.sql yaz
+// 3) database.sql yaz
 $out = [];
 $out[] = "-- =====================================================================";
-$out[] = "--  Ersan Hafriyat CMS — Tek Dosya Kurulum (MySQL / MariaDB)";
+$out[] = "--  Netvera Hafriyat CMS — Tek Dosya Kurulum (MySQL / MariaDB)";
 $out[] = "--  Üretim: " . date('Y-m-d H:i');
 $out[] = "--  phpMyAdmin > İçe Aktar ile yükleyin. Boş bir veritabanına import edin.";
 $out[] = "-- =====================================================================";
@@ -155,8 +155,8 @@ foreach ($order as $table) {
 $out[] = "SET FOREIGN_KEY_CHECKS=1;";
 $out[] = "";
 
-file_put_contents(BASE_PATH . '/database/install.sql', implode("\n", $out));
+file_put_contents(BASE_PATH . '/database/database.sql', implode("\n", $out));
 @unlink($tmp);
 
 $tableCount = count(array_filter($order, fn ($t) => isset($createByTable[$t])));
-echo "install.sql üretildi. Tablo sayısı: $tableCount\n";
+echo "database.sql üretildi. Tablo sayısı: $tableCount\n";

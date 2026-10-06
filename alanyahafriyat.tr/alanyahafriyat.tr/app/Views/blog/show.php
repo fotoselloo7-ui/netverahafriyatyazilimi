@@ -17,7 +17,7 @@ include VIEW_PATH . '/partials/page-hero.php';
 
             <?php if ($post['cover_image']): ?>
             <div class="about-media" style="aspect-ratio:16/9;margin-bottom:24px">
-                <img src="<?= e(upload_url($post['cover_image'])) ?>"
+                <img src="<?= e(upload_url($post['cover_image'])) ?>" width="1200" height="675" decoding="async"
                      alt="<?= e($post['cover_image_alt'] ?: $post['title']) ?>"
                      <?= !empty($post['cover_image_title']) ? 'title="' . e($post['cover_image_title']) . '"' : '' ?>>
             </div>

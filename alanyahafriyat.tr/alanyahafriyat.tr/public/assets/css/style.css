@@ -38,7 +38,8 @@ section{scroll-margin-top:120px}
 /* Buttons */
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:var(--radius-button);font-weight:600;font-size:15px;border:2px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap;line-height:1}
 .btn--primary{background:var(--button-primary-bg);color:var(--button-primary-text);border-color:var(--button-primary-bg)}
-.btn--primary:hover{background:var(--color-primary-hover);border-color:var(--color-primary-hover);transform:translateY(-2px)}
+.btn--primary svg{color:inherit}
+.btn--primary:hover{background:#080B0F;border-color:#080B0F;color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px rgba(8,11,15,.24)}
 .btn--dark{background:var(--button-dark-bg);color:var(--button-dark-text);border-color:var(--button-dark-bg)}
 .btn--dark:hover{filter:brightness(1.15)}
 .btn--ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
@@ -51,11 +52,11 @@ section{scroll-margin-top:120px}
 .btn--block{width:100%;justify-content:center}
 
 /* Topbar */
-.topbar{background:var(--color-dark);color:#cfd3d8;font-size:13px}
-.topbar__inner{display:flex;justify-content:space-between;align-items:center;min-height:42px;gap:12px}
+.topbar{background:var(--color-dark);color:#cfd3d8;font-size:12.5px}
+.topbar__inner{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:12px}
 .topbar__left{display:flex;align-items:center;gap:8px}
 .topbar__left .topbar__ico{color:var(--color-primary)}
-.topbar__right{display:flex;align-items:center;gap:22px}
+.topbar__right{display:flex;align-items:center;gap:18px}
 .topbar__item{display:inline-flex;align-items:center;gap:6px;color:#cfd3d8}
 .topbar__item svg{color:var(--color-primary)}
 .topbar__item:hover{color:#fff}
@@ -63,15 +64,15 @@ section{scroll-margin-top:120px}
 /* Header */
 .header{position:sticky;top:0;z-index:60;background:var(--color-dark);box-shadow:0 2px 12px rgba(0,0,0,.25);transition:.25s}
 .header.is-scrolled{background:var(--color-dark);backdrop-filter:blur(6px)}
-.header__inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:76px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand__mark{width:44px;height:44px;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:10px}
-.brand__text{color:#fff;font-weight:600;font-size:20px;letter-spacing:.3px}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:68px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand__mark{width:40px;height:40px;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:10px}
+.brand__text{color:#fff;font-weight:600;font-size:18.5px;letter-spacing:.2px}
 .brand__text strong{color:var(--color-primary);font-weight:800}
-.brand__logo{height:46px;width:auto}
-.nav{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
-.nav__links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap}
-.nav__link{color:#e8e8e8;font-weight:500;font-size:14.5px;padding:10px 12px;border-radius:8px;position:relative;transition:.2s;white-space:nowrap;display:flex;align-items:center}
+.brand__logo{display:block;height:48px;width:auto;max-width:210px;object-fit:contain;background:#fff;padding:4px 9px;border-radius:9px;box-shadow:0 3px 12px rgba(0,0,0,.10)}
+.nav{display:flex;align-items:center;gap:0;flex-wrap:nowrap}
+.nav__links{display:flex;align-items:center;gap:0;flex-wrap:nowrap}
+.nav__link{color:#e8e8e8;font-weight:500;font-size:14px;padding:8px 10px;border-radius:8px;position:relative;transition:.2s;white-space:nowrap;display:flex;align-items:center}
 .nav__link-arrow{display:none}
 .nav__head,.nav__foot{display:none}
 /* Masaüstünde hizmet grubu normal bir menü linki gibi davranır */
@@ -80,7 +81,8 @@ section{scroll-margin-top:120px}
 .nav__sub,.nav__sub-toggle{display:none}
 .nav__link:hover,.nav__link.is-active{color:var(--color-primary)}
 .nav__link.is-active::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:3px;background:var(--color-primary);border-radius:3px}
-.header__actions{display:flex;align-items:center;gap:12px}
+.header__actions{display:flex;align-items:center;gap:10px}
+.header__actions .btn{padding:9px 14px}
 .nav__toggle,.nav__close{display:none;background:none;border:none;color:#fff;cursor:pointer}
 .nav__overlay{display:none}
 
@@ -111,10 +113,10 @@ section{scroll-margin-top:120px}
 /* Badges strip */
 .badges{background:var(--color-dark);border-top:1px solid rgba(255,255,255,.06)}
 .badges__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding-top:26px;padding-bottom:26px}
-.badge{display:flex;align-items:center;gap:12px;color:#e8e8e8;padding:6px 10px}
-.badge__ico{width:46px;height:46px;flex:none;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:12px}
-.badge b{display:block;color:#fff;font-size:15px}
-.badge span{font-size:12.5px;color:#a9adb3;line-height:1.35}
+.badge{display:flex;align-items:center;gap:12px;color:#e8e8e8;padding:10px 12px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.025)}
+.badge__ico{width:44px;height:44px;flex:none;display:grid;place-items:center;background:color-mix(in srgb, var(--color-primary) 14%, transparent);color:var(--color-primary);border:1px solid color-mix(in srgb, var(--color-primary) 28%, transparent);border-radius:11px}
+.badge b{display:block;color:#f6f7f8;font-size:14.5px}
+.badge span{font-size:12.5px;color:#aeb3ba;line-height:1.4}
 
 /* Section head */
 .section{padding:66px 0}
@@ -129,44 +131,45 @@ section{scroll-margin-top:120px}
 .section--dark .sec-head p{color:#b7bcc3}
 
 /* Service cards */
-.grid{display:grid;gap:24px}
+.grid{display:grid;gap:24px;align-items:stretch}
 .grid--3{grid-template-columns:repeat(3,1fr)}
 .grid--4{grid-template-columns:repeat(4,1fr)}
 .grid--2{grid-template-columns:repeat(2,1fr)}
-.scard{background:var(--color-surface);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column}
+.scard{background:var(--color-surface);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column;height:100%;min-width:0}
 .scard:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent}
-.scard__media{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#2b2b2b,#151515);overflow:hidden}
-.scard__media img{width:100%;height:100%;object-fit:cover}
+.scard__media{position:relative;height:230px;aspect-ratio:auto;background:linear-gradient(135deg,#2b2b2b,#151515);overflow:visible;flex:0 0 auto;min-height:0}
+.scard__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 /* Kart düzeni: image → content → spacer → actions (sola hizalı, butonlar altta sabit) */
-.scard__ico{position:absolute;left:22px;bottom:-24px;width:52px;height:52px;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.scard__ico{position:absolute;left:22px;bottom:-24px;z-index:3;width:52px;height:52px;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .scard__body{padding:36px 22px 22px;text-align:left;flex:1;display:flex;flex-direction:column;align-items:flex-start}
-.scard__body h3{font-size:18px;margin-bottom:8px;text-align:left}
-.scard__body p{color:var(--muted);font-size:14px;flex:1;text-align:left;width:100%}
-.scard__foot{display:flex;gap:10px;justify-content:flex-start;margin-top:16px;width:100%;flex-wrap:wrap}
+.scard__body h3{font-size:18px;margin-bottom:8px;text-align:left;line-height:1.3;min-height:47px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.scard__body p{color:var(--muted);font-size:14px;text-align:left;width:100%;line-height:1.55;min-height:66px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.scard__foot{display:flex;gap:10px;justify-content:flex-start;margin-top:auto;padding-top:16px;width:100%;flex-wrap:nowrap}
 .scard__foot .btn{flex:0 1 auto}
-@media(max-width:420px){.scard__foot .btn{flex:1 1 100%;justify-content:center}}
+@media(max-width:420px){.scard__foot .btn{flex:1 1 0;min-width:0;justify-content:center;padding:8px 6px;font-size:11.5px}}
 
 /* placeholder media */
 .ph-media{width:100%;height:100%;display:grid;place-items:center;color:color-mix(in srgb, var(--color-primary) 55%, transparent);background:repeating-linear-gradient(45deg,#242424,#242424 14px,#1e1e1e 14px,#1e1e1e 28px)}
 
 /* Equipment */
-.ecard{background:var(--color-surface);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s}
+.ecard{background:var(--color-surface);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column;height:100%;min-width:0}
 .ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-.ecard__media{aspect-ratio:16/10;background:linear-gradient(135deg,#2b2b2b,#151515)}
-.ecard__media img{width:100%;height:100%;object-fit:cover}
-.ecard__body{padding:18px}
-.ecard__body h3{font-size:17px;margin-bottom:10px}
-.ecard__specs{margin:0 0 14px}
+.ecard__media{height:220px;aspect-ratio:auto;background:linear-gradient(135deg,#2b2b2b,#151515);overflow:hidden;flex:0 0 auto}
+.ecard__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.ecard__body{padding:18px;display:flex;flex-direction:column;flex:1}
+.ecard__body h3{font-size:17px;margin-bottom:10px;line-height:1.3;min-height:44px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ecard__specs{margin:0 0 14px;flex:1}
 .ecard__specs li{font-size:13.5px;color:var(--muted);padding:3px 0 3px 18px;position:relative}
 .ecard__specs li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;background:var(--color-primary);border-radius:2px}
 .equip-intro h2{font-size:30px;margin-bottom:14px}
 .equip-intro p{color:var(--muted);margin-bottom:20px}
+.ecard__body>.btn{margin-top:auto}
 
 /* Process */
 .process{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative}
 .pstep{text-align:center;position:relative}
 .pstep__ico{width:70px;height:70px;margin:0 auto 16px;display:grid;place-items:center;background:var(--color-surface);border:2px solid var(--color-primary);color:var(--color-primary);border-radius:50%;position:relative;z-index:2}
-.section--dark .pstep__ico{background:var(--color-accent)}
+.section--dark .pstep__ico{background:var(--color-accent);color:var(--color-accent-text)}
 .pstep h4{font-size:16px;margin-bottom:6px}
 .section--dark .pstep h4{color:#fff}
 .pstep p{font-size:13px;color:var(--muted)}
@@ -205,7 +208,7 @@ section{scroll-margin-top:120px}
 .faq__item{background:var(--color-surface);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
 .faq__q{width:100%;text-align:left;background:none;border:none;padding:18px 20px;font-size:16px;font-weight:600;color:var(--color-secondary);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;font-family:inherit}
 .faq__q .plus{flex:none;width:26px;height:26px;display:grid;place-items:center;background:var(--soft);border-radius:50%;color:var(--color-primary);transition:.25s}
-.faq__item.is-open .faq__q .plus{transform:rotate(45deg);background:var(--color-primary);color:#fff}
+.faq__item.is-open .faq__q .plus{transform:rotate(45deg);background:var(--color-primary);color:var(--color-primary-text)}
 .faq__a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted);font-size:14.5px}
 .faq__a-inner{padding:0 20px 18px}
 
@@ -223,10 +226,22 @@ section{scroll-margin-top:120px}
 .footer{background:var(--footer-bg,#111);color:var(--footer-text,#cbd5e1);padding-top:56px}
 .footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px;padding-bottom:40px}
 .footer .brand__text{color:#fff}
+.brand--footer .brand__logo{height:58px;max-width:240px;padding:5px 10px;border-radius:10px}
 .footer__about{margin-top:16px;font-size:14px;opacity:.85;line-height:1.7}
 .footer__social{display:flex;gap:10px;margin-top:18px}
-.footer__social a{width:38px;height:38px;display:grid;place-items:center;background:rgba(255,255,255,.08);border-radius:10px;color:#fff;transition:.2s}
-.footer__social a:hover{background:var(--color-primary);color:var(--color-primary-text)}
+.footer__social a{width:40px;height:40px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:11px;color:#fff;transition:.2s}
+.footer__social-link--whatsapp{background:rgba(37,211,102,.12)!important;border-color:rgba(37,211,102,.28)!important;color:#25D366!important}
+.footer__social-link--instagram{background:rgba(225,48,108,.10)!important;color:#F26A9A!important}
+.footer__social-link--facebook{background:rgba(24,119,242,.10)!important;color:#58A1FF!important}
+.footer__social-link--youtube{background:rgba(255,0,0,.10)!important;color:#FF5A5A!important}
+.footer__social-link--linkedin{background:rgba(10,102,194,.10)!important;color:#5FA9E6!important}
+.footer__social-link--x,.footer__social-link--twitter{background:rgba(255,255,255,.08)!important;color:#fff!important}
+.footer__social a:hover{background:var(--color-primary);color:#fff;border-color:transparent}
+.footer__social-link--whatsapp:hover{background:var(--color-whatsapp)!important;color:#fff!important;box-shadow:0 10px 24px rgba(37,211,102,.24)}
+.footer__social-link--instagram:hover{background:linear-gradient(135deg,#833AB4,#E1306C,#FCAF45)!important;color:#fff!important}
+.footer__social-link--facebook:hover{background:#1877F2!important;color:#fff!important}
+.footer__social-link--youtube:hover{background:#FF0000!important;color:#fff!important}
+.footer__social-link--linkedin:hover{background:#0A66C2!important;color:#fff!important}
 .footer__title{color:#fff;font-size:16px;margin-bottom:18px;position:relative;padding-bottom:10px}
 .footer__title::after{content:"";position:absolute;left:0;bottom:0;width:34px;height:3px;background:var(--color-primary);border-radius:3px}
 .footer__links li,.footer__contact li{margin-bottom:11px;font-size:14px;opacity:.9}
@@ -399,13 +414,13 @@ section{scroll-margin-top:120px}
 .counter span{color:#c7ccd3;font-size:14px}
 
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.why-card{background:var(--color-accent);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-card);padding:26px 22px;text-align:center;transition:.25s}
-.why-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--color-primary) 45%, transparent)}
-/* "Neden Biz" ikonları: koyu zeminde solid primary kutu + kontrast ikon */
+.why-card{background:color-mix(in srgb, var(--color-surface) 7%, var(--color-dark));border:1px solid rgba(255,255,255,.10);border-radius:var(--radius-card);padding:26px 22px;text-align:center;transition:.25s}
+.why-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--color-primary) 50%, transparent);background:color-mix(in srgb, var(--color-surface) 10%, var(--color-dark))}
+/* "Neden Biz" ikonları: vurgu rengi yalnızca ikon alanında kullanılır. */
 .why-card .wico{width:60px;height:60px;margin:0 auto 16px;display:grid;place-items:center;background:var(--color-primary);color:var(--color-primary-text);border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .why-card:hover .wico{transform:scale(1.06);transition:.2s}
 .why-card h4{color:#fff;font-size:17px;margin-bottom:8px}
-.why-card p{color:#adb2b9;font-size:14px}
+.why-card p{color:#c4c8ce;font-size:14px}
 
 /* Content prose */
 .prose{max-width:820px;margin:0 auto;font-size:16px;color:#333}
@@ -435,6 +450,621 @@ section{scroll-margin-top:120px}
 .flash{padding:14px 18px;border-radius:10px;margin-bottom:18px;font-size:14px}
 .flash--ok{background:#e7f7ed;color:#1a7f45;border:1px solid #b6e6c8}
 .flash--err{background:#fdecec;color:#b23b3b;border:1px solid #f5c2c2}
+
+
+
+/* ===== Mikro Etkileşimler / Motion System =====
+   Amaç: tüm ön yüzde daha canlı ama kurumsal bir his. Animasyonlar yalnızca
+   JS tarafından .motion-ready eklenen öğelerde devreye girer; JS çalışmazsa
+   içerik gizlenmez. */
+:root{
+  --motion-fast:180ms;
+  --motion-base:280ms;
+  --motion-slow:520ms;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.2,.7,.2,1);
+}
+
+/* Butonlar */
+.btn{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    filter var(--motion-fast) ease;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  z-index:-1;
+  opacity:0;
+  background:linear-gradient(110deg,transparent 22%,rgba(255,255,255,.22) 46%,transparent 70%);
+  transform:translateX(-120%);
+  transition:transform .5s var(--ease-out),opacity .2s ease;
+}
+.btn svg{transition:transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.12)}
+  .btn:hover::after{opacity:1;transform:translateX(120%)}
+  .btn:hover svg{transform:translateX(2px)}
+  .btn--wa:hover svg{transform:scale(1.08)}
+}
+.btn:active{transform:translateY(0) scale(.985)}
+.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--color-primary) 35%,transparent);outline-offset:3px}
+
+/* Header / marka / menü */
+.brand__mark{transition:transform var(--motion-base) var(--ease-out),box-shadow var(--motion-base) ease}
+.brand__text,.brand__text strong{transition:color var(--motion-fast) ease}
+.nav__link{transition:color var(--motion-fast) ease,background-color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out)}
+.topbar__item{transition:color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .brand:hover .brand__mark{transform:translateY(-2px) rotate(-3deg);box-shadow:0 8px 20px color-mix(in srgb,var(--color-primary) 22%,transparent)}
+  .nav__link:hover{background:rgba(255,255,255,.035);transform:translateY(-1px)}
+  .topbar__item:hover{transform:translateY(-1px)}
+}
+
+/* Ortak kart davranışı */
+.scard,.ecard,.bcard,.why-card,.faq__item,.contact-row,.machine-scene,.quickform,.gitem,.region-chip{
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) ease,
+    background-color var(--motion-base) ease;
+}
+.scard__media img,.ecard__media img,.bcard__media img,.gitem img{
+  transition:transform var(--motion-slow) var(--ease-out),filter var(--motion-base) ease;
+}
+.scard__ico,.pstep__ico,.why-card .wico,.badge__ico{
+  transition:transform var(--motion-base) var(--ease-out),box-shadow var(--motion-base) ease,background-color var(--motion-base) ease;
+}
+@media(hover:hover){
+  .scard:hover,.ecard:hover,.bcard:hover{transform:translateY(-7px);box-shadow:0 18px 38px rgba(0,0,0,calc(var(--shadow-strength) + .05))}
+  .scard:hover .scard__media img,.ecard:hover .ecard__media img,.bcard:hover .bcard__media img{transform:scale(1.045)}
+  .scard:hover .scard__ico{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+  .gitem:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(0,0,0,.16)}
+  .gitem:hover img{transform:scale(1.075);filter:saturate(1.05)}
+  .region-chip:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.10)}
+  .why-card:hover .wico{transform:translateY(-2px) scale(1.06)}
+  .faq__item:hover{border-color:color-mix(in srgb,var(--color-primary) 40%,var(--line));box-shadow:0 8px 22px rgba(0,0,0,.06)}
+  .contact-row:hover{transform:translateX(4px);border-color:color-mix(in srgb,var(--color-primary) 45%,var(--line));box-shadow:0 8px 20px rgba(0,0,0,.06)}
+  .machine-scene:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .quickform:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--color-primary) 24%,rgba(255,255,255,.08))}
+}
+
+/* Metin linkleri ve CTA okları */
+.bcard__more,.footer__links a,.footer__legal a,.prose a{
+  transition:color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out);
+}
+.bcard__more svg{transition:transform var(--motion-fast) var(--ease-out)}
+@media(hover:hover){
+  .bcard__more:hover{transform:translateX(2px)}
+  .bcard__more:hover svg{transform:translateX(4px)}
+  .footer__links a:hover,.footer__legal a:hover{display:inline-block;transform:translateX(3px)}
+}
+
+/* Form alanları */
+input,select,textarea{
+  transition:border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease,background-color var(--motion-fast) ease,transform var(--motion-fast) var(--ease-out);
+}
+input:focus,select:focus,textarea:focus{
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--color-primary) 12%,transparent);
+}
+
+/* Bölüm başlıkları */
+.sec-head .eyebrow,.machine-anim__text .eyebrow{position:relative}
+.sec-head .eyebrow::after,.machine-anim__text .eyebrow::after{
+  content:"";
+  display:block;
+  width:28px;
+  height:2px;
+  margin:7px auto 0;
+  background:var(--color-primary);
+  border-radius:2px;
+  transform-origin:center;
+  transition:width var(--motion-base) var(--ease-out);
+}
+.sec-head--left .eyebrow::after,.machine-anim__text .eyebrow::after{margin-left:0}
+@media(hover:hover){
+  section:hover .sec-head .eyebrow::after{width:46px}
+}
+
+/* Scroll reveal: JS .motion-ready ekler, IntersectionObserver görünür yapar */
+.motion-ready{
+  opacity:0;
+  transform:translateY(22px);
+  transition:
+    opacity var(--motion-slow) var(--ease-out),
+    transform var(--motion-slow) var(--ease-out);
+  transition-delay:var(--motion-delay,0ms);
+}
+.motion-ready.motion-from-left{transform:translateX(-24px)}
+.motion-ready.motion-from-right{transform:translateX(24px)}
+.motion-ready.motion-scale{transform:scale(.965)}
+.motion-ready.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Hero ilk açılışta daha hızlı ve kontrollü gelir */
+.hero .motion-ready{transition-duration:620ms}
+.hero__cta .btn:nth-child(2){transition-delay:35ms}
+
+/* Sayfa hero görsel/başlık hareketi */
+.page-hero{overflow:hidden}
+.page-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto -10% -70% auto;
+  width:360px;
+  height:360px;
+  border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--color-primary) 12%,transparent),transparent 68%);
+  pointer-events:none;
+  animation:heroGlow 7s ease-in-out infinite alternate;
+}
+@keyframes heroGlow{
+  from{transform:translate3d(0,0,0) scale(.92)}
+  to{transform:translate3d(-24px,-16px,0) scale(1.08)}
+}
+
+/* Hafif canlılık: rozet ve sayaç ikonları */
+@media(hover:hover){
+  .badge:hover .badge__ico{transform:translateY(-2px) rotate(-2deg)}
+  .pstep:hover .pstep__ico{transform:translateY(-4px) scale(1.04)}
+}
+
+/* Erişilebilirlik: hareket azaltma tercihini eksiksiz destekle */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .motion-ready{opacity:1 !important;transform:none !important}
+}
+
+
+
+/* ===== Premium Motion Layer v2 =====
+   Araştırma notu: hareketlerin büyük kısmı transform/opacity tabanlı tutulur.
+   Sürekli dikkat çeken animasyon yerine kullanıcı etkileşimi + görünürlük anı
+   tercih edilir. */
+
+/* 1) Pointer spotlight: yalnız fine-pointer cihazlarda JS sınıfı ekler */
+.premium-spotlight{position:relative;isolation:isolate}
+.premium-spotlight::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  z-index:2;
+  background:
+    radial-gradient(
+      280px circle at var(--spot-x,50%) var(--spot-y,50%),
+      color-mix(in srgb,var(--color-primary) 13%,transparent),
+      transparent 58%
+    );
+  transition:opacity 220ms ease;
+}
+@media(hover:hover) and (pointer:fine){
+  .premium-spotlight:hover::before{opacity:1}
+}
+
+/* 2) Kontrollü shine: kartların tamamı değil, seçilmiş premium yüzeyler */
+.premium-shine{position:relative;overflow:hidden}
+.premium-shine::after{
+  content:"";
+  position:absolute;
+  top:-35%;
+  bottom:-35%;
+  left:-52%;
+  width:34%;
+  pointer-events:none;
+  z-index:3;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+  transform:skewX(-18deg) translateX(0);
+}
+@media(hover:hover) and (pointer:fine){
+  .premium-shine:hover::after{
+    opacity:1;
+    transform:skewX(-18deg) translateX(460%);
+    transition:transform 720ms var(--ease-out),opacity 180ms ease;
+  }
+}
+
+/* 3) Hero ambient light — çok düşük yoğunluk, içerik okunabilirliğini bozmaz */
+.hero{isolation:isolate;overflow:hidden}
+.hero::after{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  right:-170px;
+  top:-220px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+  opacity:.32;
+  background:radial-gradient(circle,color-mix(in srgb,var(--color-primary) 28%,transparent),transparent 68%);
+  animation:premiumAmbient 8s ease-in-out infinite alternate;
+}
+.hero__inner{z-index:1}
+@keyframes premiumAmbient{
+  from{transform:translate3d(0,0,0) scale(.94);opacity:.22}
+  to{transform:translate3d(-42px,28px,0) scale(1.08);opacity:.38}
+}
+
+/* 4) Başlık / breadcrumb mikro-etkileşimleri */
+.breadcrumb a{position:relative;transition:color var(--motion-fast) ease}
+.breadcrumb a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:100%;
+  bottom:-3px;
+  height:1px;
+  background:var(--color-primary);
+  transition:right var(--motion-base) var(--ease-out);
+}
+@media(hover:hover){
+  .breadcrumb a:hover::after{right:0}
+}
+
+/* 5) Galeri: caption hafif yükselir, görsel zaten scale ile çalışır */
+.gitem__cap{
+  transform:translateY(4px);
+  transition:transform var(--motion-base) var(--ease-out),background-color var(--motion-base) ease;
+}
+@media(hover:hover){
+  .gitem:hover .gitem__cap{transform:translateY(0)}
+}
+
+/* 6) Sayaçlar: görünürlükte count-up JS çalışır, hover yalnız vurgu verir */
+.counter{
+  position:relative;
+  overflow:hidden;
+  transition:background-color var(--motion-base) ease,transform var(--motion-base) var(--ease-out);
+}
+.counter::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:0;
+  height:2px;
+  background:var(--color-primary);
+  transform:translateX(-50%);
+  transition:width var(--motion-base) var(--ease-out);
+}
+.counter b,.machine-anim__stats b{font-variant-numeric:tabular-nums}
+@media(hover:hover){
+  .counter:hover{background:color-mix(in srgb,var(--color-primary) 5%,var(--color-dark));transform:translateY(-2px)}
+  .counter:hover::after{width:46%}
+}
+
+/* 7) About / içerik görselleri: fotoğrafı bozmayacak kadar hafif derinlik */
+.about-media,.prose img{
+  transition:transform var(--motion-slow) var(--ease-out),box-shadow var(--motion-base) var(--ease-out);
+}
+@media(hover:hover){
+  .about-media:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(0,0,0,.15)}
+  .prose img:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.10)}
+}
+
+/* 8) FAQ: soru satırı etkileşimi daha rafine */
+.faq__q{transition:color var(--motion-fast) ease,background-color var(--motion-fast) ease}
+@media(hover:hover){
+  .faq__q:hover{background:color-mix(in srgb,var(--color-primary) 5%,transparent)}
+  .faq__q:hover .plus{transform:scale(1.08)}
+  .faq__item.is-open .faq__q:hover .plus{transform:rotate(45deg) scale(1.08)}
+}
+
+/* 9) Footer ikonları ve linkler */
+.footer__social a{
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-base) ease;
+}
+@media(hover:hover){
+  .footer__social a:hover{
+    transform:translateY(-4px) rotate(-3deg);
+    box-shadow:0 9px 20px rgba(0,0,0,.22);
+  }
+}
+
+/* 10) Final CTA: sabit bir düz renk yerine düşük yoğunluklu ışık geçişi */
+.final-cta::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.38;
+  background:
+    radial-gradient(420px circle at 12% 50%,rgba(255,255,255,.16),transparent 64%),
+    radial-gradient(360px circle at 86% 20%,rgba(255,255,255,.10),transparent 66%);
+  transform:translate3d(0,0,0);
+  animation:ctaGlow 9s ease-in-out infinite alternate;
+}
+.final-cta__inner{position:relative;z-index:1}
+@keyframes ctaGlow{
+  from{transform:translate3d(-1.5%,0,0)}
+  to{transform:translate3d(1.5%,0,0)}
+}
+
+/* 11) Form kartlarında daha premium odak hissi */
+.quickform:focus-within,.contact-form-col .scard:focus-within{
+  border-color:color-mix(in srgb,var(--color-primary) 46%,var(--line));
+  box-shadow:0 18px 42px rgba(0,0,0,.14),0 0 0 1px color-mix(in srgb,var(--color-primary) 15%,transparent);
+}
+
+/* 12) Menü aktif çizgisi daha akıcı */
+.nav__link::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  right:50%;
+  bottom:2px;
+  height:2px;
+  border-radius:2px;
+  background:var(--color-primary);
+  opacity:0;
+  transition:left var(--motion-base) var(--ease-out),right var(--motion-base) var(--ease-out),opacity var(--motion-fast) ease;
+}
+@media(hover:hover){
+  .nav__link:hover::before{left:14px;right:14px;opacity:.7}
+}
+.nav__link.is-active::before{display:none}
+
+/* Premium layer reduce-motion kapatmaları */
+@media(prefers-reduced-motion:reduce){
+  .hero::after,.page-hero::after,.final-cta::before{animation:none !important}
+  .premium-shine::after{display:none !important}
+}
+
+
+
+/* ===== Premium metric/icon interactions v3 =====
+   Bilgi/istatistik modülleri: sakin başlangıç, hover'da sarı dolgu + beyaz ikon. */
+.badges__grid{
+  grid-template-columns:.96fr 1.10fr 1fr 1.02fr .92fr;
+  gap:10px;
+}
+.badge{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  padding:10px 10px;
+  gap:10px;
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) ease,
+    background-color var(--motion-base) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+.badge > div{min-width:0}
+.badge b{
+  white-space:nowrap;
+  font-size:clamp(12.6px,.98vw,14px);
+  line-height:1.25;
+  letter-spacing:-.15px;
+}
+.badge__ico{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:color-mix(in srgb,var(--color-primary) 12%,transparent);
+  color:var(--color-primary);
+  border:1px solid color-mix(in srgb,var(--color-primary) 38%,transparent);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.018);
+}
+.badge__ico svg,
+.pstep__ico svg,
+.why-card .wico svg,
+.about-feats .fico svg{
+  transform-origin:50% 50%;
+  transition:
+    transform 620ms cubic-bezier(.2,.8,.2,1),
+    color var(--motion-fast) ease;
+}
+
+/* Süreç / neden biz / özellik ikonları da aynı premium dilde başlar. */
+.pstep__ico,
+.why-card .wico,
+.about-feats .fico{
+  background:color-mix(in srgb,var(--color-primary) 12%,transparent);
+  color:var(--color-primary);
+  border:1px solid color-mix(in srgb,var(--color-primary) 36%,transparent);
+  box-shadow:0 7px 18px rgba(0,0,0,.10);
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+
+/* Sayaç ve makine istatistikleri: rakamı hareket ettiren, ama sürekli oynamayan mikro etkileşim. */
+.counter b,
+.machine-anim__stats b{
+  display:inline-block;
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    color var(--motion-fast) ease,
+    text-shadow var(--motion-base) ease;
+}
+.machine-anim__stats > div{
+  position:relative;
+  min-width:118px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--color-primary) 3%,var(--color-surface));
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) var(--ease-out);
+}
+
+/* Kartın üstünden çok hafif ışık geçişi. */
+.badge::after,
+.machine-anim__stats > div::after{
+  content:"";
+  position:absolute;
+  inset:-35% auto -35% -45%;
+  width:28%;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transform:skewX(-18deg);
+}
+
+@keyframes premiumIconWobble{
+  0%{transform:rotate(0deg) scale(1)}
+  32%{transform:rotate(-7deg) scale(1.06)}
+  68%{transform:rotate(7deg) scale(1.06)}
+  100%{transform:rotate(0deg) scale(1)}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .badge:hover{
+    transform:translateY(-4px);
+    background:color-mix(in srgb,var(--color-primary) 6%,rgba(255,255,255,.025));
+    border-color:color-mix(in srgb,var(--color-primary) 48%,transparent);
+    box-shadow:0 13px 28px rgba(0,0,0,.22);
+  }
+
+  /* İstenen temel davranış: dolgu sarı, ikon çizgisi beyaz. */
+  .badge:hover .badge__ico,
+  .contact-row:hover .badge__ico,
+  .pstep:hover .pstep__ico,
+  .why-card:hover .wico,
+  .about-feats li:hover .fico{
+    background:var(--color-primary);
+    color:#fff;
+    border-color:var(--color-primary);
+    box-shadow:0 10px 24px color-mix(in srgb,var(--color-primary) 28%,rgba(0,0,0,.18));
+  }
+
+  .badge:hover .badge__ico{
+    transform:translateY(-2px) scale(1.06);
+  }
+
+  /* Bazı kartlarda tam spin yerine daha rafine tek seferlik dönüş/wobble. */
+  .badge:nth-child(2n):hover .badge__ico svg,
+  .contact-row:nth-child(2n):hover .badge__ico svg{
+    animation:premiumIconWobble 620ms cubic-bezier(.2,.8,.2,1) both;
+  }
+  .pstep:nth-child(3n):hover .pstep__ico svg,
+  .why-card:nth-child(2n):hover .wico svg{
+    transform:rotate(360deg);
+  }
+
+  .pstep:hover .pstep__ico,
+  .why-card:hover .wico{
+    transform:translateY(-4px) scale(1.065);
+  }
+
+  .about-feats li{
+    border-radius:10px;
+    transition:transform var(--motion-fast) var(--ease-out),background-color var(--motion-fast) ease;
+  }
+  .about-feats li:hover{
+    transform:translateX(4px);
+    background:color-mix(in srgb,var(--color-primary) 5%,transparent);
+  }
+
+  .counter:hover{
+    background:
+      radial-gradient(circle at 50% 100%,color-mix(in srgb,var(--color-primary) 14%,transparent),transparent 66%),
+      var(--color-dark);
+    transform:translateY(-3px);
+  }
+  .counter:hover b{
+    color:#fff;
+    transform:translateY(-2px) scale(1.08);
+    text-shadow:0 0 24px color-mix(in srgb,var(--color-primary) 52%,transparent);
+  }
+
+  .machine-anim__stats > div:hover{
+    transform:translateY(-4px);
+    border-color:color-mix(in srgb,var(--color-primary) 45%,var(--line));
+    background:color-mix(in srgb,var(--color-primary) 7%,var(--color-surface));
+    box-shadow:0 12px 26px rgba(0,0,0,.10);
+  }
+  .machine-anim__stats > div:hover b{
+    transform:scale(1.07);
+  }
+
+  .badge:hover::after,
+  .machine-anim__stats > div:hover::after{
+    opacity:1;
+    transform:skewX(-18deg) translateX(520%);
+    transition:transform 760ms var(--ease-out),opacity 180ms ease;
+  }
+}
+
+/* Başlıklar desktop/tablet görünümünde tek satır; küçük ekranlarda da taşmadan küçülür. */
+@media(max-width:1180px) and (min-width:993px){
+  .badge{padding-inline:8px;gap:8px}
+  .badge__ico{width:40px;height:40px}
+  .badge b{font-size:12.2px}
+}
+@media(max-width:992px){
+  .badges__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .badge b{font-size:13.5px}
+}
+@media(max-width:480px){
+  .badge b{font-size:12.5px}
+}
+
+/* Hareket azaltma tercihine ek güvence. */
+@media(prefers-reduced-motion:reduce){
+  .badge__ico svg,.pstep__ico svg,.why-card .wico svg,.about-feats .fico svg{
+    animation:none !important;
+    transform:none !important;
+  }
+  .badge::after,.machine-anim__stats > div::after{display:none !important}
+}
+
+
+/* Mobile card density v2 */
+@media(max-width:768px){
+  .grid--3,.grid--4,.ggrid{gap:12px}
+  .scard__media{height:112px}
+  .ecard__media{height:112px}
+  .scard__body{padding:28px 12px 12px}
+  .scard__ico{left:12px;bottom:-19px;width:40px;height:40px;border-radius:10px}
+  .scard__ico svg{width:19px;height:19px}
+  .scard__body h3{font-size:14px;min-height:36px;margin-bottom:6px}
+  .scard__body p{font-size:12px;line-height:1.45;min-height:52px;-webkit-line-clamp:3}
+  .scard__foot{gap:6px;padding-top:10px}
+  .scard__foot .btn{font-size:11px;padding:7px 6px;min-height:34px}
+  .ecard__body{padding:12px}
+  .ecard__body h3{font-size:14px;min-height:36px}
+  .ecard__specs li{font-size:11.5px;padding-left:14px;line-height:1.4}
+  .ecard__specs li::before{width:5px;height:5px;top:9px}
+  .ecard__body>.btn{font-size:11px;padding:8px 6px}
+  .gitem__cap{font-size:11px;padding:10px 8px}
+}
+@media(max-width:380px){
+  .grid--3,.grid--4,.ggrid{gap:9px}
+  .scard__body{padding-left:10px;padding-right:10px}
+  .scard__foot .btn{font-size:10.5px}
+}
 
 /* Responsive */
 @media(max-width:992px){
@@ -517,7 +1147,8 @@ section{scroll-margin-top:120px}
   .wa-float{bottom:calc(76px + env(safe-area-inset-bottom));transition:opacity .25s}
   body{padding-bottom:calc(62px + env(safe-area-inset-bottom))}
   .hero h1{font-size:28px}
-  .grid--3,.grid--4,.grid--2,.ggrid{grid-template-columns:1fr}
+  .grid--3,.grid--4,.ggrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid--2{grid-template-columns:1fr}
   .badges__grid{grid-template-columns:1fr}
   .footer__grid{grid-template-columns:1fr}
   .counters{grid-template-columns:repeat(2,1fr)}
@@ -525,4 +1156,9 @@ section{scroll-margin-top:120px}
   .page-hero h1{font-size:28px}
   .final-cta__btns{width:100%}
   .final-cta__btns .btn{flex:1;justify-content:center}
+}
+
+@media(max-width:560px){
+  .brand__logo{height:42px;max-width:170px;padding:4px 7px}
+  .brand--footer .brand__logo{height:52px;max-width:210px}
 }

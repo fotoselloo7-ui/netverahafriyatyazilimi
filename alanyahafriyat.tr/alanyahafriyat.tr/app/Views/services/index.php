@@ -1,4 +1,4 @@
-<?php $ph_title = 'Hizmetlerimiz'; $ph_sub = 'Alanya ve Mahmutlar genelinde sunduğumuz profesyonel hafriyat hizmetleri'; include VIEW_PATH . '/partials/page-hero.php'; ?>
+<?php $ph_title = 'Alanya Hafriyat Hizmetleri'; $ph_sub = 'Kepçe ve mini kepçe, temel ve kanal kazısı, moloz taşıma, arsa tesviye ve saha düzenleme çözümlerimizi inceleyin.'; include VIEW_PATH . '/partials/page-hero.php'; ?>
 
 <section class="section">
     <div class="container">
@@ -6,7 +6,7 @@
             <?php foreach ($services as $s): ?>
                 <article class="scard">
                     <div class="scard__media">
-                        <?php if ($s['card_image']): ?><img src="<?= e(upload_url($s['card_image'])) ?>" alt="<?= e($s['title']) ?>" loading="lazy">
+                        <?php if ($s['card_image']): ?><img src="<?= e(upload_url($s['card_image'])) ?>" alt="<?= e('Alanya ' . $s['title']) ?>" title="<?= e($s['title'] . ' - ' . site_name()) ?>" width="900" height="560" loading="lazy" decoding="async" fetchpriority="low">
                         <?php else: ?><div class="ph-media"><?= icon($s['icon'] ?: 'excavator', 54) ?></div><?php endif; ?>
                         <span class="scard__ico"><?= icon($s['icon'] ?: 'excavator', 24) ?></span>
                     </div>

@@ -12,7 +12,7 @@ MySQL ortamına kurmak için gerekli adımları içerir.
 
 ## 1) Veritabanı
 1. cPanel → **MySQL Databases**: yeni bir veritabanı ve kullanıcı oluşturun, kullanıcıyı veritabanına tam yetkiyle ekleyin.
-2. cPanel → **phpMyAdmin** → oluşturduğunuz veritabanını seçin → **İçe Aktar (Import)** → `database/install.sql` dosyasını yükleyin.
+2. cPanel → **phpMyAdmin** → oluşturduğunuz veritabanını seçin → **İçe Aktar (Import)** → `database/database.sql` dosyasını yükleyin.
    - Tek dosyadır; tüm tablolar (25 tablo), tema, menü, sayfalar, hizmetler, makineler, projeler, blog, SSS, popup, footer, bildirim ve lisans tabloları + admin kullanıcısı gelir.
 
 ## 2) Dosyaların Yüklenmesi

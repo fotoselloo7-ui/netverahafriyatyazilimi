@@ -16,10 +16,25 @@ $ftext = $fs['text_color'] ?? '#CBD5E1';
                     <span class="brand__text"><?= e(site_name()) ?></span>
                 <?php endif; ?>
             </a>
-            <p class="footer__about"><?= e($fs['description'] ?? setting('footer_about', '')) ?></p>
+            <p class="footer__about"><?= e(setting('footer_about', $fs['description'] ?? '')) ?></p>
             <div class="footer__social">
                 <?php foreach (($socialLinks ?? []) as $s): ?>
-                    <a href="<?= e($s['url']) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 18) ?></a>
+                    <?php
+                    $platform = strtolower(trim((string) ($s['platform'] ?? '')));
+                    $storedUrl = trim((string) ($s['url'] ?? ''));
+                    if ($platform === 'whatsapp' && ($storedUrl === '' || $storedUrl === '#')) {
+                        $socialHref = whatsapp_link('Merhaba, bilgi almak istiyorum.');
+                    } else {
+                        $socialHref = $storedUrl !== '' ? $storedUrl : '#';
+                    }
+                    ?>
+                    <a
+                        href="<?= e($socialHref) ?>"
+                        class="footer__social-link footer__social-link--<?= e($platform ?: 'default') ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="<?= e(ucfirst($platform ?: 'Sosyal medya')) ?>"
+                    ><?= icon($s['icon'] ?: $platform, 18) ?></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -59,7 +74,7 @@ $ftext = $fs['text_color'] ?? '#CBD5E1';
     ?>
     <div class="footer__bottom">
         <div class="container footer__bottom-inner">
-            <span class="footer__copyright"><?= e($fs['copyright_text'] ?? ('© ' . date('Y') . ' ' . site_name())) ?></span>
+            <span class="footer__copyright"><?= e('© ' . date('Y') . ' ' . site_name() . '. Tüm hakları saklıdır.') ?></span>
             <div class="footer__legal">
                 <a href="<?= base_url('sayfa/gizlilik-politikasi') ?>">Gizlilik Politikası</a>
                 <a href="<?= base_url('sayfa/kvkk') ?>">KVKK</a>

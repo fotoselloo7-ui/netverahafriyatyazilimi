@@ -1,8 +1,8 @@
 <div class="a-card">
     <div class="a-card__head"><h2>Ana Sayfa Bölümleri</h2></div>
-    <p class="help">Her bölümü düzenleyebilir, aktif/pasif yapabilir ve sıralayabilirsiniz.</p>
+    <p class="help">Her bölümün başlık, alt başlık, görünürlük ve ilgili CTA/içerik kontrollerini buradan yönetebilirsiniz. Kart içerikleri kendi modüllerinden yönetilir.</p>
     <table class="a-table">
-        <thead><tr><th>Bölüm</th><th>Başlık</th><th>Sıra</th><th>Durum</th><th></th></tr></thead>
+        <thead><tr><th>Bölüm</th><th>Başlık</th><th>Yönetim Sırası</th><th>Durum</th><th></th></tr></thead>
         <tbody>
         <?php foreach ($sections as $sec): ?>
             <tr>

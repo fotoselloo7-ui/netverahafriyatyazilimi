@@ -15,7 +15,7 @@ class PageController extends Controller
     public function about(): void
     {
         $page = Page::findBySlug('hakkimizda');
-        if (!$page) {
+        if (!$page || (int) ($page['is_active'] ?? 0) !== 1) {
             $this->abort(404);
             return;
         }
@@ -34,6 +34,8 @@ class PageController extends Controller
             'seo' => [
                 'title'       => $page['seo_title'] ?: $page['title'] . ' | ' . site_name(),
                 'description' => $page['seo_description'] ?: $page['excerpt'],
+                'og_image' => $page['og_image'] ?: ($page['cover_image'] ?: $page['hero_image']),
+                'robots' => (int) ($page['robots_index'] ?? 1) === 1,
             ],
         ]);
     }
@@ -50,6 +52,8 @@ class PageController extends Controller
             'seo'  => [
                 'title'       => $page['seo_title'] ?: $page['title'] . ' | ' . site_name(),
                 'description' => $page['seo_description'] ?: $page['excerpt'],
+                'og_image' => $page['og_image'] ?: ($page['cover_image'] ?: $page['hero_image']),
+                'robots' => (int) ($page['robots_index'] ?? 1) === 1,
             ],
         ]);
     }

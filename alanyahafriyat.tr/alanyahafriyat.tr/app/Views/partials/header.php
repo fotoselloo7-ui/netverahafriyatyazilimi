@@ -49,13 +49,14 @@
                 <a href="<?= e(whatsapp_link('Merhaba, teklif almak istiyorum.')) ?>" target="_blank" rel="noopener" data-wa-event class="btn btn--wa btn--block"><?= icon('whatsapp', 18) ?> WhatsApp’tan Teklif Al</a>
                 <div class="nav__foot-row">
                     <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', setting('phone', ''))) ?>" class="nav__foot-btn"><?= icon('phone', 17) ?> Hemen Ara</a>
-                    <a href="<?= base_url('iletisim') ?>" class="nav__foot-btn"><?= icon('map-pin', 17) ?> Konum</a>
+                    <a href="<?= base_url('iletisim#konum') ?>" class="nav__foot-btn"><?= icon('map-pin', 17) ?> Konum</a>
                 </div>
                 <div class="nav__foot-info"><?= icon('clock', 14) ?> <?= e(setting('working_hours', '')) ?></div>
                 <?php if (!empty($socialLinks)): ?>
                 <div class="nav__foot-social">
                     <?php foreach ($socialLinks as $s): ?>
-                        <a href="<?= e($s['url']) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 17) ?></a>
+                        <?php $socialHref = strtolower((string) ($s['platform'] ?? '')) === 'whatsapp' ? whatsapp_link('Merhaba, bilgi almak istiyorum.') : (string) ($s['url'] ?? '#'); ?>
+                        <a href="<?= e($socialHref) ?>" target="_blank" rel="noopener" aria-label="<?= e($s['platform']) ?>"><?= icon($s['icon'] ?: $s['platform'], 17) ?></a>
                     <?php endforeach; ?>
                 </div>
                 <?php endif; ?>

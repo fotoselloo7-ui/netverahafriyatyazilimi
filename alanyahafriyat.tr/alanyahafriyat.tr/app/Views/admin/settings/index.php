@@ -1,4 +1,7 @@
-<?php $s = fn ($k, $d = '') => e($settings[$k] ?? $d); ?>
+<?php
+$s = fn ($k, $d = '') => e($settings[$k] ?? $d);
+$socialLinks = $socialLinks ?? [];
+?>
 <form method="post" action="<?= base_url('yonetim/ayarlar') ?>" enctype="multipart/form-data">
     <?= csrf_field() ?>
 
@@ -23,6 +26,50 @@
     </div>
 
     <div class="a-card">
+        <div class="a-card__head">
+            <h2><?= icon('message-circle', 18) ?> Footer Sosyal Medya</h2>
+            <button type="button" class="btn btn--light btn--sm" onclick="addSocialRow()"><?= icon('plus', 14) ?> Hesap Ekle</button>
+        </div>
+        <p class="help">Footer'daki logo altı sosyal ikonları buradan yönetilir. WhatsApp URL alanını boş veya # bırakırsanız Genel Ayarlar'daki WhatsApp numarası kullanılır.</p>
+        <div id="social-list">
+            <?php
+            $socialRows = $socialLinks ?: [
+                ['platform'=>'whatsapp','url'=>'#','icon'=>'whatsapp','sort_order'=>0,'is_active'=>1],
+                ['platform'=>'instagram','url'=>'','icon'=>'instagram','sort_order'=>1,'is_active'=>0],
+                ['platform'=>'facebook','url'=>'','icon'=>'facebook','sort_order'=>2,'is_active'=>0],
+                ['platform'=>'youtube','url'=>'','icon'=>'youtube','sort_order'=>3,'is_active'=>0],
+            ];
+            foreach ($socialRows as $social): ?>
+                <div class="social-admin-row">
+                    <div class="a-field">
+                        <label>Platform</label>
+                        <input type="text" name="social_platform[]" value="<?= e($social['platform'] ?? '') ?>" placeholder="instagram">
+                    </div>
+                    <div class="a-field social-url-field">
+                        <label>Profil / Bağlantı</label>
+                        <input type="text" name="social_url[]" value="<?= e($social['url'] ?? '') ?>" placeholder="https://...">
+                    </div>
+                    <div class="a-field">
+                        <label>İkon</label>
+                        <input type="text" name="social_icon[]" value="<?= e($social['icon'] ?? '') ?>" placeholder="instagram">
+                    </div>
+                    <div class="a-field">
+                        <label>Sıra</label>
+                        <input type="number" name="social_sort[]" value="<?= (int) ($social['sort_order'] ?? 0) ?>">
+                    </div>
+                    <div class="a-field">
+                        <label>Durum</label>
+                        <select name="social_status[]">
+                            <option value="1" <?= (int) ($social['is_active'] ?? 1) === 1 ? 'selected' : '' ?>>Aktif</option>
+                            <option value="0" <?= (int) ($social['is_active'] ?? 1) === 0 ? 'selected' : '' ?>>Pasif</option>
+                        </select>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="a-card">
         <div class="a-card__head"><h2><?= icon('phone', 18) ?> İletişim Bilgileri</h2></div>
         <div class="a-row">
             <div class="a-field"><label>Telefon</label><input type="text" name="phone" value="<?= $s('phone') ?>"></div>
@@ -33,7 +80,7 @@
             <div class="a-field"><label>Çalışma Saatleri</label><input type="text" name="working_hours" value="<?= $s('working_hours') ?>"></div>
         </div>
         <div class="a-field"><label>Adres</label><input type="text" name="address" value="<?= $s('address') ?>"></div>
-        <div class="a-field"><label>Google Maps Embed URL</label><input type="text" name="map_embed" value="<?= $s('map_embed') ?>"><small>Google Maps &gt; Paylaş &gt; Harita yerleştir &gt; src bağlantısı</small></div>
+        <div class="a-field"><label>Google Maps Embed URL</label><input type="text" name="map_embed" value="<?= $s('map_embed') ?>"><small>Google Maps &gt; Paylaş &gt; Harita yerleştir bölümündeki tam iframe kodunu veya yalnızca src bağlantısını yapıştırabilirsiniz.</small></div>
     </div>
 
     <div class="a-card">
@@ -55,3 +102,23 @@
 
     <button type="submit" class="btn btn--primary"><?= icon('check', 16) ?> Ayarları Kaydet</button>
 </form>
+
+<style>
+.social-admin-row{display:grid;grid-template-columns:1fr 2fr 1fr 90px 110px;gap:12px;align-items:end;padding:12px 0;border-bottom:1px dashed var(--line)}
+.social-admin-row:last-child{border-bottom:0}
+@media(max-width:900px){.social-admin-row{grid-template-columns:1fr 1fr}.social-url-field{grid-column:1/-1}}
+</style>
+<script>
+function addSocialRow(){
+    var list=document.getElementById('social-list');
+    var row=document.createElement('div');
+    row.className='social-admin-row';
+    row.innerHTML=
+        '<div class="a-field"><label>Platform</label><input type="text" name="social_platform[]" placeholder="instagram"></div>'+
+        '<div class="a-field social-url-field"><label>Profil / Bağlantı</label><input type="text" name="social_url[]" placeholder="https://..."></div>'+
+        '<div class="a-field"><label>İkon</label><input type="text" name="social_icon[]" placeholder="instagram"></div>'+
+        '<div class="a-field"><label>Sıra</label><input type="number" name="social_sort[]" value="0"></div>'+
+        '<div class="a-field"><label>Durum</label><select name="social_status[]"><option value="1">Aktif</option><option value="0">Pasif</option></select></div>';
+    list.appendChild(row);
+}
+</script>

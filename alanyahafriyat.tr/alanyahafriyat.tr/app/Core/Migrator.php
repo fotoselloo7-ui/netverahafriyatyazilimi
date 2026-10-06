@@ -104,6 +104,121 @@ class Migrator
         // Footer web tasarım kredi alanları
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_text', 'VARCHAR(191)', '');
         $this->schema->addColumnIfMissing('footer_settings', 'web_design_credit_url', 'VARCHAR(191)', '');
+
+        $this->upgradeContentPackV5();
+        $this->upgradeCatalogPackV6();
+        $this->upgradeBrandPackV7();
+        $this->upgradeStockMediaPackV8();
+    }
+
+    protected function upgradeContentPackV5(): void
+    {
+        try {
+            // Fresh kurulumda Seeder zaten v4 görsel paketini oluşturur.
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = 'content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 5) {
+                return;
+            }
+
+            // v3 öncesi veya eksik hizmet kataloğu varsa tam içerik paketi yenilenir.
+            $expectedSlugs = [
+                'kepce-kiralama','mini-kepce-kiralama','temel-kazisi','moloz-hafriyat-nakliye',
+                'alt-yapi-kanal-acma','arsa-tesviye-dolgu','cevre-bahce-duzenleme','drenaj-ozel-kazi',
+                'havuz-kazisi','yol-acma-saha-hazirlama','toprak-serme-sikistirma','yikim-sonrasi-saha-temizligi',
+            ];
+            $placeholders = implode(',', array_fill(0, count($expectedSlugs), '?'));
+            $check = $this->pdo->prepare("SELECT COUNT(*) FROM services WHERE slug IN ($placeholders)");
+            $check->execute($expectedSlugs);
+            $catalogCount = (int) ($check->fetchColumn() ?: 0);
+
+            if ($version < 3 || $catalogCount < count($expectedSlugs)) {
+                (new Seeder($this->pdo))->upgradeLegacyDemoContent();
+                return;
+            }
+
+            // Katalog tam ise yalnız görsel/proje/galeri/makine paketini idempotent biçimde uygula.
+            (new Seeder($this->pdo))->applyVisualPackV5();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v5 upgrade: ' . $e->getMessage());
+            }
+        }
+    }
+
+    protected function upgradeCatalogPackV6(): void
+    {
+        try {
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 6) {
+                return;
+            }
+
+            (new Seeder($this->pdo))->applyCatalogPackV6();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v6 upgrade: ' . $e->getMessage());
+            }
+        }
+    }
+
+    protected function upgradeBrandPackV7(): void
+    {
+        try {
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 7) {
+                return;
+            }
+
+            (new Seeder($this->pdo))->applyBrandPackV7();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v7 upgrade: ' . $e->getMessage());
+            }
+        }
+    }
+
+    protected function upgradeStockMediaPackV8(): void
+    {
+        try {
+            $settingCount = (int) ($this->pdo->query("SELECT COUNT(*) FROM settings")->fetchColumn() ?: 0);
+            if ($settingCount === 0) {
+                return;
+            }
+
+            $stmt = $this->pdo->prepare("SELECT setting_value FROM settings WHERE setting_key='content_pack_version' LIMIT 1");
+            $stmt->execute();
+            $version = (int) ($stmt->fetchColumn() ?: 0);
+            if ($version >= 8) {
+                return;
+            }
+
+            (new Seeder($this->pdo))->applyStockMediaPackV8();
+        } catch (\Throwable $e) {
+            if (env('APP_DEBUG', false)) {
+                error_log('Content Pack v8 upgrade: ' . $e->getMessage());
+            }
+        }
     }
 
     public function run(): void

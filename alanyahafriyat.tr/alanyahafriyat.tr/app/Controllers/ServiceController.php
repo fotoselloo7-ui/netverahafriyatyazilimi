@@ -16,8 +16,8 @@ class ServiceController extends Controller
         $this->view('services/index', [
             'services' => Service::active('sort_order ASC'),
             'seo' => [
-                'title' => 'Hizmetlerimiz | ' . site_name(),
-                'description' => 'Alanya ve Mahmutlar’da hafriyat, kepçe kiralama, temel kazısı, moloz taşıma, altyapı ve çevre düzenleme hizmetlerimiz.',
+                'title' => 'Alanya Hafriyat Hizmetleri | Kepçe, Kazı ve Moloz | ' . site_name(),
+                'description' => 'Alanya’da kepçe ve mini kepçe kiralama, temel ve kanal kazısı, moloz taşıma, arsa tesviye, dolgu ve düzenleme hizmetlerini inceleyin.',
             ],
             'breadcrumb' => [['Ana Sayfa', base_url()], ['Hizmetlerimiz', null]],
         ]);
@@ -25,7 +25,15 @@ class ServiceController extends Controller
 
     public function show(array $params): void
     {
-        $service = Service::findBySlug($params['slug'] ?? '');
+        $slug = (string) ($params['slug'] ?? '');
+        // Ana sorgu "Alanya Hafriyat" ana sayfada sahiplenilir; eski hizmet URL'si
+        // keyword cannibalization oluşturmaması için ana sayfaya kalıcı yönlenir.
+        if ($slug === 'alanya-hafriyat-hizmeti') {
+            header('Location: ' . base_url(), true, 301);
+            exit;
+        }
+
+        $service = Service::findBySlug($slug);
         if (!$service || (int) $service['is_active'] !== 1) {
             $this->abort(404);
             return;
@@ -38,20 +46,37 @@ class ServiceController extends Controller
 
         $faqs = Service::faqs((int) $service['id']);
 
-        // FAQ + Service schema
+        // Service + FAQ yapılandırılmış verileri yalnız ekrandaki gerçek içerikten üretilir.
+        $regions = \App\Models\ServiceRegion::active('sort_order ASC, id ASC');
+        $areaServed = array_values(array_map(fn ($r) => (string) $r['title'], $regions));
         $jsonLd = [
             '@context' => 'https://schema.org',
             '@type' => 'Service',
-            'name' => $service['title'],
+            'name' => $service['hero_title'] ?: $service['title'],
             'description' => strip_tags((string) $service['short_description']),
-            'provider' => ['@type' => 'LocalBusiness', 'name' => site_name()],
-            'areaServed' => 'Alanya, Mahmutlar',
+            'url' => base_url('hizmetler/' . $service['slug']),
+            'provider' => [
+                '@type' => 'LocalBusiness',
+                'name' => site_name(),
+                'telephone' => setting('phone', ''),
+                'url' => base_url(),
+            ],
+            'areaServed' => $areaServed,
         ];
+        $faqJsonLd = $faqs ? [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => array_values(array_map(fn ($f) => [
+                '@type' => 'Question',
+                'name' => $f['question'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['answer']],
+            ], $faqs)),
+        ] : null;
 
         $this->view('services/show', [
             'service' => $service,
             'services' => Service::active('sort_order ASC'),
-            'serviceRegions' => \App\Models\ServiceRegion::active('sort_order ASC, id ASC'),
+            'serviceRegions' => $regions,
             'advantages' => json_decode_safe($service['advantages_json']),
             'usageAreas' => json_decode_safe($service['usage_areas_json']),
             'process' => json_decode_safe($service['process_json']),
@@ -59,6 +84,7 @@ class ServiceController extends Controller
             'related' => $related,
             'posts' => BlogPost::published(3),
             'jsonLd' => $jsonLd,
+            'faqJsonLd' => $faqJsonLd,
             'seo' => [
                 'title' => $service['seo_title'] ?: ($service['title'] . ' | ' . site_name()),
                 'description' => $service['seo_description'] ?: str_excerpt($service['short_description'], 155),

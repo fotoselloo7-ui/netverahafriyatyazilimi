@@ -2,7 +2,7 @@
 $colors = [
     'primary_color' => 'Ana Renk (Primary)', 'primary_hover_color' => 'Primary Hover',
     'primary_text_color' => 'Primary Üzeri Metin', 'secondary_color' => 'İkincil (Secondary)',
-    'dark_color' => 'Koyu (Dark)', 'accent_color' => 'Vurgu (Accent)',
+    'secondary_text_color' => 'Secondary Üzeri Metin', 'dark_color' => 'Koyu (Dark)', 'accent_color' => 'Vurgu (Accent)',
     'background_color' => 'Arka Plan (Background)', 'surface_color' => 'Kart/Yüzey (Surface)',
     'text_color' => 'Metin (Text)', 'muted_text_color' => 'Soluk Metin (Muted)',
     'border_color' => 'Çerçeve (Border)', 'button_primary_bg' => 'Primary Buton Zemin',
@@ -11,7 +11,7 @@ $colors = [
 ];
 $defaults = [
     'primary_color'=>'#F5A400','primary_hover_color'=>'#D98A00','primary_text_color'=>'#111827',
-    'secondary_color'=>'#111827','dark_color'=>'#080B0F','accent_color'=>'#FFB703',
+    'secondary_color'=>'#111827','secondary_text_color'=>'#FFFFFF','dark_color'=>'#080B0F','accent_color'=>'#FFB703',
     'background_color'=>'#F7F4EF','surface_color'=>'#FFFFFF','text_color'=>'#111827',
     'muted_text_color'=>'#64748B','border_color'=>'#E5E7EB','button_primary_bg'=>'#F5A400',
     'button_primary_text'=>'#111827','button_dark_bg'=>'#080B0F','button_dark_text'=>'#FFFFFF',
@@ -66,7 +66,7 @@ $curBg = strtolower((string) ($theme['background_color'] ?? ''));
     <?= csrf_field() ?>
     <div class="a-card">
         <div class="a-card__head"><h2><?= icon('tag', 18) ?> Renkleri Elle Düzenle</h2></div>
-        <p class="help">Renkleri hex kodu ile değiştirin. Buton/metin renkleri boş bırakılırsa sistem kontrast helper'ı ile otomatik seçer. Kaydettiğinizde tüm sitede anında güncellenir.</p>
+        <p class="help">Renkleri hex kodu ile değiştirin. Bir zemin rengini değiştirip ona bağlı metin rengini değiştirmezseniz sistem okunabilir kontrastı otomatik seçer. Kaydettiğinizde tüm sitede anında güncellenir.</p>
         <div class="a-grid a-grid--2">
             <?php foreach ($colors as $key => $label): $val = $theme[$key] ?? ($defaults[$key] ?? '#000000'); ?>
                 <div class="a-field">

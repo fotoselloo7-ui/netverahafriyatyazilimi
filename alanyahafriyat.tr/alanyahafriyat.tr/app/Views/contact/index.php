@@ -1,15 +1,16 @@
 <?php $ph_title = 'İletişim'; $ph_sub = 'Hafriyat ve kepçe hizmetleri için bize ulaşın'; include VIEW_PATH . '/partials/page-hero.php'; ?>
 
 <section class="section">
-    <div class="container layout-2 layout-2--wide">
-        <div>
+    <div class="container">
+        <div class="layout-2 layout-2--wide contact-top">
+        <div class="contact-info-col">
             <h2 style="font-size:26px;margin-bottom:18px">Bize Ulaşın</h2>
             <div class="contact-list">
                 <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', setting('phone', ''))) ?>" class="contact-row">
                     <span class="badge__ico"><?= icon('phone', 20) ?></span><div><b>Telefon</b><span><?= e(setting('phone', '')) ?></span></div>
                 </a>
                 <a href="<?= e(whatsapp_link('Merhaba, bilgi almak istiyorum.')) ?>" target="_blank" rel="noopener" data-wa-event class="contact-row">
-                    <span class="badge__ico"><?= icon('whatsapp', 20) ?></span><div><b>WhatsApp</b><span><?= e(setting('phone', '')) ?></span></div>
+                    <span class="badge__ico"><?= icon('whatsapp', 20) ?></span><div><b>WhatsApp</b><span><?= e(setting('whatsapp_number', setting('phone', ''))) ?></span></div>
                 </a>
                 <a href="mailto:<?= e(setting('email', '')) ?>" class="contact-row">
                     <span class="badge__ico"><?= icon('mail', 20) ?></span><div><b>E-posta</b><span><?= e(setting('email', '')) ?></span></div>
@@ -21,14 +22,9 @@
                     <span class="badge__ico"><?= icon('clock', 20) ?></span><div><b>Çalışma Saatleri</b><span><?= e(setting('working_hours', '')) ?></span></div>
                 </div>
             </div>
-            <?php if ($map = setting('map_embed')): ?>
-            <div style="margin-top:22px;border-radius:14px;overflow:hidden;border:1px solid var(--line)">
-                <iframe src="<?= e($map) ?>" width="100%" height="260" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <?php endif; ?>
         </div>
 
-        <div>
+        <div class="contact-form-col">
             <div class="scard" style="padding:28px">
                 <h2 style="font-size:22px;margin-bottom:6px">Teklif Formu</h2>
                 <p style="color:var(--muted);margin-bottom:18px">Formu doldurun, en kısa sürede size dönüş yapalım.</p>
@@ -58,11 +54,24 @@
                 </form>
             </div>
         </div>
+        </div>
+
+        <?php $map = map_embed_url((string) setting('map_embed', '')); if ($map !== ''): ?>
+        <div id="konum" class="contact-map">
+            <iframe src="<?= e($map) ?>" width="100%" height="380" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 
 <style>
-.contact-row{display:flex;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:12px;transition:.2s}
+.contact-top{align-items:stretch}
+.contact-info-col{display:flex;flex-direction:column;min-width:0}
+.contact-list{display:flex;flex:1;flex-direction:column;gap:12px}
+.contact-form-col{display:flex;padding-top:56px}
+.contact-form-col>.scard{width:100%;height:100%}
+.contact-map{margin-top:24px;border-radius:14px;overflow:hidden;border:1px solid var(--line);width:100%}
+.contact-row{display:flex;flex:1;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:0;transition:.2s}
 a.contact-row:hover{border-color:var(--color-primary)}
 .contact-row b{display:block;font-size:15px}
 .contact-row span{color:var(--muted);font-size:14px}
@@ -70,4 +79,12 @@ a.contact-row:hover{border-color:var(--color-primary)}
 .cfield label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#444}
 .cfield input,.cfield select,.cfield textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px}
 .cfield input:focus,.cfield select:focus,.cfield textarea:focus{outline:none;border-color:var(--color-primary)}
+@media(max-width:900px){
+  .contact-top{align-items:start}
+  .contact-info-col,.contact-list,.contact-form-col{display:block}
+  .contact-row{margin-bottom:12px}
+  .contact-form-col{padding-top:0}
+  .contact-map{margin-top:18px}
+  .contact-map iframe{height:300px}
+}
 </style>

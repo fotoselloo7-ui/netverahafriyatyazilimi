@@ -16,7 +16,15 @@ Session::start();
 
 // Tüm görünümlerde paylaşılan ortak veriler (header/footer/menüler)
 View::share('site_name', site_name());
-View::share('headerMenu', Menu::byLocation('header'));
+
+// Ana navigasyonda yalnızca standart kurumsal sayfaları göster.
+// SSS gibi içerik sayfaları silinmez; yalnızca ana menüyü kalabalıklaştırmaz.
+$standardHeaderUrls = ['/', '/hakkimizda', '/hizmetler', '/projeler', '/blog', '/iletisim'];
+$headerMenu = array_values(array_filter(
+    Menu::byLocation('header'),
+    static fn (array $item): bool => in_array((string) ($item['url'] ?? ''), $standardHeaderUrls, true)
+));
+View::share('headerMenu', $headerMenu);
 View::share('footerMenu', Menu::byLocation('footer'));
 View::share('mobileBar', Menu::byLocation('mobile_bar'));
 View::share('footerSettings', FooterSetting::current());

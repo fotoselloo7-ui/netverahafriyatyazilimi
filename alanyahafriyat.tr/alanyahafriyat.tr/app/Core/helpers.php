@@ -109,6 +109,32 @@ if (!function_exists('whatsapp_number')) {
     }
 }
 
+if (!function_exists('map_embed_url')) {
+    /**
+     * Admin paneline tam iframe kodu veya yalnızca Google Maps embed URL'si
+     * yapıştırılsa da güvenli bir iframe src değeri üretir.
+     */
+    function map_embed_url(?string $value): string
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return '';
+        }
+
+        if (preg_match("~\\bsrc\\s*=\\s*['\"]([^'\"]+)['\"]~i", $value, $m)) {
+            $value = $m[1];
+        }
+
+        $value = html_entity_decode(trim($value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (!filter_var($value, FILTER_VALIDATE_URL)) {
+            return '';
+        }
+
+        $scheme = strtolower((string) parse_url($value, PHP_URL_SCHEME));
+        return in_array($scheme, ['http', 'https'], true) ? $value : '';
+    }
+}
+
 if (!function_exists('whatsapp_link')) {
     function whatsapp_link(string $text = ''): string
     {
@@ -251,6 +277,8 @@ if (!function_exists('icon')) {
             'zap' => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
             'users' => '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
             'truck' => '<path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+            'tractor' => '<path d="M3 18h3"/><path d="M14 18h2"/><path d="M16 13h3l2 3v2h-2"/><path d="M8 18V9h6l2 9"/><path d="M8 11H5l-2 3v4"/><circle cx="7" cy="18" r="3"/><circle cx="18" cy="18" r="2"/>',
+            'forklift' => '<path d="M3 4v13h3"/><path d="M8 17V8h6l3 4v5"/><path d="M17 4v13"/><path d="M20 4v15"/><path d="M17 19h4"/><circle cx="8" cy="18" r="2"/><circle cx="15" cy="18" r="2"/>',
             'shield' => '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
             'tag' => '<path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.2"/>',
             'excavator' => '<path d="M3 20h18"/><path d="M5 20v-4h5v4"/><rect x="5" y="9" width="5" height="4" rx="1"/><path d="M10 11h4l6-4"/><circle cx="7.5" cy="20" r="0"/>',
@@ -273,6 +301,11 @@ if (!function_exists('icon')) {
             'facebook' => '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
             'instagram' => '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
             'whatsapp' => '<path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z"/><path d="M8.5 8.5c-.3 0-.6.1-.8.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.3-.2-.6-.4z"/>',
+            'youtube' => '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="10 15 15 12 10 9 10 15"/>',
+            'linkedin' => '<rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12"/><path d="M10 14a5 5 0 0 1 10 0v7"/><path d="M20 14v7"/>',
+            'twitter' => '<path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12.27 8v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>',
+            'x' => '<path d="M4 4l16 16"/><path d="M20 4 4 20"/>',
+            'tiktok' => '<path d="M9 18a4 4 0 1 1-4-4"/><path d="M9 18V4h4c.4 2.4 2.2 4.2 4.6 4.6V12A8 8 0 0 1 13 10.6V18"/>',
             'menu' => '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
             'x' => '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
             'settings' => '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',

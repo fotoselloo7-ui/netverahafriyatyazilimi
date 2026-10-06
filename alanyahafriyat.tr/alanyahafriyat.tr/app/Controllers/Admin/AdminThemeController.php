@@ -161,15 +161,28 @@ class AdminThemeController extends AdminBaseController
                 $data[$f] = $val;
             }
         }
-        // Buton/metin renkleri boş gelirse kontrast helper'ı ile otomatik doldur
-        if (empty($data['primary_text_color']) && !empty($data['primary_color'])) {
-            $data['primary_text_color'] = get_contrast_text($data['primary_color']);
-        }
-        if (empty($data['button_primary_text']) && !empty($data['button_primary_bg'])) {
-            $data['button_primary_text'] = get_contrast_text($data['button_primary_bg']);
-        }
-        if (empty($data['button_dark_text']) && !empty($data['button_dark_bg'])) {
-            $data['button_dark_text'] = get_contrast_text($data['button_dark_bg']);
+        // Zemin rengi değişmiş ama ona bağlı metin rengi elle değiştirilmemişse
+        // eski metin rengini taşımak yerine yeni zemin için okunabilir kontrast üret.
+        $current = Database::selectOne('SELECT * FROM theme_settings ORDER BY id ASC LIMIT 1') ?: [];
+        $contrastPairs = [
+            ['primary_color', 'primary_text_color'],
+            ['secondary_color', 'secondary_text_color'],
+            ['button_primary_bg', 'button_primary_text'],
+            ['button_dark_bg', 'button_dark_text'],
+        ];
+        foreach ($contrastPairs as [$bgKey, $textKey]) {
+            if (empty($data[$bgKey])) {
+                continue;
+            }
+            $oldBg = strtolower((string) ($current[$bgKey] ?? ''));
+            $oldText = strtolower((string) ($current[$textKey] ?? ''));
+            $newBg = strtolower((string) $data[$bgKey]);
+            $newText = strtolower((string) ($data[$textKey] ?? ''));
+            $backgroundChanged = $oldBg !== '' && $newBg !== $oldBg;
+            $textWasNotChanged = $newText === '' || $newText === $oldText;
+            if (($backgroundChanged && $textWasNotChanged) || $newText === '') {
+                $data[$textKey] = get_contrast_text($data[$bgKey]);
+            }
         }
         foreach ($this->otherFields as $f) {
             if (isset($_POST[$f])) {

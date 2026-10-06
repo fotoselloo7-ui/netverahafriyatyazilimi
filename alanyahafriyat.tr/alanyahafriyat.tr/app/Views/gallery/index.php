@@ -18,12 +18,12 @@
             <?php foreach ($items as $g): ?>
                 <?php if (!empty($g['video_url'])): ?>
                     <a class="gitem" href="<?= e($g['video_url']) ?>" target="_blank" rel="noopener">
-                        <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy"><?php else: ?><div class="ph-media"><?= icon('excavator', 44) ?></div><?php endif; ?>
+                        <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" title="<?= e($g['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low"><?php else: ?><div class="ph-media"><?= icon('excavator', 44) ?></div><?php endif; ?>
                         <span class="gitem__cap"><?= icon('chevron-right', 15) ?> <?= e($g['title']) ?></span>
                     </a>
                 <?php else: ?>
                     <a class="gitem" href="<?= $g['image'] ? e(upload_url($g['image'])) : '#' ?>" data-lightbox>
-                        <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" loading="lazy"><?php else: ?><div class="ph-media"><?= icon('excavator', 44) ?></div><?php endif; ?>
+                        <?php if ($g['image']): ?><img src="<?= e(upload_url($g['image'])) ?>" alt="<?= e($g['alt_text'] ?: $g['title']) ?>" title="<?= e($g['title']) ?>" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low"><?php else: ?><div class="ph-media"><?= icon('excavator', 44) ?></div><?php endif; ?>
                         <?php if ($g['title']): ?><span class="gitem__cap"><?= icon('map-pin', 15) ?> <?= e($g['title']) ?></span><?php endif; ?>
                     </a>
                 <?php endif; ?>

@@ -1,0 +1,46 @@
+name: Build database.sql
+
+on:
+  push:
+    branches:
+      - fix/admin-sync-db-cleanup
+    paths:
+      - "alanyahafriyat.tr/alanyahafriyat.tr/app/**"
+      - "alanyahafriyat.tr/alanyahafriyat.tr/config/**"
+      - "alanyahafriyat.tr/alanyahafriyat.tr/database/build_install_sql.php"
+      - ".github/workflows/build-database-sql.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: fix/admin-sync-db-cleanup
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_sqlite, sqlite3, mbstring, openssl, fileinfo, gd
+
+      - name: Build install SQL
+        working-directory: alanyahafriyat.tr/alanyahafriyat.tr
+        run: php database/build_install_sql.php
+
+      - name: Commit database.sql
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add alanyahafriyat.tr/alanyahafriyat.tr/database/database.sql
+          if git diff --cached --quiet; then
+            echo "database.sql already current"
+            exit 0
+          fi
+          git commit -m "Build current database.sql"
+          git push origin HEAD:fix/admin-sync-db-cleanup

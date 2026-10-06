@@ -105,6 +105,99 @@
     });
   });
 
+  // Global scroll reveal / stagger animasyonları
+  // CSS tek başına içeriği gizlemez; yalnızca JS aktifse motion-ready eklenir.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var motionSelectors = [
+      '.hero__eyebrow', '.hero h1', '.hero__sub', '.hero__cta', '.quickform',
+      '.badge', '.sec-head', '.scard', '.ecard', '.pstep', '.gitem',
+      '.region-chip', '.bcard', '.faq__item', '.why-card', '.contact-row',
+      '.machine-anim__text', '.machine-scene', '.page-hero .container',
+      '.prose > h2', '.prose > h3', '.final-cta__inner'
+    ].join(',');
+
+    var motionItems = $(motionSelectors);
+    motionItems.forEach(function (el, i) {
+      el.classList.add('motion-ready');
+      // Aynı grid/listede peş peşe gelen öğelere küçük stagger ver.
+      var parent = el.parentElement;
+      if (parent) {
+        var siblings = Array.prototype.filter.call(parent.children, function (child) {
+          return child.matches && child.matches(motionSelectors);
+        });
+        var index = siblings.indexOf(el);
+        if (index > -1) el.style.setProperty('--motion-delay', Math.min(index * 55, 220) + 'ms');
+      }
+    });
+
+    var motionObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    motionItems.forEach(function (el) { motionObserver.observe(el); });
+  }
+
+  // Premium interaction layer
+  var reducePremiumMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Pointer spotlight: mouse pozisyonuna göre çok hafif ışık odağı.
+  if (!reducePremiumMotion && finePointer) {
+    var spotlightItems = $('.scard,.ecard,.bcard,.why-card,.quickform,.machine-scene,.contact-row,.counter,.gitem');
+    spotlightItems.forEach(function (el) {
+      el.classList.add('premium-spotlight');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--spot-x', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
+      }, { passive: true });
+    });
+
+    // Shine yalnız seçilmiş yüzeylerde; her öğede kullanıp tasarımı kalabalıklaştırmıyoruz.
+    $('.scard,.ecard,.bcard,.gitem,.quickform,.about-media').forEach(function (el) {
+      el.classList.add('premium-shine');
+    });
+  }
+
+  // Sayısal sayaçlar görünür olduğunda bir kez artarak gelsin.
+  if (!reducePremiumMotion && 'IntersectionObserver' in window) {
+    var countItems = $('.counter b,.machine-anim__stats b');
+    var countObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var raw = (el.textContent || '').trim();
+        var match = raw.match(/^([0-9]+)([+%]?)$/);
+        if (!match) {
+          observer.unobserve(el);
+          return;
+        }
+
+        var target = parseInt(match[1], 10);
+        var suffix = match[2] || '';
+        var duration = Math.min(1200, Math.max(650, target > 100 ? 950 : 760));
+        var start = performance.now();
+
+        function tick(now) {
+          var p = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased).toLocaleString('tr-TR') + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = target.toLocaleString('tr-TR') + suffix;
+        }
+        requestAnimationFrame(tick);
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.45 });
+
+    countItems.forEach(function (el) { countObserver.observe(el); });
+  }
+
   // AJAX lead form
   $$('[data-ajax-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
